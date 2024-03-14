@@ -76,12 +76,10 @@ class RuleParser
      */
     public static function expandWildcardRules(array $rawRules, array $data): array
     {
-        // The primary purpose of this parser is to expand any "*" rules to the all
-        // of the explicit rules needed for the given data. For example the rule
+        // The primary purpose of this parser is to expand any "*" rules
+        // to all the explicit rules needed for the given data. For example the rule
         // names.* would get expanded to names.0, names.1, etc. for this data.
-        $parsed = (new ValidationRuleParser($data))->explode($rawRules);
-
-        return $parsed->rules;
+        return (new ValidationRuleParser($data))->explode($rawRules)->rules;
     }
 
     /**
