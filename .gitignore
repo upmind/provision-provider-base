@@ -4,6 +4,7 @@ vendor/
 
 # Tools
 phpunit.xml
+phpstan.neon
 .phpunit.result.cache
 .phpunit.cache/
 
