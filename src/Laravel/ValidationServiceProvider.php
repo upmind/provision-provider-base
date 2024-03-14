@@ -149,7 +149,10 @@ class ValidationServiceProvider extends BaseProvider
                 //validate phone number for the input country code
                 $countryCode = Arr::get($validator->getData(), $parameters[0]);
 
-                $extraValidator = Validator::make([
+                /** @var \Illuminate\Contracts\Validation\Factory $factory */
+                $factory = $this->app->make(Factory::class);
+
+                $extraValidator = $factory->make([
                     'phone' => $value
                 ], [
                     'phone' => sprintf('phone:%s', $countryCode)
