@@ -52,7 +52,7 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
     protected $validator;
 
     /**
-     * Whether or not the data set has yet been validated.
+     * Whether the data set has been validated yet.
      *
      * @var bool
      */

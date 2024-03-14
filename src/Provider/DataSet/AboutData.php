@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Upmind\ProvisionBase\Provider\DataSet;
 
-use Upmind\ProvisionBase\Provider\DataSet\DataSet;
-
 /**
  * @property-read string $name Name of the provision category or provider
  * @property-read string $description Description of the provision category or provider
