@@ -11,7 +11,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\ServiceProvider as BaseProvider;
-use Illuminate\Support\Facades\Validator;
 use League\ISO3166\ISO3166;
 use libphonenumber\NumberParseException;
 use Propaganistas\LaravelPhone\Exceptions\NumberParseException as PropaganistasNumberParseException;
