@@ -6,7 +6,6 @@ namespace Upmind\ProvisionBase\Provider\DataSet;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationRuleParser;
 use Illuminate\Validation\Validator as LaravelValidator;
@@ -25,10 +24,7 @@ class RuleParser
      */
     public const NESTED_DATA_SET_RULE = 'upmind_nested_data_set';
 
-    /**
-     * @var LaravelValidator|null
-     */
-    protected static $validator;
+    protected static ?LaravelValidator $validator = null;
 
     /**
      * Parse the given data set rules, expanding nested references to other data
@@ -382,7 +378,11 @@ class RuleParser
 
     public static function getValidator(): LaravelValidator
     {
-        return self::$validator = (self::$validator ?? Validator::make([], []));
+        if (self::$validator === null) {
+            self::$validator = DataSet::getValidatorFactory()->make([], []);
+        }
+
+        return self::$validator;
     }
 
     public static function setValidator(LaravelValidator $validator): void

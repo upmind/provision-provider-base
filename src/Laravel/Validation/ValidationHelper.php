@@ -2,8 +2,8 @@
 
 namespace Upmind\ProvisionBase\Laravel\Validation;
 
-use Illuminate\Support\Facades\Validator as ValidatorFactory;
 use Illuminate\Support\Str;
+use Upmind\ProvisionBase\Provider\DataSet\DataSet;
 use Upmind\ProvisionBase\Provider\DataSet\RuleParser;
 
 class ValidationHelper
@@ -15,7 +15,7 @@ class ValidationHelper
     {
         [$rule, $parameters] = RuleParser::parseRule($rule);
 
-        $validator = ValidatorFactory::make([], []);
+        $validator = DataSet::getValidatorFactory()->make([], []);
 
         if (method_exists($validator, sprintf('validate%s', Str::studly($rule)))) {
             return true; //built-in rule

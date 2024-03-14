@@ -92,12 +92,16 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
 
     public static function getValidatorFactory(): Factory
     {
-        return static::$validatorFactory ?? ValidatorFactory::getFacadeRoot();
+        if (self::$validatorFactory === null) {
+            self::$validatorFactory = ValidatorFactory::getFacadeRoot();
+        }
+
+        return self::$validatorFactory;
     }
 
     public static function setValidatorFactory(Factory $validatorFactory): void
     {
-        static::$validatorFactory = $validatorFactory;
+        self::$validatorFactory = $validatorFactory;
     }
 
     /**
