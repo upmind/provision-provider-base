@@ -23,7 +23,7 @@ use Upmind\ProvisionBase\Exception\InvalidDataSetException;
  */
 abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Jsonable
 {
-    public static Factory $validatorFactory;
+    private static Factory $validatorFactory;
 
     /**
      * Input values with nested data sets expanded.
