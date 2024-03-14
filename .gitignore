@@ -2,6 +2,11 @@
 composer.lock
 vendor/
 
+# Tools
+phpunit.xml
+.phpunit.result.cache
+.phpunit.cache/
+
 # Docker
 .docker/Dockerfile
 docker-compose.yml
@@ -15,3 +20,4 @@ docker-compose.yml
 
 # System
 .DS_Store
+error_log
