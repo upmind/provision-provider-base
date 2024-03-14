@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Upmind\ProvisionBase\Laravel;
 
 use Exception;
+use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Validation\Validator as LaravelValidator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -27,9 +28,9 @@ class ValidationServiceProvider extends BaseProvider
     /**
      * Bootstrap services.
      *
-     * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function boot()
+    public function boot(): void
     {
         $this->bootCustomRules();
 
@@ -55,10 +56,17 @@ class ValidationServiceProvider extends BaseProvider
         $this->bootCertificatePemRule();
     }
 
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
     protected function bootDataSetValidatorResolver(): void
     {
-        /** @var \Illuminate\Validation\Factory $factory */
-        $factory = Validator::getFacadeRoot();
+        /** @var \Illuminate\Contracts\Validation\Factory $factory */
+        $factory = $this->app->make(Factory::class);
+
+        $this->app->resolving(DataSetValidator::class, function (DataSetValidator $validator) use ($factory) {
+            $validator->setValidatorFactory($factory);
+        });
 
         // Set Validator Factory for our DataSet classes.
         DataSet::setValidatorFactory($factory);
