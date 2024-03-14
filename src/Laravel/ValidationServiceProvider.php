@@ -24,6 +24,8 @@ use Upmind\ProvisionBase\Provider\DataSet\Validator as DataSetValidator;
  */
 class ValidationServiceProvider extends BaseProvider
 {
+    private ?Factory $validatorFactory = null;
+
     /**
      * Bootstrap services.
      *
@@ -60,8 +62,7 @@ class ValidationServiceProvider extends BaseProvider
      */
     protected function bootDataSetValidatorResolver(): void
     {
-        /** @var \Illuminate\Contracts\Validation\Factory $factory */
-        $factory = $this->app->make(Factory::class);
+        $factory = $this->getValidatorFactory();
 
         // Set Validator Factory for our DataSet classes.
         DataSet::setValidatorFactory($factory);
@@ -155,8 +156,7 @@ class ValidationServiceProvider extends BaseProvider
                 //validate phone number for the input country code
                 $countryCode = Arr::get($validator->getData(), $parameters[0]);
 
-                /** @var \Illuminate\Contracts\Validation\Factory $factory */
-                $factory = $this->app->make(Factory::class);
+                $factory = $this->getValidatorFactory();
 
                 $extraValidator = $factory->make([
                     'phone' => $value
@@ -341,5 +341,17 @@ class ValidationServiceProvider extends BaseProvider
         }
 
         return false;
+    }
+
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    private function getValidatorFactory(): Factory
+    {
+        if ($this->validatorFactory === null) {
+            $this->validatorFactory = $this->app->make(Factory::class);
+        }
+
+        return $this->validatorFactory;
     }
 }
