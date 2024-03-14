@@ -7,6 +7,7 @@ namespace Upmind\ProvisionBase\Provider\DataSet;
 use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Support\Facades\Validator as ValidatorFactory;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
@@ -22,6 +23,8 @@ use Upmind\ProvisionBase\Exception\InvalidDataSetException;
  */
 abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Jsonable
 {
+    public static Factory $validatorFactory;
+
     /**
      * Input values with nested data sets expanded.
      *
@@ -56,7 +59,7 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
     protected $isValidated = false;
 
     /**
-     * Whether or not auto-validation is enabled for this data set instance.
+     * Whether auto-validation is enabled for this data set instance.
      *
      * @var bool
      */
@@ -85,6 +88,16 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
         $this->validationEnabled = $autoValidation;
 
         $this->fillNestedDataSets(); // cast values to data sets if appropriate
+    }
+
+    public static function getValidatorFactory(): Factory
+    {
+        return static::$validatorFactory ?? ValidatorFactory::getFacadeRoot();
+    }
+
+    public static function setValidatorFactory(Factory $validatorFactory): void
+    {
+        static::$validatorFactory = $validatorFactory;
     }
 
     /**
@@ -286,7 +299,7 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
      */
     protected function makeValidator($data, Rules $rules): Validator
     {
-        return ValidatorFactory::make($data, $rules->expand());
+        return self::getValidatorFactory()->make($data, $rules->expand());
     }
 
     /**
