@@ -64,10 +64,6 @@ class ValidationServiceProvider extends BaseProvider
         /** @var \Illuminate\Contracts\Validation\Factory $factory */
         $factory = $this->app->make(Factory::class);
 
-        $this->app->resolving(DataSetValidator::class, function (DataSetValidator $validator) use ($factory) {
-            $validator->setValidatorFactory($factory);
-        });
-
         // Set Validator Factory for our DataSet classes.
         DataSet::setValidatorFactory($factory);
 
