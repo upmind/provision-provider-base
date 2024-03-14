@@ -76,37 +76,45 @@ class ValidationServiceProvider extends BaseProvider
         });
     }
 
-    protected function bootAttributeQueryRule()
+    protected function bootAttributeQueryRule(): void
     {
-        Validator::extend(
-            AttributeQueryValidator::RULE_NAME,
-            'Upmind\ProvisionBase\Laravel\AttributeQueryValidator@validateAttributeQuery'
-        );
+        $this->app->resolving(Factory::class, function (Factory $factory) {
+            $factory->extend(
+                AttributeQueryValidator::RULE_NAME,
+                'Upmind\ProvisionBase\Laravel\AttributeQueryValidator@validateAttributeQuery'
+            );
+        });
     }
 
-    protected function bootAlphaScoreRule()
+    protected function bootAlphaScoreRule(): void
     {
         $extension = function ($attribute, $value, $parameters, $validator) {
             return !preg_match('/[^\w]/', strval($value));
         };
-        $message = 'This value must only contain letters, numbers and underscores.';
 
-        Validator::extend('alpha_score', $extension, $message);
-        Validator::extend('alpha-score', $extension, $message);
+        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension) {
+            $message = 'This value must only contain letters, numbers and underscores.';
+
+            $factory->extend('alpha_score', $extension, $message);
+            $factory->extend('alpha-score', $extension, $message);
+        });
     }
 
-    protected function bootAlphaDashDotRule()
+    protected function bootAlphaDashDotRule(): void
     {
         $extension = function ($attribute, $value, $parameters, $validator) {
             return !preg_match('/[^\w\-\.]/', strval($value));
         };
-        $message = 'This value must only contain letters, numbers, dashes, underscores and periods.';
 
-        Validator::extend('alpha_dash_dot', $extension, $message);
-        Validator::extend('alpha-dash-dot', $extension, $message);
+        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension,) {
+            $message = 'This value must only contain letters, numbers, dashes, underscores and periods.';
+
+            $factory->extend('alpha_dash_dot', $extension, $message);
+            $factory->extend('alpha-dash-dot', $extension, $message);
+        });
     }
 
-    protected function bootDomainNameRule()
+    protected function bootDomainNameRule(): void
     {
         $extension = function ($attribute, $value, $parameters, $validator) {
             /** @link https://stackoverflow.com/a/4694816/4741456 */
@@ -115,10 +123,14 @@ class ValidationServiceProvider extends BaseProvider
                 && preg_match('/^.{3,253}$/', $value) //overall length check
                 && preg_match('/^[^\.]{1,63}(\.[^\.]{1,63})*$/', $value); //length of each label
         };
-        $message = 'This is not a valid domain name.';
 
-        Validator::extend('domain-name', $extension, $message);
-        Validator::extend('domain_name', $extension, $message);
+
+        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension,) {
+            $message = 'This is not a valid domain name.';
+
+            $factory->extend('alpha_dash_dot', $extension, $message);
+            $factory->extend('alpha-dash-dot', $extension, $message);
+        });
     }
 
     /**
@@ -129,7 +141,7 @@ class ValidationServiceProvider extends BaseProvider
      * which it is possible to parse out the international dialling code from the
      * rest of the phone number.
      */
-    protected function bootInternationalPhoneRule()
+    protected function bootInternationalPhoneRule(): void
     {
         /** @param LaravelValidator $validator */
         $extension = function ($attribute, $value, $parameters, $validator) {
@@ -185,12 +197,12 @@ class ValidationServiceProvider extends BaseProvider
             return true;
         };
 
-        $message = 'This is not a valid international phone number';
-
-        Validator::extend('international_phone', $extension, $message);
+        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension) {
+            $factory->extend('international_phone', $extension, 'This is not a valid international phone number');
+        });
     }
 
-    protected function bootCountryCodeRule()
+    protected function bootCountryCodeRule(): void
     {
         $extension = function ($attribute, $value, $parameters, $validator) {
             try {
@@ -223,24 +235,29 @@ class ValidationServiceProvider extends BaseProvider
                 return false;
             }
         };
-        $message = 'This is not a valid country code.';
 
-        Validator::extend('country_code', $extension, $message);
+        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension) {
+            $factory->extend('country_code', $extension, 'This is not a valid country code.');
+        });
     }
 
     protected function bootStepRule(): void
     {
-        Validator::extend('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@validateStep');
-        Validator::replacer('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@replaceStep');
+        $this->app->resolving(Factory::class, function (Factory $factory) {
+            $factory->extend('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@validateStep');
+            $factory->replacer('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@replaceStep');
+        });
     }
 
     protected function bootCertificatePemRule(): void
     {
-        Validator::extend(
-            'certificate_pem',
-            CertificatePem::class,
-            'The :attribute must be a certificate in PEM format'
-        );
+        $this->app->resolving(Factory::class, function (Factory $factory) {
+            $factory->extend(
+                'certificate_pem',
+                CertificatePem::class,
+                'The :attribute must be a certificate in PEM format'
+            );
+        });
     }
 
     /**
