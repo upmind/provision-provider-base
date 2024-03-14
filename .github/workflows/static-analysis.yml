@@ -12,6 +12,7 @@ on:
     branches:
       - 'main'
       - 'v3.7-dev'
+      - 'v5-dev'
 
 # Jobs/Pipelines
 jobs:
@@ -44,7 +45,7 @@ jobs:
           restore-keys: "${{ runner.os }}-php-${{ matrix.php}}-composer-"
 
       - name: "Install Composer dependencies"
-        run: composer install --prefer-dist
+        run: composer install --no-ansi --no-interaction --no-progress --no-scripts --prefer-dist
 
       - name: "Run PHPStan Static Analysis"
         run: phpstan analyse
