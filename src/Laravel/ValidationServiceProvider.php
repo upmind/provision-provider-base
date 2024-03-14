@@ -143,7 +143,14 @@ class ValidationServiceProvider extends BaseProvider
      */
     protected function bootInternationalPhoneRule(): void
     {
-        /** @param LaravelValidator $validator */
+        /**
+         * @param $attribute
+         * @param $value
+         * @param $parameters
+         * @param $validator
+         * @return bool
+         * @throws \Illuminate\Contracts\Container\BindingResolutionException
+         */
         $extension = function ($attribute, $value, $parameters, $validator) {
             if (!empty($parameters[0])) {
                 //validate phone number for the input country code
@@ -158,18 +165,16 @@ class ValidationServiceProvider extends BaseProvider
                     'phone' => sprintf('phone:%s', $countryCode)
                 ]);
 
-                if ($extraValidator->fails()) {
-                    if (!$this->manualCheckPhones($value)) {
-                        // manually adding an error will cause validation to fail with this specific error message
-                        $validator->errors()
-                            ->add(
-                                $attribute,
-                                $this->makeReplacements('This is not a valid :COUNTRY_CODE phone number', [
-                                    'attribute' => $attribute,
-                                    'country_code' => $countryCode,
-                                ])
-                            );
-                    }
+                if ($extraValidator->fails() && !$this->manualCheckPhones($value)) {
+                    // manually adding an error will cause validation to fail with this specific error message
+                    $validator->errors()
+                        ->add(
+                            $attribute,
+                            $this->makeReplacements('This is not a valid :COUNTRY_CODE phone number', [
+                                'attribute' => $attribute,
+                                'country_code' => $countryCode,
+                            ])
+                        );
                 }
 
                 return true;
