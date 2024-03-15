@@ -332,6 +332,7 @@ class ValidationServiceProvider extends BaseProvider
     }
 
     /**
+     * @return \Illuminate\Validation\Factory
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     private function getValidatorFactory(): Factory

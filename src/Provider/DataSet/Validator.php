@@ -65,7 +65,7 @@ class Validator extends LaravelValidator
      * Split nested rules + data under the given fieldName into an "after" validator,
      * then return a new rule set for the main validator.
      *
-     * @param  \Illuminate\Contracts\Translation\Translator  $translator
+     * @param  string $fieldName
      * @param  array  $data
      * @param  array  $rules
      * @param  array  $messages

@@ -63,7 +63,7 @@ abstract class BaseCategory implements Contract\CategoryInterface
      *
      * @param string $message A user-friendly error message
      * @param mixed[] $data JSONable data to be passed back to the System Client
-     * @param mixed[] $debugData JSONable debug data
+     * @param mixed[] $debug JSONable debug data
      * @param Throwable $previous Previous exception, if any
      *
      * @throws ProvisionFunctionError

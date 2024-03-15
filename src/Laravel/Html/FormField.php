@@ -334,7 +334,7 @@ class FormField extends FormElement
     /**
      * Determine whether the given field type needs an array of options.
      *
-     * @param string
+     * @param string $type
      *
      * @return bool
      */

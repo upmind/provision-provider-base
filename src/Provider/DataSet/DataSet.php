@@ -70,7 +70,7 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
      *
      * @link https://laravel.com/docs/5.8/validation#available-validation-rules
      *
-     * @return Rules<array<string[]>>
+     * @return Rules
      */
     abstract public static function rules(): Rules;
 
@@ -367,7 +367,7 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
     /**
      * Cast the given value to the given DataSet.
      *
-     * @param array|DataSet $value Raw data
+     * @param array|DataSet $data Raw data
      * @param string $dataSetClass DataSet class
      *
      * @return DataSet

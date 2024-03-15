@@ -121,7 +121,7 @@ class Helper
      *
      * @param string[] $parts Fragments of a URL as returned from SPL function parse_url(), which can include any or all
      * of: `scheme`, `user`, `pass`, `host`, `port`, `path`, `query`, `fragment`.
-     * @param string[] $partWhitelist List of parts to use when building the URL (all by default)
+     * @param string[] $whitelist List of parts to use when building the URL (all by default)
      *
      * @link https://www.php.net/manual/en/function.parse-url.php#refsect1-function.parse-url-returnvalues
      *

@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use RuntimeException;
 use Upmind\ProvisionBase\Exception\InvalidProviderJob;
 use Upmind\ProvisionBase\Provider\Contract\ProviderInterface;
+use Upmind\ProvisionBase\Provider\DataSet\DataSet;
 use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
 
 /**

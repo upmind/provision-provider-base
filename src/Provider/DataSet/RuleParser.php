@@ -30,7 +30,7 @@ class RuleParser
      * Parse the given data set rules, expanding nested references to other data
      * sets.
      *
-     * @param array<string[]> $rules Raw data set rules
+     * @param array<string[]> $rawRules Raw data set rules
      * @param string|null $parentField Name/key of the parent field, if any
      *
      * @return array<string[]> Fully expanded data set rules

@@ -145,7 +145,7 @@ final class Rules implements ArrayAccess, JsonSerializable, Arrayable, Jsonable
     }
 
     /**
-     * @return Form<FormElement>
+     * @return Form
      */
     public function toHtmlForm(): Form
     {
