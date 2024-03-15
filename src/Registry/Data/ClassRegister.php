@@ -127,7 +127,7 @@ abstract class ClassRegister implements RegisterInterface
     }
 
     /**
-     * @return Collection<ClassRegister>|ClassRegister[]
+     * @return Collection<array-key, ClassRegister>
      */
     final public function getChildren(): Collection
     {

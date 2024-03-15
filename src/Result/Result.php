@@ -46,8 +46,8 @@ class Result implements ResultInterface
     /**
      * @param string $status Status of the result (ok or error)
      * @param string|null $message User-friendly message to explain the status
-     * @param array|null [$data] Result data
-     * @param array|null [$debug] Debug data
+     * @param array|null $data Result data
+     * @param array|null $debug Debug data
      */
     public function __construct(string $status, ?string $message = null, ?array $data = null, ?array $debug = null)
     {
@@ -63,7 +63,7 @@ class Result implements ResultInterface
      * Create a Result instance for an encountered error
      *
      * @param string $errorMessage
-     * @param array|null [$errorData]
+     * @param array|null $errorData
      * @param string|null $error_id
      *
      * @return static

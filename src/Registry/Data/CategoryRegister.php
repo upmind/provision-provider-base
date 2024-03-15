@@ -68,7 +68,7 @@ class CategoryRegister extends ClassRegister
     /**
      * Return the child provider registers.
      *
-     * @return Collection<ProviderRegister>|ProviderRegister[]
+     * @return Collection<array-key, ProviderRegister>
      */
     public function getProviders(): Collection
     {
@@ -91,7 +91,7 @@ class CategoryRegister extends ClassRegister
      * @param string $identifier Provider unique identifier
      * @param string $class Provider fully-namespaced class name
      *
-     * @return self $this
+     * @return ProviderRegister
      */
     public function addProvider(string $identifier, string $class): ProviderRegister
     {
@@ -113,7 +113,7 @@ class CategoryRegister extends ClassRegister
     /**
      * Get this category's provision functions.
      *
-     * @return Collection<FunctionRegister>|FunctionRegister[]
+     * @return Collection<array-key, FunctionRegister>
      */
     public function getFunctions(): Collection
     {

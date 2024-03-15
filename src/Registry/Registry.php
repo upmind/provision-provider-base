@@ -226,7 +226,7 @@ class Registry
     /**
      * Get all categories from the registry.
      *
-     * @return Collection<CategoryRegister>|CategoryRegister[]
+     * @return Collection<array-key, CategoryRegister>
      */
     public function getCategories(): Collection
     {
@@ -258,7 +258,7 @@ class Registry
     /**
      * Get all buffered register calls.
      *
-     * @return Collection<BufferedRegister>|BufferedRegister[]
+     * @return Collection<array-key, BufferedRegister>
      */
     public function getBuffer(): Collection
     {

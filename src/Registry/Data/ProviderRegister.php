@@ -93,7 +93,7 @@ class ProviderRegister extends ClassRegister
     /**
      * Return the available provision functions.
      *
-     * @return Collection<FunctionRegister>|FunctionRegister[]
+     * @return Collection<array-key, FunctionRegister>
      */
     public function getFunctions(): Collection
     {

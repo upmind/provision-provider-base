@@ -200,8 +200,8 @@ class Response implements ApiResponse
      *
      * Optionally returns the given index of the array.
      *
-     * @param string [$index] The index of the array to return
-     * @param mixed [$default] The default value to return if $index is invalid
+     * @param string $index The index of the array to return
+     * @param mixed $default The default value to return if $index is invalid
      *
      * @return array|mixed
      */
