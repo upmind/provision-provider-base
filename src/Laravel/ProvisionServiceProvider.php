@@ -95,7 +95,7 @@ class ProvisionServiceProvider extends BaseProvider
         // Attempt to set the Registry instance from cache
         if ($cachedRegistry = $cache->get(self::REGISTRY_CACHE_KEY)) {
             try {
-                $registry = unserialize($cachedRegistry, ['allowed_classes' => [Registry::class]]);
+                $registry = unserialize($cachedRegistry, ['allowed_classes' => true]);
             } catch (Throwable) {
                 $registry = null;
 
