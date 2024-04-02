@@ -40,8 +40,6 @@ class ValidationServiceProvider extends BaseProvider
 
     protected function bootCustomRules(): void
     {
-        $this->bootAttributeQueryRule();
-
         $this->bootAlphaScoreRule();
 
         $this->bootAlphaDashDotRule();
@@ -73,16 +71,6 @@ class ValidationServiceProvider extends BaseProvider
             }
 
             return new LaravelValidator($translator, $data, $rules, $messages, $customAttributes);
-        });
-    }
-
-    protected function bootAttributeQueryRule(): void
-    {
-        $this->app->resolving(Factory::class, function (Factory $factory) {
-            $factory->extend(
-                AttributeQueryValidator::RULE_NAME,
-                'Upmind\ProvisionBase\Laravel\AttributeQueryValidator@validateAttributeQuery'
-            );
         });
     }
 
