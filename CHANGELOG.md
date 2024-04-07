@@ -7,6 +7,7 @@ All notable changes to the package will be documented in this file.
 - Update FormField::typeShouldBePassword() to match private key and passphrase
   field names, e.g., `client_private_key` and `key_passphrase`
   - Text fields with these names now render as `input_password`
+- Remove Guzzle stack history & request debug data (which use history)
 
 ## v4.3.4 - 2025-12-22
 
