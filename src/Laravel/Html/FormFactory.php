@@ -102,7 +102,7 @@ class FormFactory
             if (Str::startsWith($rule, ['min:', 'max:'])) {
                 [$attribute, $value] = explode(':', $rule, 2);
 
-                $attributes[$attribute] = (int) $value; //convert string to integer|float
+                $attributes[$attribute] = is_float($value) || is_int($value) ? $value : (int) $value; //convert string to integer|float
             }
 
             //determine field type from rule
