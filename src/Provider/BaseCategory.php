@@ -120,10 +120,8 @@ abstract class BaseCategory implements Contract\CategoryInterface
     /**
      * Get a guzzle handler stack which logs requests/responses via the provider's
      * injected PSR-3 logger.
-     *
-     * @param bool $debugLog @deprecated To be removed in a future version
      */
-    protected function getGuzzleHandlerStack(bool $debugLog = false): HandlerStack
+    protected function getGuzzleHandlerStack(): HandlerStack
     {
         $stack = HandlerStack::create();
 
