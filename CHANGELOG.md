@@ -2,7 +2,7 @@
 
 All notable changes to the package will be documented in this file.
 
-## v4.2.1 - 2025-01-21
+## v4.2.2 - 2025-01-21
 
 - Add `XK` (Kosovo) to the list of reserved countries in the `country_code` validation rule
 
