@@ -202,6 +202,7 @@ class ValidationServiceProvider extends BaseProvider
                     'UK',
                     'YU',
                     'ZR',
+                    'XK', // Kosovo
                 ];
                 if (in_array(strtoupper($value), $reservedCodes)) {
                     return true;
