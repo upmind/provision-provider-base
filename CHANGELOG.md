@@ -2,6 +2,10 @@
 
 All notable changes to the package will be documented in this file.
 
+## v4.2.1 - 2025-01-21
+
+- Add `XK` (Kosovo) to the list of reserved countries in the `country_code` validation rule
+
 ## v4.2.1 - 2024-10-31
 
 - Fix `certificate_pem` validation rule to also work with 76 character lines of base64
@@ -27,6 +31,10 @@ All notable changes to the package will be documented in this file.
 - Remove Provider Storage filesystem adapter + related code
 - Remove deprecated HtmlField + related code
 - Deprecate AttributeQuery classes
+
+## v3.7.3 - 2025-01-21
+
+- Add `XK` (Kosovo) to the list of reserved countries in the `country_code` validation rule
 
 ## v3.7.2 - 2024-10-31
 
