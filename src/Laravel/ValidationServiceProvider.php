@@ -9,7 +9,6 @@ use Illuminate\Validation\Validator as LaravelValidator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\ServiceProvider as BaseProvider;
 use Illuminate\Support\Facades\Validator;
 use League\ISO3166\ISO3166;
