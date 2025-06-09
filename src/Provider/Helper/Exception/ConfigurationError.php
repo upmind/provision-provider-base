@@ -8,7 +8,7 @@ use Upmind\ProvisionBase\Provider\Helper\Exception\Contract\ProviderError;
 
 class ConfigurationError extends \RuntimeException implements ProviderError
 {
-    final public function __construct(string $message, int $code = 0, \Throwable $previous = null)
+    final public function __construct(string $message, int $code = 0, ?\Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
