@@ -14,7 +14,7 @@ interface HasSystemInfo
     /**
      * Sets the SystemInfo instance.
      */
-    public function setSystemInfo(SystemInfo $logger): void;
+    public function setSystemInfo(SystemInfo $systemInfo): void;
 
     /**
      * Get SystemInfo instance containing metadata about the system/runtime environment.
