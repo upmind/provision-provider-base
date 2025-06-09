@@ -13,7 +13,7 @@ use Upmind\ProvisionBase\Provider\DataSet\AboutData;
 /**
  * Register for a provision category.
  */
-final class CategoryRegister extends ClassRegister
+class CategoryRegister extends ClassRegister
 {
     /**
      * About data.

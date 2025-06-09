@@ -7,7 +7,7 @@ namespace Upmind\ProvisionBase\Registry\Data;
 /**
  * Register for a function.
  */
-final class FunctionRegister implements RegisterInterface
+class FunctionRegister implements RegisterInterface
 {
     /**
      * Function name.

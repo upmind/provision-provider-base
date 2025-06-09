@@ -13,7 +13,7 @@ use Upmind\ProvisionBase\Provider\DataSet\Rules;
 /**
  * Register for a DataSet.
  */
-final class DataSetRegister implements RegisterInterface
+class DataSetRegister implements RegisterInterface
 {
     /**
      * DataSet is a parameter type.

@@ -88,7 +88,7 @@ abstract class ClassRegister implements RegisterInterface
     /**
      * Return the class of this register.
      */
-    final public function getClass(): string
+    public function getClass(): string
     {
         return $this->class;
     }

@@ -12,7 +12,7 @@ use Upmind\ProvisionBase\Provider\DataSet\AboutData;
 /**
  * Register for a provision provider.
  */
-final class ProviderRegister extends ClassRegister
+class ProviderRegister extends ClassRegister
 {
     /**
      * About data.
