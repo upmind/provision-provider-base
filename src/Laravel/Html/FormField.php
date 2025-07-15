@@ -149,14 +149,14 @@ class FormField extends FormElement
     /**
      * Determine whether int or float should be used for the numeric data type.
      */
-    protected function determineNumericDataType(array $validationRules, array $attributes): string
+    protected function determineNumericDataType(array $validationRules, ?array $attributes): string
     {
         //int or float
         if (RuleParser::containsAnyRule($validationRules, ['integer', 'int'])) {
             return 'int';
         }
 
-        $step = Arr::get($attributes, 'step')
+        $step = Arr::get($attributes ?? [], 'step')
             ?: Arr::first(RuleParser::getRuleArguments($validationRules, 'step:') ?? []);
 
         if ($step && !is_float($step)) {
