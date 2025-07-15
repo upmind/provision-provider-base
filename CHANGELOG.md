@@ -2,9 +2,15 @@
 
 All notable changes to the package will be documented in this file.
 
-## v4.2.3 - 2025-07-15
+## v4.3.1 - 2025-07-15
 
 - Update FormField::determineNumericDataType() to accept null value for attributes to avoid type error
+
+## v4.3.0 - 2025-06-10
+
+- Broaden PHP version support
+- Broaden Laravel version support
+- Add PHPUnit tests; tweaks to improve testability
 
 ## v4.2.2 - 2025-01-21
 
