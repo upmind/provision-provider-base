@@ -2,6 +2,10 @@
 
 All notable changes to the package will be documented in this file.
 
+## v3.7.4 - 2025-07-15
+
+- Update FormField::determineNumericDataType() to accept null value for attributes to avoid type error
+
 ## v3.7.3 - 2025-01-21
 
 - Add `XK` (Kosovo) to the list of reserved countries in the `country_code` validation rule
