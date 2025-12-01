@@ -281,7 +281,7 @@ class FormField extends FormElement
             foreach ($options as $value => $label) {
                 $return[] = [
                     'label' => $label,
-                    'value' => $value,
+                    'value' => (string)$value,
                 ];
             }
         } elseif (is_scalar(Arr::first($options))) {
@@ -289,7 +289,7 @@ class FormField extends FormElement
             $return = array_map(function ($value) {
                 return [
                     'label' => ucwords(str_replace(['-', '_'], ' ', $value)),
-                    'value' => $value,
+                    'value' => (string)$value,
                 ];
             }, $options);
         } else {
