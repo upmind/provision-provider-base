@@ -223,7 +223,7 @@ abstract class FormElement
      */
     public function validationRules(): array
     {
-        return $this->validationRules;
+        return $this->validationRules ?? [];
     }
 
     /**
