@@ -380,8 +380,13 @@ class RuleParser
         return $returnItems;
     }
 
-    protected static function getValidator(): LaravelValidator
+    public static function getValidator(): LaravelValidator
     {
         return self::$validator = (self::$validator ?? Validator::make([], []));
+    }
+
+    public static function setValidator(LaravelValidator $validator): void
+    {
+        self::$validator = $validator;
     }
 }
