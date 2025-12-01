@@ -2,6 +2,10 @@
 
 All notable changes to the package will be documented in this file.
 
+## v3.7.5 - 2025-12-01
+
+- Update FormField::normalizeOptions() to cast values to strings to align with TYPE_SELECT data type
+
 ## v3.7.4 - 2025-07-15
 
 - Update FormField::determineNumericDataType() to accept null value for attributes to avoid type error
