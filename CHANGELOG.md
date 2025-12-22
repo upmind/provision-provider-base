@@ -2,6 +2,10 @@
 
 All notable changes to the package will be documented in this file.
 
+## v4.3.4 - 2025-12-22
+
+- Fix FormField::determineNumericDataType() evaluation of step rule
+
 ## v4.3.3 - 2025-12-01
 
 - Fix FormElement::validationRules() return type error when property is uninitialised
