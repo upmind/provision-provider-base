@@ -159,7 +159,7 @@ class FormField extends FormElement
         $step = Arr::get($attributes ?? [], 'step')
             ?: Arr::first(RuleParser::getRuleArguments($validationRules, 'step:') ?? []);
 
-        if ($step && !is_float($step)) {
+        if ($step && !Str::contains((string)$step, '.')) {
             return 'int';
         }
 
