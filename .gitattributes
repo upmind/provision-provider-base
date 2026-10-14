@@ -1,0 +1,3 @@
+# Keep agent instructions out of the Composer dist package
+/AGENTS.md export-ignore
+/CLAUDE.md export-ignore
