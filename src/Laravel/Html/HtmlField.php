@@ -35,16 +35,6 @@ final class HtmlField
     ];
 
     /**
-     * Field types which may be used for passwords.
-     *
-     * @var string[]
-     */
-    protected const PASSWORDABLE_TYPES = [
-        self::TYPE_INPUT_TEXT,
-        self::TYPE_INPUT_PASSWORD,
-    ];
-
-    /**
      * @var string[]
      */
     protected const NUMERIC_TYPES = [
@@ -77,18 +67,6 @@ final class HtmlField
         self::TYPE_INPUT_DATE => 'string',
         self::TYPE_INPUT_DATETIME => 'string',
         self::TYPE_INPUT_TEL => 'string',
-    ];
-
-    /**
-     * Regexes to match a "password-y" name.
-     *
-     * @var string[]
-     */
-    protected const PASSWORD_NAME_REGEXES = [
-        '/password/i',
-        '/secret/i',
-        '/^key$/i',
-        '/(?:api|secret|access)[_\-]?(key|token)/i',
     ];
 
     /**
@@ -456,17 +434,7 @@ final class HtmlField
      */
     public static function typeShouldBePassword(string $name, $type): bool
     {
-        if (!in_array($type, self::PASSWORDABLE_TYPES)) {
-            return false;
-        }
-
-        foreach (self::PASSWORD_NAME_REGEXES as $pattern) {
-            if (preg_match($pattern, $name)) {
-                return true;
-            }
-        }
-
-        return false;
+        return FormField::typeShouldBePassword($name, $type);
     }
 
     /**

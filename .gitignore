@@ -10,5 +10,8 @@ docker-compose.yml
 .vscode/
 .idea/
 
+# Tests
+.phpunit.result.cache
+
 # System
 .DS_Store

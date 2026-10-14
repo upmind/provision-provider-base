@@ -2,6 +2,14 @@
 
 All notable changes to the package will be documented in this file.
 
+## Unreleased
+
+- Update FormField::typeShouldBePassword() to match private key and passphrase
+  field names, e.g., `client_private_key` and `key_passphrase`
+  - Text fields with these names now render as `input_password`
+- Update HtmlField::typeShouldBePassword() to use FormField::typeShouldBePassword()
+- Add PHPUnit tests
+
 ## v3.7.7 - 2025-12-22
 
 - Fix FormField::determineNumericDataType() evaluation of step rule
