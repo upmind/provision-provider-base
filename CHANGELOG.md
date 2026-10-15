@@ -30,6 +30,8 @@ All notable changes to the package will be documented in this file.
   - `fromJson()` throws `JsonException` or `InvalidArgumentException` for invalid input
 - Fix `ProviderJob::execute()` for provision functions that return an array, and stop it
   hiding unexpected exceptions
+- Fix `international_phone` without a country argument accepting any value that starts with `+`
+- Update `international_phone` to fail as a rule, so `Validator::failed()` reports it
 
 ## v4.3.4 - 2025-12-22
 
