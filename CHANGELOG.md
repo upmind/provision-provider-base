@@ -22,6 +22,10 @@ All notable changes to the package will be documented in this file.
 - Add `SupportedRules`; `RuleParser::expand()` throws `UnsupportedValidationRule` for any rule outside the allowlist
   - Block rules which query a database, do DNS lookups, read the authenticated user or inspect uploaded files
 - Add `contains_lower`, `contains_upper` and `contains_number` validation rules
+- Remove the `propaganistas/laravel-phone` dependency; `international_phone` uses
+  `giggsey/libphonenumber-for-php-lite` directly
+  - This package no longer registers the `phone` rule or the `phone()` helper. Require
+    `propaganistas/laravel-phone` directly if you use them
 
 ## v4.3.4 - 2025-12-22
 
