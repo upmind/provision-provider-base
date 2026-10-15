@@ -12,6 +12,7 @@ use Upmind\ProvisionBase\Exception\InvalidDataSetException;
 use Upmind\ProvisionBase\Exception\InvalidFunctionParameterDataException;
 use Upmind\ProvisionBase\Exception\InvalidFunctionReturnDataException;
 use Upmind\ProvisionBase\Exception\InvalidProviderJob;
+use Upmind\ProvisionBase\Exception\ProviderConnectionError;
 use Upmind\ProvisionBase\Exception\ProvisionFunctionError;
 use Upmind\ProvisionBase\Provider\DataSet\DataSet;
 use Upmind\ProvisionBase\Provider\DataSet\ResultData;
@@ -215,6 +216,10 @@ class ProviderJob
             } catch (ProvisionFunctionError $e) {
                 throw $e;
             } catch (Exception $e) {
+                if ($connectionError = ConnectionErrorClassifier::find($e)) {
+                    throw ProviderConnectionError::fromConnectionError($e, $connectionError);
+                }
+
                 throw new ProvisionFunctionError('Internal provision provider error', (int)$e->getCode(), $e);
             } catch (Error $e) {
                 throw new CriticalProvisionProviderError('Critical provision provider error', (int)$e->getCode(), $e);
