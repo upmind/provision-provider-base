@@ -1,0 +1,21 @@
+{
+    "status": "error",
+    "message": "Critical provider error encountered",
+    "data": null,
+    "debug": {
+        "provider_exception": {
+            "type": "Illuminate\\Validation\\ValidationException",
+            "message": "Name is required",
+            "code": 0,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": {
+                "name": [
+                    "Name is required"
+                ]
+            },
+            "trace": []
+        },
+        "message": "Encountered exception: Illuminate\\Validation\\ValidationException"
+    }
+}

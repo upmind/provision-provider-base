@@ -15,6 +15,26 @@ All notable changes to the package will be documented in this file.
 - Update FormField::typeShouldBePassword() to match private key and passphrase
   field names, e.g., `client_private_key` and `key_passphrase`
   - Text fields with these names now render as `input_password`
+- Collapse `Result` and `ProviderResult` into one immutable, final `Result` DTO
+  - Remove `ProviderResult` and `ResultInterface`; move the status constants to `Result`
+  - The `Result` constructor no longer normalises values, and throws on an invalid status
+  - Replace the `with*()` mutators with `ResultFactory` methods of the same name
+    that return a new `Result`; `setErrorId()` becomes `withErrorId()`
+  - Remove `setException()`
+  - Add `Result::withDebugValue()`
+  - Normalise every result with the former `ProviderResult` rules and default messages
+- Add `ResultFactory` to create and normalise results
+  - Replace `createErrorResult()`, `createFromArray()`, `createFromJson()`,
+    `createFromException()`, `createFromProviderOutput()` and
+    `createFromProviderException()` with `error()`, `fromArray()`, `fromJson()`,
+    `fromException()`, `fromProviderOutput()` and `fromProviderException()`
+  - Replace `new ProviderResult(...)` with `ResultFactory::make()`, `ok()` or `error()`
+  - Move `formatException()` and `formatProviderJob()` to `ResultFactory`
+  - `fromJson()` throws `JsonException` for invalid JSON and `InvalidArgumentException`
+    for JSON that is not an object
+  - Debug `provider_output` is the string `null` when JSON encoding fails, not `false`
+- Update `ProviderJob::execute()`, `ProviderJob::getResult()`, `ResultData::toProvisionResult()`
+  and `ProvisionFunctionError::toProvisionResult()` to return `Result`
 
 ## v4.3.4 - 2025-12-22
 

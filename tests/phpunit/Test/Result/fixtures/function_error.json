@@ -1,0 +1,12 @@
+{
+    "status": "error",
+    "message": "Provider said no",
+    "data": {
+        "reason": "x"
+    },
+    "debug": {
+        "response": {
+            "code": 500
+        }
+    }
+}

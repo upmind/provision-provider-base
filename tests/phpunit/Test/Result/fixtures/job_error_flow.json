@@ -1,0 +1,42 @@
+{
+    "status": "error",
+    "message": "The given provision function parameters were invalid",
+    "data": {
+        "validation_errors": {
+            "parameters.name": [
+                "Name is required"
+            ]
+        }
+    },
+    "debug": {
+        "provider_output": "null",
+        "provider_exception": {
+            "type": "Illuminate\\Validation\\ValidationException",
+            "message": "Name is required",
+            "code": 0,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": {
+                "name": [
+                    "Name is required"
+                ]
+            },
+            "trace": []
+        },
+        "message": "Encountered exception: Illuminate\\Validation\\ValidationException",
+        "provider_job": {
+            "provider": "Upmind\\ProvisionBase\\TestStub\\TestProvider",
+            "function": "create"
+        },
+        "provider_destructor_exception": {
+            "type": "RuntimeException",
+            "message": "Destructor failure",
+            "code": 0,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": null,
+            "trace": []
+        },
+        "execution_time": 0
+    }
+}

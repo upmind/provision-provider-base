@@ -1,0 +1,8 @@
+{
+    "status": "error",
+    "message": "Error message",
+    "data": {
+        "0": "error_data"
+    },
+    "debug": null
+}
