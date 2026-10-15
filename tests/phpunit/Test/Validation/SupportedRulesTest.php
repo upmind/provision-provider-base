@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Upmind\ProvisionBase\Test\Validation;
 
+use Illuminate\Translation\ArrayLoader;
+use Illuminate\Translation\Translator;
+use Illuminate\Validation\Factory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Upmind\ProvisionBase\Exception\UnsupportedValidationRule;
@@ -13,6 +16,17 @@ use Upmind\ProvisionBase\Provider\DataSet\RuleParser;
 
 class SupportedRulesTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        // RuleParser asks the validator which strings are rules.
+        DataSet::setValidatorFactory(new Factory(new Translator(new ArrayLoader(), 'en')));
+    }
+
+    protected function tearDown(): void
+    {
+        DataSet::setValidatorFactory(null);
+    }
+
     public function testEverySupportedRuleHasCases(): void
     {
         $rules = SupportedRules::RULES;
