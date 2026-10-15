@@ -51,6 +51,8 @@ class FormField extends FormElement
         '/secret/i',
         '/^key$/i',
         '/(?:api|secret|access)[_\-]?(key|token)/i',
+        '/private[_\-]?key/i',
+        '/passphrase/i',
     ];
 
     /**

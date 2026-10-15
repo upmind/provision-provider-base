@@ -2,6 +2,12 @@
 
 All notable changes to the package will be documented in this file.
 
+## Unreleased
+
+- Update FormField::typeShouldBePassword() to match private key and passphrase
+  field names, e.g., `client_private_key` and `key_passphrase`
+  - Text fields with these names now render as `input_password`
+
 ## v4.3.4 - 2025-12-22
 
 - Fix FormField::determineNumericDataType() evaluation of step rule
