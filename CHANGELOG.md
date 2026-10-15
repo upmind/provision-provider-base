@@ -15,6 +15,9 @@ All notable changes to the package will be documented in this file.
 - Update FormField::typeShouldBePassword() to match private key and passphrase
   field names, e.g., `client_private_key` and `key_passphrase`
   - Text fields with these names now render as `input_password`
+- Add `CategoryRegisterInterface` and `ProviderRegisterInterface`
+  - `Registry`, `Provider`, `FunctionRegister` and console commands now type hint these
+    interfaces instead of the concrete register classes
 
 ## v4.3.4 - 2025-12-22
 

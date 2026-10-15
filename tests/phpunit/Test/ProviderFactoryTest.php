@@ -10,8 +10,8 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Log\LoggerInterface;
 use Upmind\ProvisionBase\Provider\DataSet\SystemInfo;
 use Upmind\ProvisionBase\ProviderFactory;
-use Upmind\ProvisionBase\Registry\Data\CategoryRegister;
-use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
+use Upmind\ProvisionBase\Registry\Data\Contract\CategoryRegisterInterface;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
 use Upmind\ProvisionBase\Registry\Registry;
 use Upmind\ProvisionBase\TestStub\TestDataSet;
 use Upmind\ProvisionBase\TestStub\TestProvider;
@@ -61,8 +61,8 @@ class ProviderFactoryTest extends TestCase
     public function testCreate(): void
     {
         // Set up
-        $category = $this->createMock(CategoryRegister::class);
-        $provider = $this->createMock(ProviderRegister::class);
+        $category = $this->createMock(CategoryRegisterInterface::class);
+        $provider = $this->createMock(ProviderRegisterInterface::class);
         $dataSet = new TestDataSet([]);
 
         $this->registry->expects(self::once())->method('getCategory')->willReturn($category);

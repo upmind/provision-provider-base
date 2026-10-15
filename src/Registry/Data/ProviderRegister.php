@@ -8,11 +8,13 @@ use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use Upmind\ProvisionBase\Provider\Contract\ProviderInterface;
 use Upmind\ProvisionBase\Provider\DataSet\AboutData;
+use Upmind\ProvisionBase\Registry\Data\Contract\CategoryRegisterInterface;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
 
 /**
  * Register for a provision provider.
  */
-class ProviderRegister extends ClassRegister
+class ProviderRegister extends ClassRegister implements ProviderRegisterInterface
 {
     /**
      * About data.
@@ -85,7 +87,7 @@ class ProviderRegister extends ClassRegister
     /**
      * Return the parent category register.
      */
-    public function getCategory(): CategoryRegister
+    public function getCategory(): CategoryRegisterInterface
     {
         return $this->getParent();
     }
