@@ -112,12 +112,11 @@ class ValidationServiceProvider extends BaseProvider
                 && preg_match('/^[^\.]{1,63}(\.[^\.]{1,63})*$/', $value); //length of each label
         };
 
-
-        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension,) {
+        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension) {
             $message = 'This is not a valid domain name.';
 
-            $factory->extend('alpha_dash_dot', $extension, $message);
-            $factory->extend('alpha-dash-dot', $extension, $message);
+            $factory->extend('domain-name', $extension, $message);
+            $factory->extend('domain_name', $extension, $message);
         });
     }
 
