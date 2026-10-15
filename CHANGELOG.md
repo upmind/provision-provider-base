@@ -21,6 +21,7 @@ All notable changes to the package will be documented in this file.
 - Add a validation conformance suite in `tests/conformance`: one JSON case file per supported rule
 - Add `SupportedRules`; `RuleParser::expand()` throws `UnsupportedValidationRule` for any rule outside the allowlist
   - Block rules which query a database, do DNS lookups, read the authenticated user or inspect uploaded files
+- Add `contains_lower`, `contains_upper` and `contains_number` validation rules
 
 ## v4.3.4 - 2025-12-22
 

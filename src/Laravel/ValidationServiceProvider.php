@@ -53,6 +53,8 @@ class ValidationServiceProvider extends BaseProvider
         $this->bootStepRule();
 
         $this->bootCertificatePemRule();
+
+        $this->bootContainsRules();
     }
 
     /**
@@ -237,6 +239,28 @@ class ValidationServiceProvider extends BaseProvider
 
         $factory->extend('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@validateStep');
         $factory->replacer('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@replaceStep');
+    }
+
+    /**
+     * Provides the rules `contains_lower`, `contains_upper` and `contains_number`.
+     * Each passes if a string value contains at least one character of the class.
+     * The character classes match the Laravel Password rule.
+     */
+    protected function bootContainsRules(): void
+    {
+        $factory = $this->getValidatorFactory();
+
+        $rules = [
+            'contains_lower' => ['/\p{Ll}/u', 'The :attribute must contain at least one lowercase letter.'],
+            'contains_upper' => ['/\p{Lu}/u', 'The :attribute must contain at least one uppercase letter.'],
+            'contains_number' => ['/\pN/u', 'The :attribute must contain at least one number.'],
+        ];
+
+        foreach ($rules as $rule => [$pattern, $message]) {
+            $factory->extend($rule, function ($attribute, $value) use ($pattern) {
+                return is_string($value) && preg_match($pattern, $value) === 1;
+            }, $message);
+        }
     }
 
     protected function bootCertificatePemRule(): void

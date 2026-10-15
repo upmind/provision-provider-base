@@ -1,0 +1,119 @@
+{
+  "rule": "contains_lower",
+  "cases": [
+    {
+      "name": "one lowercase letter",
+      "rules": {
+        "value": [
+          "contains_lower"
+        ]
+      },
+      "data": {
+        "value": "ABc"
+      },
+      "valid": true
+    },
+    {
+      "name": "non-ASCII lowercase letter",
+      "rules": {
+        "value": [
+          "contains_lower"
+        ]
+      },
+      "data": {
+        "value": "é"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "contains_lower"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "contains_lower"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "uppercase letters only",
+      "rules": {
+        "value": [
+          "contains_lower"
+        ]
+      },
+      "data": {
+        "value": "ABC"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "contains_lower"
+        ]
+      }
+    },
+    {
+      "name": "digits and symbols only",
+      "rules": {
+        "value": [
+          "contains_lower"
+        ]
+      },
+      "data": {
+        "value": "123!"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "contains_lower"
+        ]
+      }
+    },
+    {
+      "name": "non-ASCII uppercase letter only",
+      "rules": {
+        "value": [
+          "contains_lower"
+        ]
+      },
+      "data": {
+        "value": "É"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "contains_lower"
+        ]
+      }
+    },
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "contains_lower"
+        ]
+      },
+      "data": {
+        "value": 123
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "contains_lower"
+        ]
+      }
+    }
+  ]
+}
