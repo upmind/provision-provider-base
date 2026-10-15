@@ -1,16 +1,16 @@
 <?php
 
-
 namespace Upmind\ProvisionBase\TestStub;
 
 use Upmind\ProvisionBase\Provider\DataSet\SystemInfo;
 
 class TestSystemInfo extends SystemInfo
 {
-    // @phpstan-ignore-next-line Unused parameter keeps the expected signature.
-    public function __construct($values = [], bool $autoValidation = true)
+    public function __construct($values = [])
     {
-        parent::__construct($values, false);
+        parent::__construct($values);
+
+        $this->autoValidation(false);
     }
 
     protected function fillNestedDataSets(): void

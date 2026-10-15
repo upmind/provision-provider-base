@@ -13,15 +13,14 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 use JsonSerializable;
 use Upmind\ProvisionBase\Exception\InvalidDataSetException;
+use Upmind\ProvisionBase\Provider\Contract\DataSetInterface;
 
 /**
  * DTO encapsulating a data set. If the data set is invalid according to the
  * rules returned by static::rules(), an `InvalidDataSetException` will be thrown
  * for any attempt to take data from it.
- *
- * @phpstan-consistent-constructor
  */
-abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Jsonable
+abstract class DataSet implements DataSetInterface, ArrayAccess, JsonSerializable, Arrayable, Jsonable
 {
     private static ?Factory $validatorFactory = null;
 
@@ -75,17 +74,16 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
     abstract public static function rules(): Rules;
 
     /**
-     * Instantiate the data set with the given values.
+     * Instantiate the data set with the given values. Auto-validation is
+     * enabled. Call `autoValidation(false)` to disable it.
      *
      * @param mixed[] $values Raw data
-     * @param bool $autoValidation Enable or disable auto-validation of this data set instance
      */
-    public function __construct($values = [], bool $autoValidation = true)
+    public function __construct($values = [])
     {
         $this->values = $this->rawValues = (array)$this->recursiveToArray($values); // convert to raw array(s)
 
         $this->rules = static::rules();
-        $this->validationEnabled = $autoValidation;
 
         $this->fillNestedDataSets(); // cast values to data sets if appropriate
     }
@@ -126,13 +124,12 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
      * Instantiate the data set with the given values.
      *
      * @param mixed[] $values Raw data
-     * @param bool $validationEnabled Enable or disable validation of this data set instance
      *
      * @return static
      */
-    public static function create($values = [], bool $validationEnabled = true)
+    public static function create($values = [])
     {
-        return new static($values, $validationEnabled);
+        return new static($values);
     }
 
     /**
@@ -374,7 +371,11 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
      */
     protected function castToDataSet($data, string $dataSetClass): DataSet
     {
-        return $dataSetClass::create($data, false);
+        /** @var DataSet $dataSet */
+        $dataSet = $dataSetClass::create($data);
+        $dataSet->autoValidation(false);
+
+        return $dataSet;
     }
 
     /**
