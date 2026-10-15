@@ -17,6 +17,7 @@ All notable changes to the package will be documented in this file.
   - Text fields with these names now render as `input_password`
 - Fix `international_phone` without a country argument accepting any value that starts with `+`
 - Update `international_phone` to fail as a rule, so `Validator::failed()` reports it
+- Update the data set validator to report nested data set failures in `Validator::failed()`
 
 ## v4.3.4 - 2025-12-22
 
