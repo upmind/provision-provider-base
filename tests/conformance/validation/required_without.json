@@ -1,0 +1,122 @@
+{
+  "rule": "required_without",
+  "cases": [
+    {
+      "name": "other field is set",
+      "rules": {
+        "value": [
+          "required_without:other"
+        ]
+      },
+      "data": {
+        "other": "x"
+      },
+      "valid": true
+    },
+    {
+      "name": "field is set",
+      "rules": {
+        "value": [
+          "required_without:other"
+        ]
+      },
+      "data": {
+        "value": "x"
+      },
+      "valid": true
+    },
+    {
+      "name": "both are set",
+      "rules": {
+        "value": [
+          "required_without:other"
+        ]
+      },
+      "data": {
+        "value": "x",
+        "other": "y"
+      },
+      "valid": true
+    },
+    {
+      "name": "nested other field is set",
+      "rules": {
+        "value": [
+          "required_without:a.b"
+        ]
+      },
+      "data": {
+        "a": {
+          "b": "x"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "both missing",
+      "rules": {
+        "value": [
+          "required_without:other"
+        ]
+      },
+      "data": {},
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_without"
+        ]
+      }
+    },
+    {
+      "name": "other field is empty",
+      "rules": {
+        "value": [
+          "required_without:other"
+        ]
+      },
+      "data": {
+        "other": ""
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_without"
+        ]
+      }
+    },
+    {
+      "name": "other field is null",
+      "rules": {
+        "value": [
+          "required_without:other"
+        ]
+      },
+      "data": {
+        "other": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_without"
+        ]
+      }
+    },
+    {
+      "name": "one of two other fields is missing",
+      "rules": {
+        "value": [
+          "required_without:a,b"
+        ]
+      },
+      "data": {
+        "a": "x"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_without"
+        ]
+      }
+    }
+  ]
+}

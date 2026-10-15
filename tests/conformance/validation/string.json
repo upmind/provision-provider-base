@@ -1,0 +1,126 @@
+{
+  "rule": "string",
+  "cases": [
+    {
+      "name": "string",
+      "rules": {
+        "value": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": "a"
+      },
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "string"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": 1
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "float",
+      "rules": {
+        "value": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": 1.5
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "boolean",
+      "rules": {
+        "value": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": true
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "array",
+      "rules": {
+        "value": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": [
+          "a"
+        ]
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "null",
+      "rules": {
+        "value": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "string"
+        ]
+      }
+    }
+  ]
+}

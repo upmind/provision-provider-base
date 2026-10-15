@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Validation conformance case file",
+  "type": "object",
+  "required": ["rule", "cases"],
+  "additionalProperties": false,
+  "properties": {
+    "rule": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["name", "rules", "data", "valid"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "rules": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "data": { "type": ["object", "array"] },
+          "valid": { "type": "boolean" },
+          "failed": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "if": { "properties": { "valid": { "const": false } } },
+        "then": { "required": ["failed"] },
+        "else": { "not": { "required": ["failed"] } }
+      }
+    }
+  }
+}

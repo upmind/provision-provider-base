@@ -1,0 +1,124 @@
+{
+  "rule": "date_format",
+  "cases": [
+    {
+      "name": "matching format",
+      "rules": {
+        "value": [
+          "date_format:Y-m-d H:i:s"
+        ]
+      },
+      "data": {
+        "value": "2024-01-02 03:04:05"
+      },
+      "valid": true
+    },
+    {
+      "name": "leap day",
+      "rules": {
+        "value": [
+          "date_format:Y-m-d"
+        ]
+      },
+      "data": {
+        "value": "2024-02-29"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "date_format:Y-m-d H:i:s"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "date without time",
+      "rules": {
+        "value": [
+          "date_format:Y-m-d H:i:s"
+        ]
+      },
+      "data": {
+        "value": "2024-01-02"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "date_format"
+        ]
+      }
+    },
+    {
+      "name": "different separator",
+      "rules": {
+        "value": [
+          "date_format:Y-m-d H:i:s"
+        ]
+      },
+      "data": {
+        "value": "2024-01-02T03:04:05"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "date_format"
+        ]
+      }
+    },
+    {
+      "name": "overflowing day",
+      "rules": {
+        "value": [
+          "date_format:Y-m-d"
+        ]
+      },
+      "data": {
+        "value": "2024-02-30"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "date_format"
+        ]
+      }
+    },
+    {
+      "name": "missing leading zeros",
+      "rules": {
+        "value": [
+          "date_format:Y-m-d"
+        ]
+      },
+      "data": {
+        "value": "2024-1-2"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "date_format"
+        ]
+      }
+    },
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "date_format:Y-m-d"
+        ]
+      },
+      "data": {
+        "value": 20240102
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "date_format"
+        ]
+      }
+    }
+  ]
+}

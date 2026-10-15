@@ -1,0 +1,181 @@
+{
+  "rule": "international_phone",
+  "cases": [
+    {
+      "name": "international format, GB mobile",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+447400123456"
+      },
+      "valid": true
+    },
+    {
+      "name": "international format, US number",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+12015550123"
+      },
+      "valid": true
+    },
+    {
+      "name": "national format with matching country",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "07400123456",
+        "country": "GB"
+      },
+      "valid": true
+    },
+    {
+      "name": "international format with matching country",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447400123456",
+        "country": "GB"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "national format without country",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "07400123456"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    },
+    {
+      "name": "unknown dialling code",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+999123456"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    },
+    {
+      "name": "dialling code only",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+44"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    },
+    {
+      "name": "letters after plus sign",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+abc"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    },
+    {
+      "name": "invalid number for country",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "12345",
+        "country": "GB"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    },
+    {
+      "name": "number of another country",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+12015550123",
+        "country": "GB"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "rule": "numeric",
+  "cases": [
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": 1
+      },
+      "valid": true
+    },
+    {
+      "name": "float",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": 1.5
+      },
+      "valid": true
+    },
+    {
+      "name": "decimal string",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": "1.5"
+      },
+      "valid": true
+    },
+    {
+      "name": "negative string",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": "-1"
+      },
+      "valid": true
+    },
+    {
+      "name": "exponent string",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": "1e3"
+      },
+      "valid": true
+    },
+    {
+      "name": "leading decimal point",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": ".5"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "letters",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": "abc"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "numeric"
+        ]
+      }
+    },
+    {
+      "name": "thousands separator",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": "1,000"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "numeric"
+        ]
+      }
+    },
+    {
+      "name": "hexadecimal string",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": "0x1A"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "numeric"
+        ]
+      }
+    },
+    {
+      "name": "boolean",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": true
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "numeric"
+        ]
+      }
+    },
+    {
+      "name": "null",
+      "rules": {
+        "value": [
+          "numeric"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "numeric"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "rule": "max",
+  "cases": [
+    {
+      "name": "string at the maximum length",
+      "rules": {
+        "value": [
+          "string",
+          "max:3"
+        ]
+      },
+      "data": {
+        "value": "abc"
+      },
+      "valid": true
+    },
+    {
+      "name": "multibyte string at the maximum length",
+      "rules": {
+        "value": [
+          "string",
+          "max:3"
+        ]
+      },
+      "data": {
+        "value": "ééé"
+      },
+      "valid": true
+    },
+    {
+      "name": "integer at the maximum",
+      "rules": {
+        "value": [
+          "integer",
+          "max:10"
+        ]
+      },
+      "data": {
+        "value": 10
+      },
+      "valid": true
+    },
+    {
+      "name": "decimal maximum",
+      "rules": {
+        "value": [
+          "numeric",
+          "max:1.5"
+        ]
+      },
+      "data": {
+        "value": 1.5
+      },
+      "valid": true
+    },
+    {
+      "name": "array at the maximum count",
+      "rules": {
+        "value": [
+          "array",
+          "max:2"
+        ]
+      },
+      "data": {
+        "value": [
+          1,
+          2
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "integer without a numeric rule uses string length",
+      "rules": {
+        "value": [
+          "max:3"
+        ]
+      },
+      "data": {
+        "value": 1234
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "max"
+        ]
+      }
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "string",
+          "max:3"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "string over the maximum length",
+      "rules": {
+        "value": [
+          "string",
+          "max:3"
+        ]
+      },
+      "data": {
+        "value": "abcd"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "max"
+        ]
+      }
+    },
+    {
+      "name": "integer over the maximum",
+      "rules": {
+        "value": [
+          "integer",
+          "max:10"
+        ]
+      },
+      "data": {
+        "value": 11
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "max"
+        ]
+      }
+    },
+    {
+      "name": "numeric string over the maximum",
+      "rules": {
+        "value": [
+          "integer",
+          "max:10"
+        ]
+      },
+      "data": {
+        "value": "11"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "max"
+        ]
+      }
+    },
+    {
+      "name": "array over the maximum count",
+      "rules": {
+        "value": [
+          "array",
+          "max:2"
+        ]
+      },
+      "data": {
+        "value": [
+          1,
+          2,
+          3
+        ]
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "max"
+        ]
+      }
+    }
+  ]
+}

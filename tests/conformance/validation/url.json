@@ -1,0 +1,172 @@
+{
+  "rule": "url",
+  "cases": [
+    {
+      "name": "HTTPS URL",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "https://example.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "path, query and fragment",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "http://example.com/path?x=1#top"
+      },
+      "valid": true
+    },
+    {
+      "name": "port",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "https://sub.example.com:8443/a"
+      },
+      "valid": true
+    },
+    {
+      "name": "IPv4 host",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "https://127.0.0.1"
+      },
+      "valid": true
+    },
+    {
+      "name": "credentials",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "https://user:pass@example.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "FTP scheme",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "ftp://example.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "no scheme",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "example.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "url"
+        ]
+      }
+    },
+    {
+      "name": "space in host",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "https://exa mple.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "url"
+        ]
+      }
+    },
+    {
+      "name": "scheme only",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "https://"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "url"
+        ]
+      }
+    },
+    {
+      "name": "text",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": "not a url"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "url"
+        ]
+      }
+    },
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "url"
+        ]
+      },
+      "data": {
+        "value": 123
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "url"
+        ]
+      }
+    }
+  ]
+}
