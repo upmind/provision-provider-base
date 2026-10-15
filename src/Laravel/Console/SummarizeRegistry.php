@@ -4,7 +4,7 @@ namespace Upmind\ProvisionBase\Laravel\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Upmind\ProvisionBase\Registry\Data\CategoryRegister;
+use Upmind\ProvisionBase\Registry\Data\Contract\CategoryRegisterInterface;
 use Upmind\ProvisionBase\Registry\Registry;
 
 /**
@@ -48,7 +48,7 @@ class SummarizeRegistry extends Command
             return;
         }
 
-        $providers = $categories->reduce(function (Collection $providers, CategoryRegister $category) {
+        $providers = $categories->reduce(function (Collection $providers, CategoryRegisterInterface $category) {
             return $providers->merge($category->getProviders());
         }, collect());
 

@@ -8,7 +8,8 @@ use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use Upmind\ProvisionBase\Registry\Data\BufferedRegister;
 use Upmind\ProvisionBase\Registry\Data\CategoryRegister;
-use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
+use Upmind\ProvisionBase\Registry\Data\Contract\CategoryRegisterInterface;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
 
 /**
  * Registry of available provision categories, providers and functions.
@@ -18,7 +19,7 @@ class Registry
     /**
      * Registered Categories.
      *
-     * @var Collection<CategoryRegister>|CategoryRegister[]
+     * @var Collection<CategoryRegisterInterface>|CategoryRegisterInterface[]
      */
     protected $categories;
 
@@ -90,9 +91,9 @@ class Registry
      * @param string $identifier Unique category identifier
      * @param string $class Fully-namespaced category class
      *
-     * @return CategoryRegister|null Registered category, if successful
+     * @return CategoryRegisterInterface|null Registered category, if successful
      */
-    public function registerCategory(string $identifier, string $class): ?CategoryRegister
+    public function registerCategory(string $identifier, string $class): ?CategoryRegisterInterface
     {
         if ($this->wasCached()) {
             $this->getBuffer()->push(new BufferedRegister($this, __METHOD__, func_get_args()));
@@ -115,13 +116,13 @@ class Registry
      * Register a provision provider. If registry was loaded from cache, this
      * method will call will be buffered instead, and will return null.
      *
-     * @param string|CategoryRegister $category Category identifier, class or register instance
+     * @param string|CategoryRegisterInterface $category Category identifier, class or register instance
      * @param string $identifier Unique provider identifier
      * @param string $class Fully-namespaced provider class
      *
-     * @return ProviderRegister|null Whether or not the provider was registered
+     * @return ProviderRegisterInterface|null Registered provider, if successful
      */
-    public function registerProvider($category, string $identifier, string $class): ?ProviderRegister
+    public function registerProvider($category, string $identifier, string $class): ?ProviderRegisterInterface
     {
         if ($this->wasCached()) {
             $this->getBuffer()->push(new BufferedRegister($this, __METHOD__, func_get_args()));
@@ -154,7 +155,7 @@ class Registry
     /**
      * Determine whether the given category has been registered.
      *
-     * @param string|CategoryRegister $category Category identifier, class or register instance
+     * @param string|CategoryRegisterInterface $category Category identifier, class or register instance
      *
      * @return bool
      */
@@ -163,7 +164,7 @@ class Registry
         $this->enumerateData();
 
         return $this->getCategories()
-            ->contains(function (CategoryRegister $register) use ($category) {
+            ->contains(function (CategoryRegisterInterface $register) use ($category) {
                 return $register->is($category);
             });
     }
@@ -171,16 +172,16 @@ class Registry
     /**
      * Get the given category from the registry.
      *
-     * @param string|CategoryRegister $category Category identifier, class or register instance
+     * @param string|CategoryRegisterInterface $category Category identifier, class or register instance
      *
-     * @return CategoryRegister|null Registered category, if found
+     * @return CategoryRegisterInterface|null Registered category, if found
      */
-    public function getCategory($category): ?CategoryRegister
+    public function getCategory($category): ?CategoryRegisterInterface
     {
         $this->enumerateData();
 
         return $this->getCategories()
-            ->first(function (CategoryRegister $register) use ($category) {
+            ->first(function (CategoryRegisterInterface $register) use ($category) {
                 return $register->is($category);
             });
     }
@@ -188,8 +189,8 @@ class Registry
     /**
      * Determine whether the given provider has been registered.
      *
-     * @param string|CategoryRegister $category Category identifier, class or register instance
-     * @param string|ProviderRegister $provider Provider identifier, class or register instance
+     * @param string|CategoryRegisterInterface $category Category identifier, class or register instance
+     * @param string|ProviderRegisterInterface $provider Provider identifier, class or register instance
      *
      * @return bool
      */
@@ -207,12 +208,12 @@ class Registry
     /**
      * Get the given provider from the registry.
      *
-     * @param string|CategoryRegister $category Category identifier, class or register instance
-     * @param string|ProviderRegister $provider Provider identifier, class or register instance
+     * @param string|CategoryRegisterInterface $category Category identifier, class or register instance
+     * @param string|ProviderRegisterInterface $provider Provider identifier, class or register instance
      *
-     * @return ProviderRegister|null Registered provider, if found
+     * @return ProviderRegisterInterface|null Registered provider, if found
      */
-    public function getProvider($category, $provider): ?ProviderRegister
+    public function getProvider($category, $provider): ?ProviderRegisterInterface
     {
         $this->enumerateData();
 
@@ -226,7 +227,7 @@ class Registry
     /**
      * Get all categories from the registry.
      *
-     * @return Collection<array-key, CategoryRegister>
+     * @return Collection<array-key, CategoryRegisterInterface>
      */
     public function getCategories(): Collection
     {
@@ -250,7 +251,7 @@ class Registry
 
         $this->dataEnumerated = true;
 
-        $this->getCategories()->each(function (CategoryRegister $category) {
+        $this->getCategories()->each(function (CategoryRegisterInterface $category) {
             $category->enumerateData();
         });
     }

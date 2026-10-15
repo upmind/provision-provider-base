@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Upmind\ProvisionBase\Registry\Data;
 
+use Upmind\ProvisionBase\Registry\Data\Contract\CategoryRegisterInterface;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
+
 /**
  * Register for a function.
  */
@@ -19,7 +22,7 @@ class FunctionRegister implements RegisterInterface
     /**
      * Category or Provider parent register.
      *
-     * @var CategoryRegister|ProviderRegister
+     * @var CategoryRegisterInterface|ProviderRegisterInterface
      */
     protected $parent;
 
@@ -39,15 +42,15 @@ class FunctionRegister implements RegisterInterface
 
     /**
      * @param string $name Function name
-     * @param ClassRegister $parent Parent class
      * @param string|null $parameterDataSetClass DataSet class name for the function parameters
      * @param string|null $returnDataSetClass DataSet class name for the function return data
+     * @param CategoryRegisterInterface|ProviderRegisterInterface $parent Parent register
      */
     public function __construct(
         string $name,
         ?string $parameterDataSetClass,
         ?string $returnDataSetClass,
-        ClassRegister $parent
+        CategoryRegisterInterface|ProviderRegisterInterface $parent
     ) {
         $this->name = $name;
         $this->parent = $parent;
@@ -81,7 +84,7 @@ class FunctionRegister implements RegisterInterface
      */
     public function isConstructor(): bool
     {
-        return $this->parent instanceof ProviderRegister
+        return $this->parent instanceof ProviderRegisterInterface
             && $this->name === '__construct';
     }
 
@@ -94,9 +97,9 @@ class FunctionRegister implements RegisterInterface
     }
 
     /**
-     * Get the parent class.
+     * Get the parent register.
      */
-    public function getParent(): ClassRegister
+    public function getParent(): CategoryRegisterInterface|ProviderRegisterInterface
     {
         return $this->parent;
     }
@@ -104,9 +107,9 @@ class FunctionRegister implements RegisterInterface
     /**
      * Get the category register of this function.
      */
-    public function getCategory(): CategoryRegister
+    public function getCategory(): CategoryRegisterInterface
     {
-        if ($this->parent instanceof CategoryRegister) {
+        if ($this->parent instanceof CategoryRegisterInterface) {
             return $this->parent;
         }
 

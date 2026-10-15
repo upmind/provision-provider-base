@@ -48,6 +48,9 @@ All notable changes to the package will be documented in this file.
   - Result data `connection_error` has the `reason` and `host`; debug data has the details
   - Detects PSR-18 network exceptions (incl. Guzzle 7 and 8), Guzzle 8 timeouts,
     Guzzle 6/7 cURL connection errnos and SoapFault transport faults, also when wrapped
+- Add `CategoryRegisterInterface` and `ProviderRegisterInterface`
+  - `Registry`, `Provider`, `FunctionRegister` and console commands now type hint these
+    interfaces instead of the concrete register classes
 
 ## v4.3.4 - 2025-12-22
 
