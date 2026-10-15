@@ -12,6 +12,7 @@ class TestProvider extends AbstractTestProvider implements ProviderInterface
 {
     use LoggerAwareTrait;
 
+    // @phpstan-ignore-next-line Unused parameter keeps the expected signature.
     public function __construct(TestDataSet $configuration)
     {
     }
