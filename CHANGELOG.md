@@ -15,6 +15,8 @@ All notable changes to the package will be documented in this file.
 - Update FormField::typeShouldBePassword() to match private key and passphrase
   field names, e.g., `client_private_key` and `key_passphrase`
   - Text fields with these names now render as `input_password`
+- Fix `international_phone` without a country argument accepting any value that starts with `+`
+- Update `international_phone` to fail as a rule, so `Validator::failed()` reports it
 
 ## v4.3.4 - 2025-12-22
 
