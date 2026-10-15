@@ -9,7 +9,7 @@ use RuntimeException;
 use Upmind\ProvisionBase\Exception\InvalidProviderJob;
 use Upmind\ProvisionBase\Provider\Contract\ProviderInterface;
 use Upmind\ProvisionBase\Provider\DataSet\DataSet;
-use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
 
 /**
  * Provider wrapper class encapsulating a provision provider register and instance.
@@ -17,7 +17,7 @@ use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
 class Provider
 {
     /**
-     * @var ProviderRegister
+     * @var ProviderRegisterInterface
      */
     protected $register;
 
@@ -27,10 +27,10 @@ class Provider
     protected $instance;
 
     /**
-     * @param ProviderRegister $register Provider register
+     * @param ProviderRegisterInterface $register Provider register
      * @param ProviderInterface $instance Provider instance
      */
-    public function __construct(ProviderRegister $register, ProviderInterface $instance)
+    public function __construct(ProviderRegisterInterface $register, ProviderInterface $instance)
     {
         $this->register = $register;
         $this->instance = $instance;
@@ -45,7 +45,7 @@ class Provider
     /**
      * Get the provider register.
      */
-    public function getRegister(): ProviderRegister
+    public function getRegister(): ProviderRegisterInterface
     {
         return $this->register;
     }

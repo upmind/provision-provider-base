@@ -8,20 +8,20 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Upmind\ProvisionBase\Provider;
 use Upmind\ProvisionBase\ProviderJob;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
 use Upmind\ProvisionBase\Registry\Data\DataSetRegister;
 use Upmind\ProvisionBase\Registry\Data\FunctionRegister;
-use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
 use Upmind\ProvisionBase\TestStub\TestDataSet;
 
 class ProviderJobTest extends TestCase
 {
     private MockObject|Provider $provider;
-    private MockObject|ProviderRegister $providerRegister;
+    private MockObject|ProviderRegisterInterface $providerRegister;
     private MockObject|FunctionRegister $functionRegister;
 
     protected function setUp(): void
     {
-        $this->providerRegister = $this->createMock(ProviderRegister::class);
+        $this->providerRegister = $this->createMock(ProviderRegisterInterface::class);
         $this->provider = $this->createMock(Provider::class);
         $this->functionRegister = $this->createMock(FunctionRegister::class);
     }
