@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\ServiceProvider as BaseProvider;
 use League\ISO3166\ISO3166;
 use libphonenumber\NumberParseException;
-use Propaganistas\LaravelPhone\Exceptions\NumberParseException as PropaganistasNumberParseException;
+use libphonenumber\PhoneNumberUtil;
 use Upmind\ProvisionBase\Laravel\Validation\Rules\CertificatePem;
 use Upmind\ProvisionBase\Provider\DataSet\DataSet;
 use Upmind\ProvisionBase\Provider\DataSet\RuleParser;
@@ -132,34 +132,18 @@ class ValidationServiceProvider extends BaseProvider
      */
     protected function bootInternationalPhoneRule(): void
     {
-        /**
-         * @param $attribute
-         * @param $value
-         * @param $parameters
-         * @param $validator
-         * @return bool
-         * @throws \Illuminate\Contracts\Container\BindingResolutionException
-         */
         $extension = function ($attribute, $value, $parameters, $validator) {
             if (!empty($parameters[0])) {
                 //validate phone number for the input country code
                 $countryCode = Arr::get($validator->getData(), $parameters[0]);
 
-                $factory = $this->getValidatorFactory();
-
-                $extraValidator = $factory->make([
-                    'phone' => $value
-                ], [
-                    'phone' => sprintf('phone:%s', $countryCode)
-                ]);
-
-                if ($extraValidator->fails() && !$this->manualCheckPhones($value)) {
+                if (!$this->isValidPhoneForCountry($value, $countryCode) && !$this->manualCheckPhones($value)) {
                     return $this->failInternationalPhone(
                         $validator,
                         $attribute,
                         $this->makeReplacements('This is not a valid :COUNTRY_CODE phone number', [
                             'attribute' => $attribute,
-                            'country_code' => $countryCode,
+                            'country_code' => is_scalar($countryCode) ? (string)$countryCode : '',
                         ])
                     );
                 }
@@ -179,14 +163,7 @@ class ValidationServiceProvider extends BaseProvider
                 );
             }
 
-            try {
-                // Older versions throw for an unknown number. Newer versions return null.
-                $country = phone($value)->getCountry();
-            } catch (PropaganistasNumberParseException | NumberParseException $e) {
-                $country = null;
-            }
-
-            return $country !== null || $this->manualCheckPhones($value);
+            return $this->getPhoneRegion($value) !== null || $this->manualCheckPhones($value);
         };
 
         $factory = $this->getValidatorFactory();
@@ -334,8 +311,63 @@ class ValidationServiceProvider extends BaseProvider
         return false;
     }
 
+    /**
+     * Determine whether the given value is a valid phone number for the given
+     * country. If the country is not a supported region, the value must be a
+     * valid number in international format.
+     *
+     * @param mixed $value
+     * @param mixed $country ISO 3166-1 alpha-2 code
+     */
+    private function isValidPhoneForCountry($value, $country): bool
+    {
+        if (!is_scalar($value)) {
+            return false;
+        }
+
+        $util = PhoneNumberUtil::getInstance();
+        $region = is_string($country) && in_array(strtoupper($country), $util->getSupportedRegions(), true)
+            ? strtoupper($country)
+            : null;
+
+        try {
+            $number = $util->parse((string)$value, $region ?? 'ZZ');
+        } catch (NumberParseException $e) {
+            return false;
+        }
+
+        return $region !== null
+            ? $util->isValidNumberForRegion($number, $region)
+            : $util->isValidNumber($number);
+    }
+
+    /**
+     * Get the region of the given phone number in international format, if
+     * the dialling code is known. This does not check that the number is valid.
+     *
+     * @param mixed $value
+     */
+    private function getPhoneRegion($value): ?string
+    {
+        if (!is_scalar($value)) {
+            return null;
+        }
+
+        $util = PhoneNumberUtil::getInstance();
+
+        try {
+            return $util->getRegionCodeForNumber($util->parse((string)$value, 'ZZ'));
+        } catch (NumberParseException $e) {
+            return null;
+        }
+    }
+
     private function manualCheckPhones($value): bool
     {
+        if (!is_scalar($value)) {
+            return false;
+        }
+
         $value = strval($value);
 
         //Morocco phone validation

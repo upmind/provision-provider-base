@@ -13,7 +13,6 @@ use Illuminate\Validation\Factory;
 use Illuminate\Validation\Validator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Propaganistas\LaravelPhone\PhoneServiceProvider;
 use Upmind\ProvisionBase\Laravel\ValidationServiceProvider;
 use Upmind\ProvisionBase\Provider\DataSet\DataSet;
 
@@ -34,7 +33,6 @@ class ConformanceTest extends TestCase
         });
         $app->alias('validator', FactoryContract::class);
 
-        (new PhoneServiceProvider($app))->register();
         (new ValidationServiceProvider($app))->boot();
 
         self::$factory = $app->make('validator');
