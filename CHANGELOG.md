@@ -2,7 +2,7 @@
 
 All notable changes to the package will be documented in this file.
 
-## Unreleased
+## v4.3.5 - 2026-10-15
 
 - Update FormField::typeShouldBePassword() to match private key and passphrase
   field names, e.g., `client_private_key` and `key_passphrase`
