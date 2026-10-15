@@ -80,12 +80,12 @@ class ValidationServiceProvider extends BaseProvider
             return !preg_match('/[^\w]/', strval($value));
         };
 
-        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension) {
-            $message = 'This value must only contain letters, numbers and underscores.';
+        $factory = $this->getValidatorFactory();
 
-            $factory->extend('alpha_score', $extension, $message);
-            $factory->extend('alpha-score', $extension, $message);
-        });
+        $message = 'This value must only contain letters, numbers and underscores.';
+
+        $factory->extend('alpha_score', $extension, $message);
+        $factory->extend('alpha-score', $extension, $message);
     }
 
     protected function bootAlphaDashDotRule(): void
@@ -94,12 +94,12 @@ class ValidationServiceProvider extends BaseProvider
             return !preg_match('/[^\w\-\.]/', strval($value));
         };
 
-        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension,) {
-            $message = 'This value must only contain letters, numbers, dashes, underscores and periods.';
+        $factory = $this->getValidatorFactory();
 
-            $factory->extend('alpha_dash_dot', $extension, $message);
-            $factory->extend('alpha-dash-dot', $extension, $message);
-        });
+        $message = 'This value must only contain letters, numbers, dashes, underscores and periods.';
+
+        $factory->extend('alpha_dash_dot', $extension, $message);
+        $factory->extend('alpha-dash-dot', $extension, $message);
     }
 
     protected function bootDomainNameRule(): void
@@ -112,12 +112,12 @@ class ValidationServiceProvider extends BaseProvider
                 && preg_match('/^[^\.]{1,63}(\.[^\.]{1,63})*$/', $value); //length of each label
         };
 
-        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension) {
-            $message = 'This is not a valid domain name.';
+        $factory = $this->getValidatorFactory();
 
-            $factory->extend('domain-name', $extension, $message);
-            $factory->extend('domain_name', $extension, $message);
-        });
+        $message = 'This is not a valid domain name.';
+
+        $factory->extend('domain-name', $extension, $message);
+        $factory->extend('domain_name', $extension, $message);
     }
 
     /**
@@ -191,9 +191,9 @@ class ValidationServiceProvider extends BaseProvider
             return true;
         };
 
-        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension) {
-            $factory->extend('international_phone', $extension, 'This is not a valid international phone number');
-        });
+        $factory = $this->getValidatorFactory();
+
+        $factory->extend('international_phone', $extension, 'This is not a valid international phone number');
     }
 
     protected function bootCountryCodeRule(): void
@@ -230,28 +230,28 @@ class ValidationServiceProvider extends BaseProvider
             }
         };
 
-        $this->app->resolving(Factory::class, function (Factory $factory) use ($extension) {
-            $factory->extend('country_code', $extension, 'This is not a valid country code.');
-        });
+        $factory = $this->getValidatorFactory();
+
+        $factory->extend('country_code', $extension, 'This is not a valid country code.');
     }
 
     protected function bootStepRule(): void
     {
-        $this->app->resolving(Factory::class, function (Factory $factory) {
-            $factory->extend('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@validateStep');
-            $factory->replacer('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@replaceStep');
-        });
+        $factory = $this->getValidatorFactory();
+
+        $factory->extend('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@validateStep');
+        $factory->replacer('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@replaceStep');
     }
 
     protected function bootCertificatePemRule(): void
     {
-        $this->app->resolving(Factory::class, function (Factory $factory) {
-            $factory->extend(
-                'certificate_pem',
-                CertificatePem::class,
-                'The :attribute must be a certificate in PEM format'
-            );
-        });
+        $factory = $this->getValidatorFactory();
+
+        $factory->extend(
+            'certificate_pem',
+            CertificatePem::class,
+            'The :attribute must be a certificate in PEM format'
+        );
     }
 
     /**
