@@ -16,6 +16,7 @@ use LogicException;
 use Psr\Http\Message\MessageInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Psr\Log\NullLogger;
 use RuntimeException;
 use Throwable;
 use Upmind\ProvisionBase\Exception\ProvisionFunctionError;
@@ -86,15 +87,11 @@ abstract class BaseCategory implements Contract\CategoryInterface
     }
 
     /**
-     * Get the Logger instance for debug logging.
+     * Get the Logger instance for debug logging. Returns a NullLogger if none is set.
      */
     final public function getLogger(): LoggerInterface
     {
-        if (!isset($this->log)) {
-            throw new LogicException('Logger instance only set if Provider or Category implement LogsDebugData');
-        }
-
-        return $this->log;
+        return $this->log ??= new NullLogger();
     }
 
     /**
