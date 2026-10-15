@@ -23,7 +23,7 @@ use Upmind\ProvisionBase\Exception\InvalidDataSetException;
  */
 abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Jsonable
 {
-    private static Factory $validatorFactory;
+    private static ?Factory $validatorFactory = null;
 
     /**
      * Input values with nested data sets expanded.
@@ -99,7 +99,7 @@ abstract class DataSet implements ArrayAccess, JsonSerializable, Arrayable, Json
         return self::$validatorFactory;
     }
 
-    public static function setValidatorFactory(Factory $validatorFactory): void
+    public static function setValidatorFactory(?Factory $validatorFactory): void
     {
         self::$validatorFactory = $validatorFactory;
     }

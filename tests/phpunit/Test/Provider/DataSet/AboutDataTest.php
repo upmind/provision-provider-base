@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Unit\Provider\DataSet;
+namespace Upmind\ProvisionBase\Test\Provider\DataSet;
 
 use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Contracts\Validation\Factory;
@@ -21,6 +21,11 @@ class AboutDataTest extends TestCase
     protected function setUp(): void
     {
         $this->validatorFactory = $this->createMock(Factory::class);
+    }
+
+    protected function tearDown(): void
+    {
+        AboutData::setValidatorFactory(null);
     }
 
     /**
