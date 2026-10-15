@@ -7,7 +7,7 @@ All notable changes to the package will be documented in this file.
 - Require PHP 8.3; support PHP 8.3, 8.4, 8.5 and 8.6
 - Require Laravel 13 (`illuminate/*` ^13.0)
 - Require `guzzlehttp/guzzle` ^8.0
-- Require `league/iso3166` ^4.0, `propaganistas/laravel-phone` ^6.0 and `psr/log` ^3.0
+- Require `league/iso3166` ^4.0 and `psr/log` ^3.0
 - Update dev dependencies to `phpstan/phpstan` ^2.0 and `phpunit/phpunit` ^12.0 || ^13.0
 - Update `Provider::unsetInstance()` and `ClassRegister::__sleep()` to set the property to null instead of unsetting it
 - Remove deprecated AttributeQuery classes and the `provision_attribute_query` validation rule
@@ -37,6 +37,10 @@ All notable changes to the package will be documented in this file.
 - Add `SupportedRules`; `RuleParser::expand()` throws `UnsupportedValidationRule` for any rule outside the allowlist
   - Block rules which query a database, do DNS lookups, read the authenticated user or inspect uploaded files
 - Add `contains_lower`, `contains_upper` and `contains_number` validation rules
+- Remove the `propaganistas/laravel-phone` dependency; `international_phone` uses
+  `giggsey/libphonenumber-for-php-lite` directly
+  - This package no longer registers the `phone` rule or the `phone()` helper. Require
+    `propaganistas/laravel-phone` directly if you use them
 
 ## v4.3.4 - 2025-12-22
 

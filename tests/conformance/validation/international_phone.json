@@ -52,6 +52,107 @@
       "valid": true
     },
     {
+      "name": "national format with spaces and matching country",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "07400 123456",
+        "country": "GB"
+      },
+      "valid": true
+    },
+    {
+      "name": "lower case country",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "07400123456",
+        "country": "gb"
+      },
+      "valid": true
+    },
+    {
+      "name": "integer national number with matching country",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": 7400123456,
+        "country": "GB"
+      },
+      "valid": true
+    },
+    {
+      "name": "international format without country value",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447400123456"
+      },
+      "valid": true
+    },
+    {
+      "name": "international format with unknown country value",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447400123456",
+        "country": "XX"
+      },
+      "valid": true
+    },
+    {
+      "name": "fallback pattern accepts 0 and 9 digits without country value",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "0612345678"
+      },
+      "valid": true
+    },
+    {
+      "name": "fallback pattern accepts 0 and 9 digits for another country",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "0612345678",
+        "country": "US"
+      },
+      "valid": true
+    },
+    {
+      "name": "known dialling code without a valid number",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+3312"
+      },
+      "valid": true
+    },
+    {
       "name": "missing field is not validated",
       "rules": {
         "phone": [
@@ -168,6 +269,61 @@
       },
       "data": {
         "phone": "+12015550123",
+        "country": "GB"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    },
+    {
+      "name": "Jersey number with country GB",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447797712345",
+        "country": "GB"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    },
+    {
+      "name": "national format without country value",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "7400123456"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    },
+    {
+      "name": "array value",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": [
+          "+447400123456"
+        ],
         "country": "GB"
       },
       "valid": false,
