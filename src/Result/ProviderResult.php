@@ -6,6 +6,8 @@ namespace Upmind\ProvisionBase\Result;
 
 use Illuminate\Support\Arr;
 use Throwable;
+use Upmind\ProvisionBase\ConnectionErrorClassifier;
+use Upmind\ProvisionBase\Exception\ProviderConnectionError;
 use Upmind\ProvisionBase\ProviderJob;
 use Upmind\ProvisionBase\Result\Contract\ResultInterface;
 
@@ -46,7 +48,8 @@ class ProviderResult extends Result implements ResultInterface
     }
 
     /**
-     * Adds the Provider exception to debug data
+     * Adds the Provider exception to debug data. For a connection error, the
+     * message contains no URL credentials or query strings.
      *
      * @param Throwable $e
      *
@@ -55,14 +58,21 @@ class ProviderResult extends Result implements ResultInterface
     public function withProviderExceptionDebug(Throwable $e): self
     {
         $this->setException($e);
+        $isConnectionError = $e instanceof ProviderConnectionError;
 
         // Record the first exception in the chain
         while ($previous = $e->getPrevious()) {
             $e = $previous;
         }
 
+        $exceptionDebug = self::formatException($e);
+
+        if ($isConnectionError) {
+            $exceptionDebug['message'] = ConnectionErrorClassifier::sanitiseMessage($exceptionDebug['message']);
+        }
+
         $this->debug = Arr::wrap($this->debug);
-        Arr::set($this->debug, 'provider_exception', self::formatException($e));
+        Arr::set($this->debug, 'provider_exception', $exceptionDebug);
 
         return $this->withDebugMessage("Encountered exception: " . get_class($e));
     }

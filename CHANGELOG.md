@@ -15,6 +15,11 @@ All notable changes to the package will be documented in this file.
 - Update FormField::typeShouldBePassword() to match private key and passphrase
   field names, e.g., `client_private_key` and `key_passphrase`
   - Text fields with these names now render as `input_password`
+- Add ConnectionErrorClassifier and ProviderConnectionError
+  - ProviderJob now renders provider API connection, timeout and SSL errors as
+    `Provider API connection failed`, with sanitised `connection_error` debug data
+  - Detects Guzzle ConnectException, Guzzle RequestException with a cURL
+    connection errno, and SoapFault transport faults, including wrapped exceptions
 
 ## v4.3.4 - 2025-12-22
 
