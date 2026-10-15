@@ -1,0 +1,368 @@
+{
+  "rule": "domain_name",
+  "cases": [
+    {
+      "name": "domain",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "example.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "subdomain",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "sub.example.co.uk"
+      },
+      "valid": true
+    },
+    {
+      "name": "upper case",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "EXAMPLE.COM"
+      },
+      "valid": true
+    },
+    {
+      "name": "punycode label",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "xn--bcher-kva.example"
+      },
+      "valid": true
+    },
+    {
+      "name": "dash inside label",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "a-b.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "consecutive dashes inside label",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "a--b.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "numeric labels",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "1.2"
+      },
+      "valid": true
+    },
+    {
+      "name": "label of 63 characters",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "253 characters",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "valid": true
+    },
+    {
+      "name": "alias domain-name",
+      "rules": {
+        "value": [
+          "domain-name"
+        ]
+      },
+      "data": {
+        "value": "example.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "single label",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "example"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "label starts with dash",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "-example.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "label ends with dash",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "example-.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "underscore",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "exa_mple.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "empty label",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "example..com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "trailing period",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "example.com."
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "leading period",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": ".example.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "space",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "exa mple.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "non-ASCII label",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "bücher.example"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "label of 64 characters",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "254 characters",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "domain_name"
+        ]
+      },
+      "data": {
+        "value": 123
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    },
+    {
+      "name": "alias domain-name with single label",
+      "rules": {
+        "value": [
+          "domain-name"
+        ]
+      },
+      "data": {
+        "value": "example"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "domain_name"
+        ]
+      }
+    }
+  ]
+}

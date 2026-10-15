@@ -1,0 +1,153 @@
+{
+  "rule": "email",
+  "cases": [
+    {
+      "name": "address",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {
+        "value": "user@example.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "dots, plus sign and subdomain",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {
+        "value": "first.last+tag@sub.example.co.uk"
+      },
+      "valid": true
+    },
+    {
+      "name": "domain without a period",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {
+        "value": "user@localhost"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "no at sign",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {
+        "value": "user"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "email"
+        ]
+      }
+    },
+    {
+      "name": "two at signs",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {
+        "value": "user@@example.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "email"
+        ]
+      }
+    },
+    {
+      "name": "space in domain",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {
+        "value": "user@exa mple.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "email"
+        ]
+      }
+    },
+    {
+      "name": "empty local part",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {
+        "value": "@example.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "email"
+        ]
+      }
+    },
+    {
+      "name": "empty domain",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {
+        "value": "user@"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "email"
+        ]
+      }
+    },
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "email"
+        ]
+      },
+      "data": {
+        "value": 123
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "email"
+        ]
+      }
+    }
+  ]
+}

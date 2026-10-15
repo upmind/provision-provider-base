@@ -1,0 +1,62 @@
+{
+  "rule": "required_without_all",
+  "cases": [
+    {
+      "name": "one other field is set",
+      "rules": {
+        "value": [
+          "required_without_all:a,b"
+        ]
+      },
+      "data": {
+        "a": "x"
+      },
+      "valid": true
+    },
+    {
+      "name": "field is set",
+      "rules": {
+        "value": [
+          "required_without_all:a,b"
+        ]
+      },
+      "data": {
+        "value": "x"
+      },
+      "valid": true
+    },
+    {
+      "name": "all missing",
+      "rules": {
+        "value": [
+          "required_without_all:a,b"
+        ]
+      },
+      "data": {},
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_without_all"
+        ]
+      }
+    },
+    {
+      "name": "other fields are empty",
+      "rules": {
+        "value": [
+          "required_without_all:a,b"
+        ]
+      },
+      "data": {
+        "a": "",
+        "b": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_without_all"
+        ]
+      }
+    }
+  ]
+}

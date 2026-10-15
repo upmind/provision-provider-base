@@ -17,12 +17,19 @@ on:
 # Jobs/Pipelines
 jobs:
   php-unit:
-    name: 'PHP Unit'
+    name: 'PHP Unit (PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }})'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         php: [ 8.1, 8.2, 8.3 ]
+        laravel: [ 10, 11, 12 ]
+        exclude:
+          # Laravel 11 and 12 require PHP 8.2
+          - php: 8.1
+            laravel: 11
+          - php: 8.1
+            laravel: 12
     steps:
       - name: 'Checkout Code'
         uses: actions/checkout@v4
@@ -41,11 +48,17 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "${{ steps.composer-cache.outputs.dir }}"
-          key: "${{ runner.os }}-php-${{ matrix.php}}-composer-${{ hashFiles('**/composer.json') }}"
-          restore-keys: "${{ runner.os }}-php-${{ matrix.php}}-composer-"
+          key: "${{ runner.os }}-php-${{ matrix.php}}-laravel-${{ matrix.laravel }}-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-php-${{ matrix.php}}-laravel-${{ matrix.laravel }}-composer-"
 
+      # Pin the Laravel major so the conformance cases run against each supported version
       - name: "Install Composer dependencies"
-        run: composer install --no-ansi --no-interaction --no-progress --no-scripts --prefer-dist
+        run: |
+          composer require --no-update --no-interaction \
+            "illuminate/console:^${{ matrix.laravel }}.0" \
+            "illuminate/support:^${{ matrix.laravel }}.0" \
+            "illuminate/validation:^${{ matrix.laravel }}.0"
+          composer update --no-ansi --no-interaction --no-progress --no-scripts --prefer-dist --with-all-dependencies
 
       - name: 'Run PHPUnit'
         run: ./vendor/bin/phpunit

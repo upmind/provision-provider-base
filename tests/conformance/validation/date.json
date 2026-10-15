@@ -1,0 +1,133 @@
+{
+  "rule": "date",
+  "cases": [
+    {
+      "name": "ISO date",
+      "rules": {
+        "value": [
+          "date"
+        ]
+      },
+      "data": {
+        "value": "2024-02-29"
+      },
+      "valid": true
+    },
+    {
+      "name": "date and time",
+      "rules": {
+        "value": [
+          "date"
+        ]
+      },
+      "data": {
+        "value": "2024-01-02 03:04:05"
+      },
+      "valid": true
+    },
+    {
+      "name": "ISO 8601 date and time",
+      "rules": {
+        "value": [
+          "date"
+        ]
+      },
+      "data": {
+        "value": "2024-01-02T03:04:05+00:00"
+      },
+      "valid": true
+    },
+    {
+      "name": "parameter is ignored",
+      "rules": {
+        "value": [
+          "date:Y-m-d"
+        ]
+      },
+      "data": {
+        "value": "2024-01-02"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "date"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "invalid day",
+      "rules": {
+        "value": [
+          "date"
+        ]
+      },
+      "data": {
+        "value": "2023-02-29"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "date"
+        ]
+      }
+    },
+    {
+      "name": "invalid month",
+      "rules": {
+        "value": [
+          "date"
+        ]
+      },
+      "data": {
+        "value": "2024-13-01"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "date"
+        ]
+      }
+    },
+    {
+      "name": "text",
+      "rules": {
+        "value": [
+          "date"
+        ]
+      },
+      "data": {
+        "value": "not a date"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "date"
+        ]
+      }
+    },
+    {
+      "name": "array",
+      "rules": {
+        "value": [
+          "date"
+        ]
+      },
+      "data": {
+        "value": [
+          "2024-01-02"
+        ]
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "date"
+        ]
+      }
+    }
+  ]
+}

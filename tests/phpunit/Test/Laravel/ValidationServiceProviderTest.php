@@ -47,6 +47,19 @@ class ValidationServiceProviderTest extends TestCase
         $this->assertCustomRulesRegistered();
     }
 
+    public function testInternationalPhoneFailureKeepsItsMessage(): void
+    {
+        (new ValidationServiceProvider($this->app))->boot();
+
+        /** @var Factory $factory */
+        $factory = $this->app->make('validator');
+        $validator = $factory->make(['phone' => '07400123456'], ['phone' => 'international_phone']);
+
+        $this->assertTrue($validator->fails());
+        $this->assertArrayHasKey('InternationalPhone', $validator->failed()['phone']);
+        $this->assertSame(['The phone number must begin with +{dialing code}'], $validator->errors()->get('phone'));
+    }
+
     private function assertCustomRulesRegistered(): void
     {
         /** @var Factory $factory */

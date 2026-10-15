@@ -1,0 +1,90 @@
+{
+  "rule": "nullable",
+  "cases": [
+    {
+      "name": "null with nullable",
+      "rules": {
+        "value": [
+          "nullable",
+          "string"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": true
+    },
+    {
+      "name": "string with nullable",
+      "rules": {
+        "value": [
+          "nullable",
+          "string"
+        ]
+      },
+      "data": {
+        "value": "a"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field with nullable",
+      "rules": {
+        "value": [
+          "nullable",
+          "string"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "null with nullable integer",
+      "rules": {
+        "value": [
+          "nullable",
+          "integer"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": true
+    },
+    {
+      "name": "null without nullable",
+      "rules": {
+        "value": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "integer with nullable string",
+      "rules": {
+        "value": [
+          "nullable",
+          "string"
+        ]
+      },
+      "data": {
+        "value": 1
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "string"
+        ]
+      }
+    }
+  ]
+}

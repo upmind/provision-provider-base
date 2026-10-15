@@ -1,0 +1,148 @@
+{
+  "rule": "alpha_dash_dot",
+  "cases": [
+    {
+      "name": "letters, digits, dashes, underscores and periods",
+      "rules": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      },
+      "data": {
+        "value": "a-b.c_D9"
+      },
+      "valid": true
+    },
+    {
+      "name": "float",
+      "rules": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      },
+      "data": {
+        "value": 1.5
+      },
+      "valid": true
+    },
+    {
+      "name": "alias alpha-dash-dot",
+      "rules": {
+        "value": [
+          "alpha-dash-dot"
+        ]
+      },
+      "data": {
+        "value": "a.b-c"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "space",
+      "rules": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      },
+      "data": {
+        "value": "a b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      }
+    },
+    {
+      "name": "slash",
+      "rules": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      },
+      "data": {
+        "value": "a/b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      }
+    },
+    {
+      "name": "at sign",
+      "rules": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      },
+      "data": {
+        "value": "a@b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      }
+    },
+    {
+      "name": "non-ASCII letter",
+      "rules": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      },
+      "data": {
+        "value": "naïve"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      }
+    },
+    {
+      "name": "alias alpha-dash-dot with space",
+      "rules": {
+        "value": [
+          "alpha-dash-dot"
+        ]
+      },
+      "data": {
+        "value": "a b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_dash_dot"
+        ]
+      }
+    }
+  ]
+}

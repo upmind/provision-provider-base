@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationRuleParser;
 use Illuminate\Validation\Validator as LaravelValidator;
+use Upmind\ProvisionBase\Laravel\Validation\SupportedRules;
 
 class RuleParser
 {
@@ -34,6 +35,8 @@ class RuleParser
      * @param string|null $parentField Name/key of the parent field, if any
      *
      * @return array<string[]> Fully expanded data set rules
+     *
+     * @throws \Upmind\ProvisionBase\Exception\UnsupportedValidationRule If a rule is not supported
      */
     public static function expand(array $rawRules, ?string $parentField = null): array
     {
@@ -60,6 +63,10 @@ class RuleParser
                     }
 
                     continue;
+                }
+
+                if ($rule !== self::NESTED_DATA_SET_RULE) {
+                    SupportedRules::assertSupported($rule);
                 }
 
                 //no further rules to expand
