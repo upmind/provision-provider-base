@@ -4,10 +4,17 @@ All notable changes to the package will be documented in this file.
 
 ## Unreleased
 
+- Require PHP 8.1
+- Remove deprecated AttributeQuery classes and the `provision_attribute_query` validation rule
+- Remove Guzzle stack history & request debug data (which use history)
+- Remove `$debugLog` argument from `BaseCategory::getGuzzleHandlerStack()`
+- Update `BaseCategory::getLogger()` to return a NullLogger when no logger is set
+- Add `DataSet::setValidatorFactory()` and `DataSet::getValidatorFactory()`; use the
+  injected validator factory instead of the Validator facade
+- Update FormFactory to cast `min`/`max` rule values to int or float
 - Update FormField::typeShouldBePassword() to match private key and passphrase
   field names, e.g., `client_private_key` and `key_passphrase`
   - Text fields with these names now render as `input_password`
-- Remove Guzzle stack history & request debug data (which use history)
 
 ## v4.3.4 - 2025-12-22
 
