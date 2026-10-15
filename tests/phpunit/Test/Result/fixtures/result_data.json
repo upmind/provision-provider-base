@@ -1,0 +1,13 @@
+{
+    "status": "ok",
+    "message": "Done",
+    "data": {
+        "a": 1,
+        "b": {
+            "c": "d"
+        }
+    },
+    "debug": {
+        "d": 1
+    }
+}

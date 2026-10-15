@@ -1,0 +1,20 @@
+{
+    "status": "ok",
+    "message": "M",
+    "data": null,
+    "debug": {
+        "error_id": "abc",
+        "message": "dbg",
+        "data": {
+            "k": "v"
+        },
+        "provider_data": {
+            "p": 1
+        },
+        "provider_output": "{\"x\":1}",
+        "custom": [
+            1,
+            2
+        ]
+    }
+}

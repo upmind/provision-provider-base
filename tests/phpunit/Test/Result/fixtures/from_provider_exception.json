@@ -1,0 +1,32 @@
+{
+    "status": "error",
+    "message": "Critical provider error encountered",
+    "data": null,
+    "debug": {
+        "provider_exception": {
+            "type": "RuntimeException",
+            "message": "Provider failure",
+            "code": 0,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": null,
+            "trace": [
+                {
+                    "file": "/app/src/Example.php",
+                    "line": 20,
+                    "class": "Example\\Client",
+                    "type": "->",
+                    "function": "request"
+                },
+                {
+                    "file": "/app/src/Example.php",
+                    "line": 30,
+                    "class": "Example\\Provider",
+                    "type": "->",
+                    "function": "create"
+                }
+            ]
+        },
+        "message": "Encountered exception: RuntimeException"
+    }
+}

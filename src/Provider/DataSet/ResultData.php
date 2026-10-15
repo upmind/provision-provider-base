@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Upmind\ProvisionBase\Provider\DataSet;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Upmind\ProvisionBase\Result\ProviderResult;
+use Upmind\ProvisionBase\Result\Result;
+use Upmind\ProvisionBase\Result\ResultFactory;
 
 class ResultData extends DataSet
 {
@@ -91,13 +92,8 @@ class ResultData extends DataSet
     /**
      * Create a successful provision result from this result data instance.
      */
-    final public function toProvisionResult(): ProviderResult
+    final public function toProvisionResult(): Result
     {
-        return new ProviderResult(
-            ProviderResult::STATUS_OK,
-            $this->getMessage(),
-            $this->getData(),
-            $this->getDebug()
-        );
+        return ResultFactory::fromResultData($this);
     }
 }

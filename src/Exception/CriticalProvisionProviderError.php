@@ -6,7 +6,6 @@ namespace Upmind\ProvisionBase\Exception;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Throwable;
-use Upmind\ProvisionBase\Result\ProviderResult;
 
 /**
  * Exception representing a critical error encountered during provision function

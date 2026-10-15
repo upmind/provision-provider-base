@@ -411,7 +411,7 @@ class ProvisionRegistryServiceProvider extends ServiceProvider
 
 Some convenience classes are provided to ease the instantiation of provider
 objects, and execute provision functions in exchange for a normalized provision
-[Result](./src/Result/ProviderResult.php) object.
+[Result](./src/Result/Result.php) object.
 
 A [Factory](./src/ProviderFactory.php) is available to create a [Provider](./src/Provider.php)
 instance wrapper, which can then create a [ProviderJob](./src/ProviderJob.php)
@@ -441,13 +441,33 @@ $greeting = $foo->makeJob('greeting', $greetingParameters);
 // => Instance of Upmind\ProvisionBase\ProviderJob
 
 $greetingResult = $greeting->execute();
-// => Instance of Upmind\ProvisionBase\Result\ProviderResult
+// => Instance of Upmind\ProvisionBase\Result\Result
 
 $data = $greetingResult->getData();
 // Greeting result data:
 // [
 //     'sentence' => 'Hello Harry! From your friend, Foo.'
 // ]
+```
+
+#### Results
+
+A [Result](./src/Result/Result.php) is an immutable object with a status (`ok`
+or `error`), a message, data and debug data. JSON-encode it to get the
+provision result output.
+
+Use [ResultFactory](./src/Result/ResultFactory.php) to create results. The
+factory normalises the values and formats exceptions for debug data:
+
+```php
+<?php
+
+use Upmind\ProvisionBase\Result\ResultFactory;
+
+$result = ResultFactory::ok('Greeting created', ['sentence' => 'Hello Harry!']);
+$result = ResultFactory::error('Greeting failed', errorId: 'error-id');
+$result = ResultFactory::fromException($exception);
+$result = ResultFactory::fromJson($json);
 ```
 
 ## Data Sets
@@ -504,7 +524,7 @@ class PersonData extends DataSet
 
 For provision function return data, there is an alternative base [ResultData](./src/Provider/DataSet/ResultData.php)
 class you can extend from which provides convenience methods for optionally
-setting a [Result](./src/Result/ProviderResult.php) success message and/or debug
+setting a [Result](./src/Result/Result.php) success message and/or debug
 data which you can see in action in the Foo provider [above](#example-provider).
 
 See the example below defining Greeting which contains the return data of the
