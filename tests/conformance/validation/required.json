@@ -1,0 +1,150 @@
+{
+  "rule": "required",
+  "cases": [
+    {
+      "name": "non-empty string",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {
+        "value": "a"
+      },
+      "valid": true
+    },
+    {
+      "name": "string zero",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {
+        "value": "0"
+      },
+      "valid": true
+    },
+    {
+      "name": "integer zero",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {
+        "value": 0
+      },
+      "valid": true
+    },
+    {
+      "name": "false",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {
+        "value": false
+      },
+      "valid": true
+    },
+    {
+      "name": "non-empty array",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {
+        "value": [
+          1
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {},
+      "valid": false,
+      "failed": {
+        "value": [
+          "required"
+        ]
+      }
+    },
+    {
+      "name": "null",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required"
+        ]
+      }
+    },
+    {
+      "name": "empty string",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required"
+        ]
+      }
+    },
+    {
+      "name": "whitespace-only string",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {
+        "value": "   "
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required"
+        ]
+      }
+    },
+    {
+      "name": "empty array",
+      "rules": {
+        "value": [
+          "required"
+        ]
+      },
+      "data": {
+        "value": []
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required"
+        ]
+      }
+    }
+  ]
+}

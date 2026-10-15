@@ -1,0 +1,242 @@
+{
+  "rule": "certificate_pem",
+  "cases": [
+    {
+      "name": "certificate",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN CERTIFICATE-----\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nQUJD\n-----END CERTIFICATE-----\n"
+      },
+      "valid": true
+    },
+    {
+      "name": "certificate without trailing newline",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN CERTIFICATE-----\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nQUJD\n-----END CERTIFICATE-----"
+      },
+      "valid": true
+    },
+    {
+      "name": "76-character lines",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN CERTIFICATE-----\nBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\nQUJD\n-----END CERTIFICATE-----\n"
+      },
+      "valid": true
+    },
+    {
+      "name": "CRLF line endings",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN CERTIFICATE-----\r\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\r\nQUJD\r\n-----END CERTIFICATE-----\r\n"
+      },
+      "valid": true
+    },
+    {
+      "name": "public key",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN PUBLIC KEY-----\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n-----END PUBLIC KEY-----\n"
+      },
+      "valid": true
+    },
+    {
+      "name": "private key",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN PRIVATE KEY-----\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n-----END PRIVATE KEY-----\n"
+      },
+      "valid": true
+    },
+    {
+      "name": "RSA private key",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN RSA PRIVATE KEY-----\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n-----END RSA PRIVATE KEY-----\n"
+      },
+      "valid": true
+    },
+    {
+      "name": "certificate chain",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN CERTIFICATE-----\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nQUJD\n-----END CERTIFICATE-----\n-----BEGIN CERTIFICATE-----\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nQUJD\n-----END CERTIFICATE-----\n"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "plain text",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "not a certificate"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "certificate_pem"
+        ]
+      }
+    },
+    {
+      "name": "EC private key",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN EC PRIVATE KEY-----\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n-----END EC PRIVATE KEY-----\n"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "certificate_pem"
+        ]
+      }
+    },
+    {
+      "name": "77-character line",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN CERTIFICATE-----\nCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC\n-----END CERTIFICATE-----\n"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "certificate_pem"
+        ]
+      }
+    },
+    {
+      "name": "short line before a full line",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN CERTIFICATE-----\nQUJD\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n-----END CERTIFICATE-----\n"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "certificate_pem"
+        ]
+      }
+    },
+    {
+      "name": "invalid base64 character",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN CERTIFICATE-----\nA*B\n-----END CERTIFICATE-----\n"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "certificate_pem"
+        ]
+      }
+    },
+    {
+      "name": "missing footer",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": "-----BEGIN CERTIFICATE-----\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "certificate_pem"
+        ]
+      }
+    },
+    {
+      "name": "integer fails as string",
+      "rules": {
+        "value": [
+          "certificate_pem"
+        ]
+      },
+      "data": {
+        "value": 123
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "string"
+        ]
+      }
+    }
+  ]
+}

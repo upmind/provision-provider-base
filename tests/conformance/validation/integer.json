@@ -1,0 +1,203 @@
+{
+  "rule": "integer",
+  "cases": [
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": 1
+      },
+      "valid": true
+    },
+    {
+      "name": "negative integer",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": -5
+      },
+      "valid": true
+    },
+    {
+      "name": "numeric string",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": "42"
+      },
+      "valid": true
+    },
+    {
+      "name": "negative numeric string",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": "-42"
+      },
+      "valid": true
+    },
+    {
+      "name": "zero",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": 0
+      },
+      "valid": true
+    },
+    {
+      "name": "alias int",
+      "rules": {
+        "value": [
+          "int"
+        ]
+      },
+      "data": {
+        "value": 7
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "float",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": 1.5
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "integer"
+        ]
+      }
+    },
+    {
+      "name": "decimal string",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": "1.5"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "integer"
+        ]
+      }
+    },
+    {
+      "name": "letters",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": "abc"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "integer"
+        ]
+      }
+    },
+    {
+      "name": "exponent string",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": "1e3"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "integer"
+        ]
+      }
+    },
+    {
+      "name": "leading space is trimmed",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": " 1"
+      },
+      "valid": true
+    },
+    {
+      "name": "null",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "integer"
+        ]
+      }
+    },
+    {
+      "name": "array",
+      "rules": {
+        "value": [
+          "integer"
+        ]
+      },
+      "data": {
+        "value": [
+          1
+        ]
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "integer"
+        ]
+      }
+    }
+  ]
+}

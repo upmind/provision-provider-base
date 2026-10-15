@@ -1,0 +1,243 @@
+{
+  "rule": "required_if",
+  "cases": [
+    {
+      "name": "other field matches and field is set",
+      "rules": {
+        "type": [
+          "string"
+        ],
+        "value": [
+          "required_if:type,a"
+        ]
+      },
+      "data": {
+        "type": "a",
+        "value": "x"
+      },
+      "valid": true
+    },
+    {
+      "name": "other field does not match",
+      "rules": {
+        "type": [
+          "string"
+        ],
+        "value": [
+          "required_if:type,a"
+        ]
+      },
+      "data": {
+        "type": "b"
+      },
+      "valid": true
+    },
+    {
+      "name": "other field is missing",
+      "rules": {
+        "value": [
+          "required_if:type,a"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "other field matches one of several values",
+      "rules": {
+        "value": [
+          "required_if:type,a,b"
+        ]
+      },
+      "data": {
+        "type": "b",
+        "value": "x"
+      },
+      "valid": true
+    },
+    {
+      "name": "boolean other field false with parameter 1",
+      "rules": {
+        "flag": [
+          "boolean"
+        ],
+        "value": [
+          "required_if:flag,1"
+        ]
+      },
+      "data": {
+        "flag": false
+      },
+      "valid": true
+    },
+    {
+      "name": "other field matches and field is missing",
+      "rules": {
+        "type": [
+          "string"
+        ],
+        "value": [
+          "required_if:type,a"
+        ]
+      },
+      "data": {
+        "type": "a"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_if"
+        ]
+      }
+    },
+    {
+      "name": "other field matches and field is empty",
+      "rules": {
+        "value": [
+          "required_if:type,a"
+        ]
+      },
+      "data": {
+        "type": "a",
+        "value": ""
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_if"
+        ]
+      }
+    },
+    {
+      "name": "boolean other field true does not match parameter 1",
+      "rules": {
+        "flag": [
+          "boolean"
+        ],
+        "value": [
+          "required_if:flag,1"
+        ]
+      },
+      "data": {
+        "flag": true
+      },
+      "valid": true
+    },
+    {
+      "name": "boolean other field true matches parameter true",
+      "rules": {
+        "flag": [
+          "boolean"
+        ],
+        "value": [
+          "required_if:flag,true"
+        ]
+      },
+      "data": {
+        "flag": true
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_if"
+        ]
+      }
+    },
+    {
+      "name": "boolean other field false matches parameter false",
+      "rules": {
+        "flag": [
+          "boolean"
+        ],
+        "value": [
+          "required_if:flag,false"
+        ]
+      },
+      "data": {
+        "flag": false
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_if"
+        ]
+      }
+    },
+    {
+      "name": "integer 1 other field matches parameter 1",
+      "rules": {
+        "flag": [
+          "boolean"
+        ],
+        "value": [
+          "required_if:flag,1"
+        ]
+      },
+      "data": {
+        "flag": 1
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_if"
+        ]
+      }
+    },
+    {
+      "name": "string 1 other field matches parameter 1",
+      "rules": {
+        "flag": [
+          "boolean"
+        ],
+        "value": [
+          "required_if:flag,1"
+        ]
+      },
+      "data": {
+        "flag": "1"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_if"
+        ]
+      }
+    },
+    {
+      "name": "integer other field matches string parameter",
+      "rules": {
+        "value": [
+          "required_if:count,1"
+        ]
+      },
+      "data": {
+        "count": 1
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_if"
+        ]
+      }
+    },
+    {
+      "name": "nested other field",
+      "rules": {
+        "value": [
+          "required_if:a.type,x"
+        ]
+      },
+      "data": {
+        "a": {
+          "type": "x"
+        }
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "required_if"
+        ]
+      }
+    }
+  ]
+}

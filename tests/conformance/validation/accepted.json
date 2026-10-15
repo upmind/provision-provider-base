@@ -1,0 +1,143 @@
+{
+  "rule": "accepted",
+  "cases": [
+    {
+      "name": "yes",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {
+        "value": "yes"
+      },
+      "valid": true
+    },
+    {
+      "name": "on",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {
+        "value": "on"
+      },
+      "valid": true
+    },
+    {
+      "name": "string 1",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {
+        "value": "1"
+      },
+      "valid": true
+    },
+    {
+      "name": "integer 1",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {
+        "value": 1
+      },
+      "valid": true
+    },
+    {
+      "name": "true",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {
+        "value": true
+      },
+      "valid": true
+    },
+    {
+      "name": "string true",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {
+        "value": "true"
+      },
+      "valid": true
+    },
+    {
+      "name": "no",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {
+        "value": "no"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "accepted"
+        ]
+      }
+    },
+    {
+      "name": "false",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {
+        "value": false
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "accepted"
+        ]
+      }
+    },
+    {
+      "name": "integer 0",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {
+        "value": 0
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "accepted"
+        ]
+      }
+    },
+    {
+      "name": "missing field",
+      "rules": {
+        "value": [
+          "accepted"
+        ]
+      },
+      "data": {},
+      "valid": false,
+      "failed": {
+        "value": [
+          "accepted"
+        ]
+      }
+    }
+  ]
+}

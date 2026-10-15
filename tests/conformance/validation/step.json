@@ -1,0 +1,167 @@
+{
+  "rule": "step",
+  "cases": [
+    {
+      "name": "integer multiple",
+      "rules": {
+        "value": [
+          "step:2"
+        ]
+      },
+      "data": {
+        "value": 4
+      },
+      "valid": true
+    },
+    {
+      "name": "negative multiple",
+      "rules": {
+        "value": [
+          "step:2"
+        ]
+      },
+      "data": {
+        "value": -4
+      },
+      "valid": true
+    },
+    {
+      "name": "zero",
+      "rules": {
+        "value": [
+          "step:2"
+        ]
+      },
+      "data": {
+        "value": 0
+      },
+      "valid": true
+    },
+    {
+      "name": "numeric string multiple",
+      "rules": {
+        "value": [
+          "step:2"
+        ]
+      },
+      "data": {
+        "value": "6"
+      },
+      "valid": true
+    },
+    {
+      "name": "decimal multiple",
+      "rules": {
+        "value": [
+          "step:0.5"
+        ]
+      },
+      "data": {
+        "value": 1.5
+      },
+      "valid": true
+    },
+    {
+      "name": "multiple of 0.01 within float precision",
+      "rules": {
+        "value": [
+          "step:0.01"
+        ]
+      },
+      "data": {
+        "value": 2.07
+      },
+      "valid": true
+    },
+    {
+      "name": "integer with step 1",
+      "rules": {
+        "value": [
+          "step:1"
+        ]
+      },
+      "data": {
+        "value": 3
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "step:2"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "not a multiple",
+      "rules": {
+        "value": [
+          "step:2"
+        ]
+      },
+      "data": {
+        "value": 3
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "step"
+        ]
+      }
+    },
+    {
+      "name": "not a decimal multiple",
+      "rules": {
+        "value": [
+          "step:0.5"
+        ]
+      },
+      "data": {
+        "value": 1.25
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "step"
+        ]
+      }
+    },
+    {
+      "name": "fraction with step 1 fails as integer",
+      "rules": {
+        "value": [
+          "step:1"
+        ]
+      },
+      "data": {
+        "value": 1.5
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "integer"
+        ]
+      }
+    },
+    {
+      "name": "non-numeric value fails as numeric",
+      "rules": {
+        "value": [
+          "step:2"
+        ]
+      },
+      "data": {
+        "value": "abc"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "numeric"
+        ]
+      }
+    }
+  ]
+}

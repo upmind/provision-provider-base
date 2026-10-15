@@ -1,0 +1,68 @@
+{
+  "rule": "present",
+  "cases": [
+    {
+      "name": "value",
+      "rules": {
+        "value": [
+          "present"
+        ]
+      },
+      "data": {
+        "value": "a"
+      },
+      "valid": true
+    },
+    {
+      "name": "null",
+      "rules": {
+        "value": [
+          "present"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": true
+    },
+    {
+      "name": "empty string",
+      "rules": {
+        "value": [
+          "present"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "empty array",
+      "rules": {
+        "value": [
+          "present"
+        ]
+      },
+      "data": {
+        "value": []
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field",
+      "rules": {
+        "value": [
+          "present"
+        ]
+      },
+      "data": {},
+      "valid": false,
+      "failed": {
+        "value": [
+          "present"
+        ]
+      }
+    }
+  ]
+}

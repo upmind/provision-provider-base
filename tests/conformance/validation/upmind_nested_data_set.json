@@ -1,0 +1,238 @@
+{
+  "rule": "upmind_nested_data_set",
+  "cases": [
+    {
+      "name": "valid nested data",
+      "rules": {
+        "contact": [
+          "upmind_nested_data_set"
+        ],
+        "contact.name": [
+          "required",
+          "string"
+        ],
+        "contact.email": [
+          "nullable",
+          "email"
+        ]
+      },
+      "data": {
+        "contact": {
+          "name": "A",
+          "email": "a@example.com"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "nested rules are skipped when the field is missing",
+      "rules": {
+        "contact": [
+          "upmind_nested_data_set"
+        ],
+        "contact.name": [
+          "required",
+          "string"
+        ],
+        "contact.email": [
+          "nullable",
+          "email"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "nested rules are skipped when the field is null",
+      "rules": {
+        "contact": [
+          "upmind_nested_data_set"
+        ],
+        "contact.name": [
+          "required",
+          "string"
+        ],
+        "contact.email": [
+          "nullable",
+          "email"
+        ]
+      },
+      "data": {
+        "contact": null
+      },
+      "valid": true
+    },
+    {
+      "name": "nested rules are skipped when the field is not an array",
+      "rules": {
+        "contact": [
+          "upmind_nested_data_set"
+        ],
+        "contact.name": [
+          "required",
+          "string"
+        ],
+        "contact.email": [
+          "nullable",
+          "email"
+        ]
+      },
+      "data": {
+        "contact": "x"
+      },
+      "valid": true
+    },
+    {
+      "name": "required parent with nested data",
+      "rules": {
+        "contact": [
+          "required",
+          "upmind_nested_data_set"
+        ],
+        "contact.name": [
+          "required",
+          "string"
+        ],
+        "contact.email": [
+          "nullable",
+          "email"
+        ]
+      },
+      "data": {
+        "contact": {
+          "name": "A"
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "missing nested required field",
+      "rules": {
+        "contact": [
+          "upmind_nested_data_set"
+        ],
+        "contact.name": [
+          "required",
+          "string"
+        ],
+        "contact.email": [
+          "nullable",
+          "email"
+        ]
+      },
+      "data": {
+        "contact": {
+          "email": "a@example.com"
+        }
+      },
+      "valid": false,
+      "failed": {
+        "contact.name": [
+          "required"
+        ]
+      }
+    },
+    {
+      "name": "invalid nested field",
+      "rules": {
+        "contact": [
+          "upmind_nested_data_set"
+        ],
+        "contact.name": [
+          "required",
+          "string"
+        ],
+        "contact.email": [
+          "nullable",
+          "email"
+        ]
+      },
+      "data": {
+        "contact": {
+          "name": "A",
+          "email": "x"
+        }
+      },
+      "valid": false,
+      "failed": {
+        "contact.email": [
+          "email"
+        ]
+      }
+    },
+    {
+      "name": "empty nested data",
+      "rules": {
+        "contact": [
+          "upmind_nested_data_set"
+        ],
+        "contact.name": [
+          "required",
+          "string"
+        ],
+        "contact.email": [
+          "nullable",
+          "email"
+        ]
+      },
+      "data": {
+        "contact": {}
+      },
+      "valid": false,
+      "failed": {
+        "contact.name": [
+          "required"
+        ]
+      }
+    },
+    {
+      "name": "required parent is missing",
+      "rules": {
+        "contact": [
+          "required",
+          "upmind_nested_data_set"
+        ],
+        "contact.name": [
+          "required",
+          "string"
+        ],
+        "contact.email": [
+          "nullable",
+          "email"
+        ]
+      },
+      "data": {},
+      "valid": false,
+      "failed": {
+        "contact": [
+          "required"
+        ]
+      }
+    },
+    {
+      "name": "two levels of nesting",
+      "rules": {
+        "a": [
+          "upmind_nested_data_set"
+        ],
+        "a.b": [
+          "upmind_nested_data_set"
+        ],
+        "a.b.c": [
+          "required"
+        ]
+      },
+      "data": {
+        "a": {
+          "b": {}
+        }
+      },
+      "valid": false,
+      "failed": {
+        "a.b.c": [
+          "required"
+        ]
+      }
+    }
+  ]
+}

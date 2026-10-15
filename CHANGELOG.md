@@ -18,6 +18,9 @@ All notable changes to the package will be documented in this file.
 - Fix `international_phone` without a country argument accepting any value that starts with `+`
 - Update `international_phone` to fail as a rule, so `Validator::failed()` reports it
 - Update the data set validator to report nested data set failures in `Validator::failed()`
+- Add a validation conformance suite in `tests/conformance`: one JSON case file per supported rule
+- Add `SupportedRules`; `RuleParser::expand()` throws `UnsupportedValidationRule` for any rule outside the allowlist
+  - Block rules which query a database, do DNS lookups, read the authenticated user or inspect uploaded files
 
 ## v4.3.4 - 2025-12-22
 

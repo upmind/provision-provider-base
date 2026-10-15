@@ -1,0 +1,160 @@
+{
+  "rule": "alpha_score",
+  "cases": [
+    {
+      "name": "letters, digits and underscores",
+      "rules": {
+        "value": [
+          "alpha_score"
+        ]
+      },
+      "data": {
+        "value": "abc_XYZ_123"
+      },
+      "valid": true
+    },
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "alpha_score"
+        ]
+      },
+      "data": {
+        "value": 123
+      },
+      "valid": true
+    },
+    {
+      "name": "alias alpha-score",
+      "rules": {
+        "value": [
+          "alpha-score"
+        ]
+      },
+      "data": {
+        "value": "abc"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "alpha_score"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "alpha_score"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "whitespace-only string is not validated",
+      "rules": {
+        "value": [
+          "alpha_score"
+        ]
+      },
+      "data": {
+        "value": "   "
+      },
+      "valid": true
+    },
+    {
+      "name": "dash",
+      "rules": {
+        "value": [
+          "alpha_score"
+        ]
+      },
+      "data": {
+        "value": "a-b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_score"
+        ]
+      }
+    },
+    {
+      "name": "period",
+      "rules": {
+        "value": [
+          "alpha_score"
+        ]
+      },
+      "data": {
+        "value": "a.b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_score"
+        ]
+      }
+    },
+    {
+      "name": "space",
+      "rules": {
+        "value": [
+          "alpha_score"
+        ]
+      },
+      "data": {
+        "value": "a b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_score"
+        ]
+      }
+    },
+    {
+      "name": "non-ASCII letter",
+      "rules": {
+        "value": [
+          "alpha_score"
+        ]
+      },
+      "data": {
+        "value": "café"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_score"
+        ]
+      }
+    },
+    {
+      "name": "alias alpha-score with dash",
+      "rules": {
+        "value": [
+          "alpha-score"
+        ]
+      },
+      "data": {
+        "value": "a-b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_score"
+        ]
+      }
+    }
+  ]
+}
