@@ -222,7 +222,7 @@ class ProviderJob
             }
 
             //ensure return data is of the correct type
-            if (get_class($this->returnData) !== $this->getReturnDataSetClass()) {
+            if (!is_object($this->returnData) || get_class($this->returnData) !== $this->getReturnDataSetClass()) {
                 $this->returnData = $this->getReturnDataSetClass()::create($this->returnData);
             }
 
@@ -230,9 +230,9 @@ class ProviderJob
             $this->validateReturnData();
 
             //create successful job result
-            return $this->result = $this->createSuccessResult($this->returnData);
+            $this->result = $this->createSuccessResult($this->returnData);
         } catch (Throwable $e) {
-            return $this->result = ResultFactory::withProviderJobDebug(
+            $this->result = ResultFactory::withProviderJobDebug(
                 $this->createErrorResult($e, $this->returnData ?? null),
                 $this
             );
@@ -241,14 +241,21 @@ class ProviderJob
                 // trigger destructors to prevent destruct errors from affecting the provision result
                 $this->getProvider()->unsetInstance();
             } catch (Throwable $e) {
-                $this->result = ResultFactory::withProviderDestructorExceptionDebug($this->result, $e);
+                if (isset($this->result)) {
+                    $this->result = ResultFactory::withProviderDestructorExceptionDebug($this->result, $e);
+                }
             }
 
-            return $this->result = ResultFactory::withExecutionTimeDebug(
-                $this->result,
-                microtime(true) - $executeStartTime
-            );
+            // no result means an unexpected exception is propagating
+            if (isset($this->result)) {
+                $this->result = ResultFactory::withExecutionTimeDebug(
+                    $this->result,
+                    microtime(true) - $executeStartTime
+                );
+            }
         }
+
+        return $this->result;
     }
 
     /**

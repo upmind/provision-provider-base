@@ -19,6 +19,7 @@ use Upmind\ProvisionBase\Registry\Data\FunctionRegister;
 use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
 use Upmind\ProvisionBase\TestStub\TestDataSet;
 use Upmind\ProvisionBase\TestStub\TestProvider;
+use Upmind\ProvisionBase\TestStub\TestThrowingDataSet;
 
 class ProviderJobResultTest extends TestCase
 {
@@ -80,12 +81,38 @@ class ProviderJobResultTest extends TestCase
         $this->assertSame($result, $job->getResult());
     }
 
-    private function makeJob(string $function, ?RuntimeException $destructorException = null): ProviderJob
+    public function testArrayReturnDataIsCastToReturnDataSet(): void
     {
+        $result = $this->makeJob('returnArray')->execute();
+
+        $this->assertTrue($result->isOk());
+        $this->assertSame(['a' => 1], $result->getData());
+    }
+
+    public function testUnexpectedExceptionPropagates(): void
+    {
+        $job = $this->makeJob('returnArray', null, TestThrowingDataSet::class);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Data set failure');
+
+        $job->execute();
+    }
+
+    private function makeJob(
+        string $function,
+        ?RuntimeException $destructorException = null,
+        string $returnDataSetClass = ResultData::class
+    ): ProviderJob {
         $this->provider = new class (new TestDataSet([])) extends TestProvider {
             public function succeed(TestDataSet $params): ResultData
             {
                 return ResultData::create(['a' => 1])->setMessage('Done')->setDebug(['b' => 2]);
+            }
+
+            public function returnArray(TestDataSet $params): array
+            {
+                return ['a' => 1];
             }
 
             public function fail(TestDataSet $params): ResultData
@@ -99,7 +126,7 @@ class ProviderJobResultTest extends TestCase
         $parameterRegister = $this->createMock(DataSetRegister::class);
         $parameterRegister->method('getClass')->willReturn(TestDataSet::class);
         $returnRegister = $this->createMock(DataSetRegister::class);
-        $returnRegister->method('getClass')->willReturn(ResultData::class);
+        $returnRegister->method('getClass')->willReturn($returnDataSetClass);
 
         $functionRegister = $this->createMock(FunctionRegister::class);
         $functionRegister->method('getParameter')->willReturn($parameterRegister);
