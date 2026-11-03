@@ -13,7 +13,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\ServiceProvider as BaseProvider;
 use League\ISO3166\ISO3166;
 use libphonenumber\NumberParseException;
-use Propaganistas\LaravelPhone\Exceptions\NumberParseException as PropaganistasNumberParseException;
 use Upmind\ProvisionBase\Laravel\Validation\Rules\CertificatePem;
 use Upmind\ProvisionBase\Provider\DataSet\DataSet;
 use Upmind\ProvisionBase\Provider\DataSet\RuleParser;
@@ -184,7 +183,7 @@ class ValidationServiceProvider extends BaseProvider
             try {
                 $phone = phone($value);
                 $phone->getCountry();
-            } catch (PropaganistasNumberParseException | NumberParseException $e) {
+            } catch (NumberParseException $e) {
                 return $this->manualCheckPhones($value);
             }
 

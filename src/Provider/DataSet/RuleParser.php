@@ -135,7 +135,7 @@ class RuleParser
         if (strpos($rule, ':') !== false) {
             list($rule, $arguments) = explode(':', $rule, 2);
 
-            $arguments = $arguments ? str_getcsv($arguments) : [];
+            $arguments = $arguments ? str_getcsv($arguments, ',', '"', '\\') : [];
         }
 
         return [$rule, $arguments];

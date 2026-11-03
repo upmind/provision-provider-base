@@ -407,7 +407,7 @@ abstract class ClassRegister implements RegisterInterface
      */
     public function __sleep()
     {
-        unset($this->reflection);
+        $this->reflection = null;
 
         return array_keys(get_object_vars($this));
     }

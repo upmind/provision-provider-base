@@ -6,7 +6,7 @@ namespace Upmind\ProvisionBase\Test;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Psr\Log\LoggerInterface;
 use Upmind\ProvisionBase\Provider\DataSet\SystemInfo;
 use Upmind\ProvisionBase\ProviderFactory;
@@ -19,17 +19,17 @@ use Upmind\ProvisionBase\TestStub\TestSystemInfo;
 
 class ProviderFactoryTest extends TestCase
 {
-    private MockObject $registry;
-    private MockObject $filesystem;
-    private MockObject $logger;
+    private Registry&Stub $registry;
+    private Filesystem&Stub $filesystem;
+    private LoggerInterface&Stub $logger;
     private ProviderFactory $factory;
     private SystemInfo $systemInfo;
 
     protected function setUp(): void
     {
-        $this->registry = $this->createMock(Registry::class);
-        $this->filesystem = $this->createMock(Filesystem::class);
-        $this->logger = $this->createMock(LoggerInterface::class);
+        $this->registry = $this->createStub(Registry::class);
+        $this->filesystem = $this->createStub(Filesystem::class);
+        $this->logger = $this->createStub(LoggerInterface::class);
         $this->systemInfo = new TestSystemInfo();
 
         $this->factory = new ProviderFactory(
@@ -42,7 +42,7 @@ class ProviderFactoryTest extends TestCase
 
     public function testGetAndSetLogger(): void
     {
-        $newLogger = $this->createMock(LoggerInterface::class);
+        $newLogger = $this->createStub(LoggerInterface::class);
 
         $this->factory->setLogger($newLogger);
 
@@ -51,7 +51,7 @@ class ProviderFactoryTest extends TestCase
 
     public function testGetAndSetFilesystem(): void
     {
-        $newFilesystem = $this->createMock(Filesystem::class);
+        $newFilesystem = $this->createStub(Filesystem::class);
 
         $this->factory->setFilesystem($newFilesystem);
 
@@ -61,18 +61,20 @@ class ProviderFactoryTest extends TestCase
     public function testCreate(): void
     {
         // Set up
+        $registry = $this->createMock(Registry::class);
         $category = $this->createMock(CategoryRegister::class);
-        $provider = $this->createMock(ProviderRegister::class);
+        $provider = $this->createStub(ProviderRegister::class);
         $dataSet = new TestDataSet([]);
+        $factory = new ProviderFactory($registry, $this->filesystem, $this->logger, $this->systemInfo);
 
-        $this->registry->expects(self::once())->method('getCategory')->willReturn($category);
+        $registry->expects(self::once())->method('getCategory')->willReturn($category);
 
         $category->expects($this->once())->method('getProvider')->willReturn($provider);
 
-        $provider->expects($this->any())->method('getClass')->willReturn(TestProvider::class);
+        $provider->method('getClass')->willReturn(TestProvider::class);
 
         // Invoke factory
-        $result = $this->factory->create($category, $provider, $dataSet);
+        $result = $factory->create($category, $provider, $dataSet);
 
         // Check returned object
         $this->assertSame($provider, $result->getRegister());

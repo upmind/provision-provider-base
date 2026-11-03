@@ -12,6 +12,7 @@ Normally this library will not be used standalone, as it will be installed as a
 sub-dependency of a provision category/provider library such as
 [upmind/provision-provider-shared-hosting](https://github.com/upmind-automation/provision-provider-shared-hosting#readme).
 
+- [Requirements](#requirements)
 - [Installation](#installation)
   - [Docker](#docker)
 - [Usage](#usage)
@@ -33,6 +34,12 @@ sub-dependency of a provision category/provider library such as
 - [License](#license)
 - [Upmind](#upmind)
 
+## Requirements
+
+- PHP 8.3, 8.4 or 8.5
+- Laravel 13 (`illuminate/*` ^13.0)
+- Guzzle 8
+
 ## Installation
 
 ```bash
@@ -46,7 +53,7 @@ The package provides samples of Dockerfile files to support local development an
 To use them, you need to have Docker and Docker Compose installed on your machine.
 
 A `Makefile` is provided to simplify the usage of the docker-compose files.
-  - `make setup-php82` sets up the PHP 8.2 development environment.
+  - `make setup-php83`, `make setup-php84` or `make setup-php85` sets up the development environment for that PHP version.
   - `make static-analysis` runs the static analysis.
 
 ## Usage
