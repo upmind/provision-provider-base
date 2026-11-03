@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Upmind\ProvisionBase\Test;
 
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Upmind\ProvisionBase\Provider;
 use Upmind\ProvisionBase\ProviderJob;
@@ -15,21 +15,21 @@ use Upmind\ProvisionBase\TestStub\TestDataSet;
 
 class ProviderJobTest extends TestCase
 {
-    private MockObject|Provider $provider;
-    private MockObject|ProviderRegister $providerRegister;
-    private MockObject|FunctionRegister $functionRegister;
+    private Provider&Stub $provider;
+    private ProviderRegister&Stub $providerRegister;
+    private FunctionRegister&Stub $functionRegister;
 
     protected function setUp(): void
     {
-        $this->providerRegister = $this->createMock(ProviderRegister::class);
-        $this->provider = $this->createMock(Provider::class);
-        $this->functionRegister = $this->createMock(FunctionRegister::class);
+        $this->providerRegister = $this->createStub(ProviderRegister::class);
+        $this->provider = $this->createStub(Provider::class);
+        $this->functionRegister = $this->createStub(FunctionRegister::class);
     }
 
     public function testConstructorCreatesJobSuccessfully(): void
     {
         $this->provider->method('getRegister')->willReturn($this->providerRegister);
-        $this->providerRegister->method('hasFunction')->with('testFunction')->willReturn(true);
+        $this->providerRegister->method('hasFunction')->willReturnMap([['testFunction', true]]);
 
         $job = new ProviderJob($this->provider, 'testFunction', []);
 
@@ -41,7 +41,7 @@ class ProviderJobTest extends TestCase
     {
         $this->provider->method('getRegister')->willReturn($this->providerRegister);
         $this->providerRegister->method('hasFunction')->willReturn(true);
-        $this->providerRegister->method('getFunction')->with('testFunction')->willReturn($this->functionRegister);
+        $this->providerRegister->method('getFunction')->willReturnMap([['testFunction', $this->functionRegister]]);
 
         $job = new ProviderJob($this->provider, 'testFunction');
 
@@ -50,8 +50,8 @@ class ProviderJobTest extends TestCase
 
     public function testGetParameterDataSetClassReturnsCorrectClass(): void
     {
-        $dataSetRegister = $this->createMock(DataSetRegister::class);
-        $dataSetRegister->expects($this->any())->method('getClass')->willReturn(TestDataSet::class);
+        $dataSetRegister = $this->createStub(DataSetRegister::class);
+        $dataSetRegister->method('getClass')->willReturn(TestDataSet::class);
 
         $this->provider->method('getRegister')->willReturn($this->providerRegister);
         $this->providerRegister->method('hasFunction')->willReturn(true);

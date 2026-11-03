@@ -22,7 +22,7 @@ class Provider
     protected $register;
 
     /**
-     * @var ProviderInterface
+     * @var ProviderInterface|null
      */
     protected $instance;
 
@@ -67,7 +67,7 @@ class Provider
      */
     public function unsetInstance(): void
     {
-        unset($this->instance);
+        $this->instance = null;
     }
 
     /**
