@@ -19,6 +19,12 @@ All notable changes to the package will be documented in this file.
 - Remove the `$autoValidation` argument from `DataSet::__construct()` and `DataSet::create()`
   - Call `autoValidation(false)` on the instance to disable auto-validation
   - Subclass constructors must match `__construct($values = [])`
+- Replace `Result`, `ProviderResult` and `ResultInterface` with one immutable, final `Result` DTO
+- Add `ResultFactory` to create results and add debug data
+  - It replaces the `ProviderResult` constructor, `create*()` methods and `with*()` mutators
+  - `fromJson()` throws `JsonException` or `InvalidArgumentException` for invalid input
+- Fix `ProviderJob::execute()` for provision functions that return an array, and stop it
+  hiding unexpected exceptions
 
 ## v4.3.4 - 2025-12-22
 

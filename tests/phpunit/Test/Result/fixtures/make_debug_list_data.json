@@ -1,0 +1,11 @@
+{
+    "status": "ok",
+    "message": "M",
+    "data": null,
+    "debug": {
+        "data": {
+            "0": "x",
+            "1": "y"
+        }
+    }
+}

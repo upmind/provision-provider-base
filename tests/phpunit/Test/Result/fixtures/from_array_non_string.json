@@ -1,0 +1,11 @@
+{
+    "status": "error",
+    "message": "Unexpected provider function output",
+    "data": {
+        "0": "scalar"
+    },
+    "debug": {
+        "message": "dbg",
+        "provider_output": "null"
+    }
+}

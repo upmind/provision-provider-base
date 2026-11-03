@@ -1,0 +1,8 @@
+{
+    "status": "ok",
+    "message": "M",
+    "data": null,
+    "debug": {
+        "custom": "bar"
+    }
+}
