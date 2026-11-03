@@ -19,26 +19,12 @@ All notable changes to the package will be documented in this file.
 - Remove the `$autoValidation` argument from `DataSet::__construct()` and `DataSet::create()`
   - Call `autoValidation(false)` on the instance to disable auto-validation
   - Subclass constructors must match `__construct($values = [])`
-- Collapse `Result` and `ProviderResult` into one immutable, final `Result` DTO
-  - Remove `ProviderResult` and `ResultInterface`; move the status constants to `Result`
-  - The `Result` constructor no longer normalises values, and throws on an invalid status
-  - Replace the `with*()` mutators with `ResultFactory` methods of the same name
-    that return a new `Result`; `setErrorId()` becomes `withErrorId()`
-  - Remove `setException()`
-  - Add `Result::withDebugValue()`
-  - Normalise every result with the former `ProviderResult` rules and default messages
-- Add `ResultFactory` to create and normalise results
-  - Replace `createErrorResult()`, `createFromArray()`, `createFromJson()`,
-    `createFromException()`, `createFromProviderOutput()` and
-    `createFromProviderException()` with `error()`, `fromArray()`, `fromJson()`,
-    `fromException()`, `fromProviderOutput()` and `fromProviderException()`
-  - Replace `new ProviderResult(...)` with `ResultFactory::make()`, `ok()` or `error()`
-  - Move `formatException()` and `formatProviderJob()` to `ResultFactory`
-  - `fromJson()` throws `JsonException` for invalid JSON and `InvalidArgumentException`
-    for JSON that is not an object
-  - Debug `provider_output` is the string `null` when JSON encoding fails, not `false`
-- Update `ProviderJob::execute()`, `ProviderJob::getResult()`, `ResultData::toProvisionResult()`
-  and `ProvisionFunctionError::toProvisionResult()` to return `Result`
+- Replace `Result`, `ProviderResult` and `ResultInterface` with one immutable, final `Result` DTO
+- Add `ResultFactory` to create results and add debug data
+  - It replaces the `ProviderResult` constructor, `create*()` methods and `with*()` mutators
+  - `fromJson()` throws `JsonException` or `InvalidArgumentException` for invalid input
+- Fix `ProviderJob::execute()` for provision functions that return an array, and stop it
+  hiding unexpected exceptions
 
 ## v4.3.4 - 2025-12-22
 
