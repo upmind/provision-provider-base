@@ -25,6 +25,12 @@ All notable changes to the package will be documented in this file.
   - `fromJson()` throws `JsonException` or `InvalidArgumentException` for invalid input
 - Fix `ProviderJob::execute()` for provision functions that return an array, and stop it
   hiding unexpected exceptions
+- Add `ConnectionErrorClassifier` and `ProviderConnectionError`
+  - `ProviderJob` renders provider API connection, timeout and SSL errors as
+    `Provider API connection failed`
+  - Result data `connection_error` has the `reason` and `host`; debug data has the details
+  - Detects PSR-18 network exceptions (incl. Guzzle 7 and 8), Guzzle 8 timeouts,
+    Guzzle 6/7 cURL connection errnos and SoapFault transport faults, also when wrapped
 
 ## v4.3.4 - 2025-12-22
 
