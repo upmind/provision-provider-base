@@ -1,0 +1,17 @@
+{
+    "status": "ok",
+    "message": "M",
+    "data": null,
+    "debug": {
+        "provider_exception": {
+            "type": "RuntimeException",
+            "message": "Example failure",
+            "code": 0,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": null,
+            "trace": []
+        },
+        "message": "Encountered exception: RuntimeException"
+    }
+}

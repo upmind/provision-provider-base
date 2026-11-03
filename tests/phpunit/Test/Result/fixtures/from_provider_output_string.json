@@ -1,0 +1,8 @@
+{
+    "status": "error",
+    "message": "Unexpected provider function output",
+    "data": null,
+    "debug": {
+        "provider_output": "\"simple string output\""
+    }
+}

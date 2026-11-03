@@ -1,0 +1,18 @@
+{
+    "status": "error",
+    "message": "Critical provision system error encountered",
+    "data": null,
+    "debug": {
+        "error_id": "id-2",
+        "exception": {
+            "type": "RuntimeException",
+            "message": "System failure",
+            "code": 0,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": null,
+            "trace": []
+        },
+        "message": "Encountered exception: RuntimeException"
+    }
+}

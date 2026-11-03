@@ -1,0 +1,16 @@
+{
+    "status": "ok",
+    "message": "Success",
+    "data": null,
+    "debug": {
+        "provider_destructor_exception": {
+            "type": "RuntimeException",
+            "message": "Destructor failure",
+            "code": 0,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": null,
+            "trace": []
+        }
+    }
+}

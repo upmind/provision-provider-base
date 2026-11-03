@@ -1,0 +1,53 @@
+{
+    "status": "error",
+    "message": "Critical provision system error encountered",
+    "data": null,
+    "debug": {
+        "exception": {
+            "type": "RuntimeException",
+            "message": "Inner",
+            "code": 3,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": null,
+            "trace": [
+                {
+                    "file": "/app/src/helpers.php",
+                    "line": 5,
+                    "class": null,
+                    "type": null,
+                    "function": "helper"
+                },
+                {
+                    "file": "/app/src/Example.php",
+                    "line": 10,
+                    "class": "Example\\Service",
+                    "type": "::",
+                    "function": "step1"
+                },
+                {
+                    "file": "/app/src/Example.php",
+                    "line": 20,
+                    "class": "Example\\Service",
+                    "type": "::",
+                    "function": "step2"
+                },
+                {
+                    "file": "/app/src/Example.php",
+                    "line": 30,
+                    "class": "Example\\Service",
+                    "type": "::",
+                    "function": "step3"
+                },
+                {
+                    "file": "/app/src/Example.php",
+                    "line": 40,
+                    "class": "Example\\Service",
+                    "type": "::",
+                    "function": "step4"
+                }
+            ]
+        },
+        "message": "Encountered exception: RuntimeException"
+    }
+}

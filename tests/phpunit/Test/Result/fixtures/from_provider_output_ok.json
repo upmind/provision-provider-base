@@ -1,0 +1,10 @@
+{
+    "status": "ok",
+    "message": "M",
+    "data": {
+        "x": 1
+    },
+    "debug": {
+        "provider_output": "{\"status\":\"ok\",\"message\":\"m\",\"data\":{\"x\":1}}"
+    }
+}

@@ -17,7 +17,8 @@ use Upmind\ProvisionBase\Exception\ProvisionFunctionError;
 use Upmind\ProvisionBase\Provider\DataSet\DataSet;
 use Upmind\ProvisionBase\Provider\DataSet\ResultData;
 use Upmind\ProvisionBase\Registry\Data\FunctionRegister;
-use Upmind\ProvisionBase\Result\ProviderResult;
+use Upmind\ProvisionBase\Result\Result;
+use Upmind\ProvisionBase\Result\ResultFactory;
 
 /**
  * Class for handling the execution of Provider functions
@@ -62,7 +63,7 @@ class ProviderJob
     /**
      * Provider job result.
      *
-     * @var ProviderResult
+     * @var Result
      */
     protected $result;
 
@@ -183,7 +184,7 @@ class ProviderJob
     /**
      * Get this provider job's result.
      */
-    public function getResult(): ProviderResult
+    public function getResult(): Result
     {
         if (!isset($this->result)) {
             $this->execute();
@@ -195,7 +196,7 @@ class ProviderJob
     /**
      * Execute the provision function and obtain the job result.
      */
-    public function execute(): ProviderResult
+    public function execute(): Result
     {
         if (isset($this->result)) {
             return $this->result;
@@ -226,7 +227,7 @@ class ProviderJob
             }
 
             //ensure return data is of the correct type
-            if (get_class($this->returnData) !== $this->getReturnDataSetClass()) {
+            if (!is_object($this->returnData) || get_class($this->returnData) !== $this->getReturnDataSetClass()) {
                 $this->returnData = $this->getReturnDataSetClass()::create($this->returnData);
             }
 
@@ -234,38 +235,45 @@ class ProviderJob
             $this->validateReturnData();
 
             //create successful job result
-            return $this->result = $this->createSuccessResult($this->returnData);
+            $this->result = $this->createSuccessResult($this->returnData);
         } catch (Throwable $e) {
-            return $this->result = $this->createErrorResult($e, $this->returnData ?? null)
-                ->withProviderJobDebug($this);
+            $this->result = ResultFactory::withProviderJobDebug(
+                $this->createErrorResult($e, $this->returnData ?? null),
+                $this
+            );
         } finally {
             try {
                 // trigger destructors to prevent destruct errors from affecting the provision result
                 $this->getProvider()->unsetInstance();
             } catch (Throwable $e) {
-                $this->result->withProviderDestructorExceptionDebug($e);
+                if (isset($this->result)) {
+                    $this->result = ResultFactory::withProviderDestructorExceptionDebug($this->result, $e);
+                }
             }
 
-            return $this->result->withExecutionTimeDebug(microtime(true) - $executeStartTime);
+            // no result means an unexpected exception is propagating
+            if (isset($this->result)) {
+                $this->result = ResultFactory::withExecutionTimeDebug(
+                    $this->result,
+                    microtime(true) - $executeStartTime
+                );
+            }
         }
+
+        return $this->result;
     }
 
     /**
      * Create a successful provider result with the given provision function
      * return data.
      */
-    protected function createSuccessResult(DataSet $returnData): ProviderResult
+    protected function createSuccessResult(DataSet $returnData): Result
     {
         if ($returnData instanceof ResultData) {
             return $returnData->toProvisionResult();
         }
 
-        return new ProviderResult(
-            ProviderResult::STATUS_OK,
-            null,
-            $returnData->toArray(),
-            null
-        );
+        return ResultFactory::ok(null, $returnData->toArray());
     }
 
     /**
@@ -274,18 +282,18 @@ class ProviderJob
      * @param Throwable $e Encountered error
      * @param DataSet|array|null $returnData Function return data, if any
      */
-    protected function createErrorResult(Throwable $e, $returnData = null): ProviderResult
+    protected function createErrorResult(Throwable $e, $returnData = null): Result
     {
         if ($e instanceof ProvisionFunctionError) {
             $result = $e->toProvisionResult();
         } elseif ($e instanceof InvalidFunctionParameterDataException) {
             $e->setErrorPrefix('parameters');
-            $result = ProviderResult::createErrorResult($e->getMessage(), ['validation_errors' => $e->errors()]);
+            $result = ResultFactory::error($e->getMessage(), ['validation_errors' => $e->errors()]);
         } elseif ($e instanceof InvalidFunctionReturnDataException) {
             $e->setErrorPrefix('provider_output');
-            $result = ProviderResult::createErrorResult($e->getMessage());
+            $result = ResultFactory::error($e->getMessage());
         } elseif ($e instanceof CriticalProvisionProviderError) {
-            $result = ProviderResult::createErrorResult($e->getMessage());
+            $result = ResultFactory::error($e->getMessage());
         } else {
             throw $e; // at this point, any other type of exception is our bad!
         }
@@ -295,8 +303,10 @@ class ProviderJob
             $returnData->autoValidation(false); //disable validation to get return data values without errors
         }
 
-        return $result->withProviderOutputDebug($returnData)
-            ->withProviderExceptionDebug($e);
+        return ResultFactory::withProviderExceptionDebug(
+            ResultFactory::withProviderOutputDebug($result, $returnData),
+            $e
+        );
     }
 
     public function __debugInfo()

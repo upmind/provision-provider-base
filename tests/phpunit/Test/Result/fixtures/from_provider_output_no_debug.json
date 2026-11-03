@@ -1,0 +1,10 @@
+{
+    "status": "error",
+    "message": "Unknown provider function error",
+    "data": {
+        "0": "scalar"
+    },
+    "debug": {
+        "0": "scalar"
+    }
+}

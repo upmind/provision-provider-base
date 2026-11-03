@@ -1,0 +1,11 @@
+{
+    "status": "ok",
+    "message": "Success",
+    "data": null,
+    "debug": {
+        "provider_job": {
+            "provider": "Upmind\\ProvisionBase\\TestStub\\TestProvider",
+            "function": "create"
+        }
+    }
+}

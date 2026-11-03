@@ -6,7 +6,8 @@ namespace Upmind\ProvisionBase\Exception;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Throwable;
-use Upmind\ProvisionBase\Result\ProviderResult;
+use Upmind\ProvisionBase\Result\Result;
+use Upmind\ProvisionBase\Result\ResultFactory;
 
 /**
  * Exception representing a runtime error encountered during provision function execution.
@@ -63,15 +64,10 @@ class ProvisionFunctionError extends ProviderJobError
     }
 
     /**
-     * Create a successful provision result from this result data instance.
+     * Create an error provision result from this exception.
      */
-    final public function toProvisionResult(): ProviderResult
+    final public function toProvisionResult(): Result
     {
-        return new ProviderResult(
-            ProviderResult::STATUS_ERROR,
-            $this->getMessage(),
-            $this->getData(),
-            $this->getDebug()
-        );
+        return ResultFactory::fromFunctionError($this);
     }
 }

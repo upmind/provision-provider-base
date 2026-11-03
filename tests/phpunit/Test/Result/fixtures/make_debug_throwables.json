@@ -1,0 +1,29 @@
+{
+    "status": "error",
+    "message": "M",
+    "data": null,
+    "debug": {
+        "exception": {
+            "type": "RuntimeException",
+            "message": "System failure",
+            "code": 0,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": null,
+            "trace": []
+        },
+        "provider_exception": {
+            "type": "RuntimeException",
+            "message": "Provider failure",
+            "code": 5,
+            "file": "/app/src/Example.php",
+            "line": 10,
+            "validation_errors": null,
+            "trace": []
+        },
+        "provider_job": {
+            "provider": "Upmind\\ProvisionBase\\TestStub\\TestProvider",
+            "function": "testFunction"
+        }
+    }
+}

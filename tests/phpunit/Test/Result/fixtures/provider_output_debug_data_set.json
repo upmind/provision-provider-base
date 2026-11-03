@@ -1,0 +1,8 @@
+{
+    "status": "ok",
+    "message": "Success",
+    "data": null,
+    "debug": {
+        "provider_output": "{\"a\":1}"
+    }
+}
