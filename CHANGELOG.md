@@ -42,11 +42,12 @@ All notable changes to the package will be documented in this file.
   `giggsey/libphonenumber-for-php-lite` directly
   - This package no longer registers the `phone` rule or the `phone()` helper. Require
     `propaganistas/laravel-phone` directly if you use them
-- Add ConnectionErrorClassifier and ProviderConnectionError
-  - ProviderJob now renders provider API connection, timeout and SSL errors as
-    `Provider API connection failed`, with sanitised `connection_error` debug data
-  - Detects Guzzle ConnectException, Guzzle RequestException with a cURL
-    connection errno, and SoapFault transport faults, including wrapped exceptions
+- Add `ConnectionErrorClassifier` and `ProviderConnectionError`
+  - `ProviderJob` renders provider API connection, timeout and SSL errors as
+    `Provider API connection failed`
+  - Result data `connection_error` has the `reason` and `host`; debug data has the details
+  - Detects PSR-18 network exceptions (incl. Guzzle 7 and 8), Guzzle 8 timeouts,
+    Guzzle 6/7 cURL connection errnos and SoapFault transport faults, also when wrapped
 
 ## v4.3.4 - 2025-12-22
 

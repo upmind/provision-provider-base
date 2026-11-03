@@ -20,6 +20,7 @@ class ProviderConnectionError extends ProvisionFunctionError
     public static function fromConnectionError(Throwable $e, Throwable $connectionError): self
     {
         $error = new self('Provider API connection failed', 0, $e);
+        $error->withData(['connection_error' => ConnectionErrorClassifier::getData($connectionError)]);
         $error->withDebug(['connection_error' => ConnectionErrorClassifier::getDebugData($connectionError)]);
 
         return $error;
