@@ -167,7 +167,7 @@ class ResultFactoryTest extends TestCase
 
     public function testFromResultData(): void
     {
-        $data = ResultData::create(['a' => 1], false)->setMessage('done')->setDebug(['b' => 2]);
+        $data = self::unvalidatedResultData(['a' => 1])->setMessage('done')->setDebug(['b' => 2]);
 
         $result = ResultFactory::fromResultData($data);
 
@@ -270,5 +270,16 @@ class ResultFactoryTest extends TestCase
         $exception = ResultFixtures::fixException(new RuntimeException('x'), ResultFixtures::longTrace());
 
         $this->assertCount(5, ResultFactory::formatException($exception)['trace']);
+    }
+
+    /**
+     * Create result data with auto-validation disabled.
+     */
+    private static function unvalidatedResultData(array $values): ResultData
+    {
+        $data = ResultData::create($values);
+        $data->autoValidation(false);
+
+        return $data;
     }
 }

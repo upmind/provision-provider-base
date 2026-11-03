@@ -173,17 +173,17 @@ class LegacyJsonParityTest extends TestCase
             ),
             'provider_output_debug_data_set' => fn () => ResultFactory::withProviderOutputDebug(
                 ResultFactory::ok(),
-                ResultData::create(['a' => 1], false)
+                self::unvalidatedResultData(['a' => 1])
             ),
             'execution_time_debug' => fn () => ResultFactory::withExecutionTimeDebug(ResultFactory::ok(), 1.23456),
             'validation_exception' => fn () => ResultFactory::fromProviderException(
                 F::fixException(F::validationException(['name' => ['Name is required']]))
             ),
-            'result_data' => fn () => ResultData::create(['a' => 1, 'b' => ['c' => 'd']], false)
+            'result_data' => fn () => self::unvalidatedResultData(['a' => 1, 'b' => ['c' => 'd']])
                 ->setMessage('done')
                 ->setDebug(['d' => 1])
                 ->toProvisionResult(),
-            'result_data_defaults' => fn () => ResultFactory::fromResultData(ResultData::create([], false)),
+            'result_data_defaults' => fn () => ResultFactory::fromResultData(self::unvalidatedResultData([])),
             'function_error' => fn () => (new ProvisionFunctionError('Provider said no'))
                 ->withData(['reason' => 'x'])
                 ->withDebug(['response' => ['code' => 500]])
@@ -206,5 +206,16 @@ class LegacyJsonParityTest extends TestCase
                 return ResultFactory::withExecutionTimeDebug($result, 0.0004);
             },
         ];
+    }
+
+    /**
+     * Create result data with auto-validation disabled.
+     */
+    private static function unvalidatedResultData(array $values): ResultData
+    {
+        $data = ResultData::create($values);
+        $data->autoValidation(false);
+
+        return $data;
     }
 }
