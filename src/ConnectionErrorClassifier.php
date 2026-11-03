@@ -6,48 +6,71 @@ namespace Upmind\ProvisionBase;
 
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Client\NetworkExceptionInterface;
+use Psr\Http\Message\RequestInterface;
 use SoapFault;
 use Throwable;
 
 /**
  * Detects connection-level failures (DNS, connect, timeout, SSL) in exceptions
- * thrown by provider code.
+ * thrown by provider code. Supports Guzzle 6, 7 and 8, other PSR-18 clients and
+ * ext-soap.
  */
 class ConnectionErrorClassifier
 {
+    public const REASON_CONNECT = 'connect';
+    public const REASON_CONNECT_TIMEOUT = 'connect_timeout';
+    public const REASON_TIMEOUT = 'timeout';
+    public const REASON_SSL = 'ssl';
+    public const REASON_NETWORK = 'network';
+
     /**
-     * cURL error constants which indicate a connection failure. ext-curl can be
-     * missing, so names resolve at runtime.
+     * cURL error constants which indicate a connection failure, with their
+     * reason. ext-curl can be missing, so names resolve at runtime. Only Guzzle
+     * 6 and 7 expose the cURL errno.
      *
-     * @var string[]
+     * @var array<string,string>
      */
-    protected const CURL_ERROR_CONSTANTS = [
-        'CURLE_COULDNT_RESOLVE_PROXY',
-        'CURLE_COULDNT_RESOLVE_HOST',
-        'CURLE_COULDNT_CONNECT',
-        'CURLE_OPERATION_TIMEOUTED',
-        'CURLE_SSL_CONNECT_ERROR',
-        'CURLE_GOT_NOTHING',
-        'CURLE_SEND_ERROR',
-        'CURLE_RECV_ERROR',
-        'CURLE_SSL_CERTPROBLEM',
-        'CURLE_SSL_CIPHER',
-        'CURLE_SSL_CACERT',
-        'CURLE_SSL_CACERT_BADFILE',
-        'CURLE_SSL_PINNEDPUBKEYNOTMATCH',
+    protected const CURL_ERROR_REASONS = [
+        'CURLE_COULDNT_RESOLVE_PROXY' => self::REASON_CONNECT,
+        'CURLE_COULDNT_RESOLVE_HOST' => self::REASON_CONNECT,
+        'CURLE_COULDNT_CONNECT' => self::REASON_CONNECT,
+        'CURLE_OPERATION_TIMEOUTED' => self::REASON_TIMEOUT,
+        'CURLE_SSL_CONNECT_ERROR' => self::REASON_SSL,
+        'CURLE_SSL_CERTPROBLEM' => self::REASON_SSL,
+        'CURLE_SSL_CIPHER' => self::REASON_SSL,
+        'CURLE_SSL_CACERT' => self::REASON_SSL,
+        'CURLE_SSL_CACERT_BADFILE' => self::REASON_SSL,
+        'CURLE_SSL_PINNEDPUBKEYNOTMATCH' => self::REASON_SSL,
+        'CURLE_GOT_NOTHING' => self::REASON_NETWORK,
+        'CURLE_SEND_ERROR' => self::REASON_NETWORK,
+        'CURLE_RECV_ERROR' => self::REASON_NETWORK,
     ];
 
     /**
-     * Fault string prefixes of ext-soap transport faults with fault code `HTTP`.
-     * Other `HTTP` faults carry an HTTP response status, so they do not match.
+     * Guzzle 8 timeout exception classes, with their reason. Class names are
+     * strings, so Guzzle 6 and 7 need no such classes.
      *
-     * @var string[]
+     * @var array<string,string>
      */
-    protected const SOAP_FAULT_PREFIXES = [
-        'Could not connect to host',
-        'Failed Sending HTTP SOAP request',
-        'Error Fetching http headers',
-        'Error Fetching http body',
+    protected const GUZZLE_TIMEOUT_REASONS = [
+        'GuzzleHttp\Exception\ConnectTimeoutException' => self::REASON_CONNECT_TIMEOUT,
+        'GuzzleHttp\Exception\NetworkTimeoutException' => self::REASON_TIMEOUT,
+        'GuzzleHttp\Exception\ResponseTimeoutException' => self::REASON_TIMEOUT,
+    ];
+
+    /**
+     * Fault string prefixes of ext-soap transport faults with fault code `HTTP`,
+     * with their reason. Other `HTTP` faults carry an HTTP response status, so
+     * they do not match.
+     *
+     * @var array<string,string>
+     */
+    protected const SOAP_FAULT_REASONS = [
+        'Could not connect to host' => self::REASON_CONNECT,
+        'Failed Sending HTTP SOAP request' => self::REASON_NETWORK,
+        'Error Fetching http headers' => self::REASON_NETWORK,
+        'Error Fetching http body' => self::REASON_NETWORK,
     ];
 
     /**
@@ -70,19 +93,57 @@ class ConnectionErrorClassifier
      */
     public static function isConnectionError(Throwable $e): bool
     {
-        if ($e instanceof ConnectException) {
-            return true;
+        return static::getReason($e) !== null;
+    }
+
+    /**
+     * Get the reason of the given connection error: one of the REASON_*
+     * constants, or null if it is not a connection error.
+     */
+    public static function getReason(Throwable $e): ?string
+    {
+        // Guzzle 6 and 7: the cURL errno is the most specific signal.
+        if ($reason = static::getCurlErrorReason($e)) {
+            return $reason;
         }
 
-        if ($e instanceof RequestException) {
-            return in_array(static::getCurlErrno($e), static::getCurlErrorCodes(), true);
+        foreach (static::GUZZLE_TIMEOUT_REASONS as $class => $reason) {
+            if (is_a($e, $class)) {
+                return $reason;
+            }
+        }
+
+        if ($e instanceof ConnectException) {
+            return self::REASON_CONNECT;
+        }
+
+        // Guzzle 8 NetworkException and other PSR-18 clients.
+        if ($e instanceof NetworkExceptionInterface) {
+            return self::REASON_NETWORK;
         }
 
         if ($e instanceof SoapFault) {
-            return static::isSoapConnectionFault($e);
+            return static::getSoapFaultReason($e);
         }
 
-        return false;
+        return null;
+    }
+
+    /**
+     * Get result data for the given connection error: its reason and, if known,
+     * the host. The data contains no URL path, credentials or query strings.
+     *
+     * @return array<string,string>
+     */
+    public static function getData(Throwable $e): array
+    {
+        $data = ['reason' => static::getReason($e) ?? self::REASON_NETWORK];
+
+        if ($host = static::getRequest($e)?->getUri()->getHost()) {
+            $data['host'] = $host;
+        }
+
+        return $data;
     }
 
     /**
@@ -98,12 +159,12 @@ class ConnectionErrorClassifier
             'message' => static::sanitiseMessage($e->getMessage()),
         ];
 
-        if ($e instanceof ConnectException || $e instanceof RequestException) {
-            $debug['url'] = static::sanitiseUrl((string)$e->getRequest()->getUri());
+        if ($request = static::getRequest($e)) {
+            $debug['url'] = static::sanitiseUrl((string)$request->getUri());
+        }
 
-            if ($errno = static::getCurlErrno($e)) {
-                $debug['errno'] = $errno;
-            }
+        if ($errno = static::getCurlErrno($e)) {
+            $debug['errno'] = $errno;
         }
 
         return $debug;
@@ -138,44 +199,61 @@ class ConnectionErrorClassifier
         return Helper::buildUrl($parts, ['scheme', 'host', 'port', 'path']);
     }
 
+    protected static function getRequest(Throwable $e): ?RequestInterface
+    {
+        if ($e instanceof RequestException || $e instanceof NetworkExceptionInterface) {
+            return $e->getRequest();
+        }
+
+        return null;
+    }
+
     /**
-     * @param ConnectException|RequestException $e
+     * Get the cURL errno from the Guzzle handler context. Guzzle 8 removed the
+     * handler context, so this returns null there.
      */
     protected static function getCurlErrno(Throwable $e): ?int
     {
+        if (!$e instanceof RequestException && !$e instanceof ConnectException) {
+            return null;
+        }
+
+        if (!method_exists($e, 'getHandlerContext')) {
+            return null;
+        }
+
         $errno = $e->getHandlerContext()['errno'] ?? null;
 
         return is_numeric($errno) ? (int)$errno : null;
     }
 
-    /**
-     * @return int[]
-     */
-    protected static function getCurlErrorCodes(): array
+    protected static function getCurlErrorReason(Throwable $e): ?string
     {
-        $codes = [];
+        if (!$errno = static::getCurlErrno($e)) {
+            return null;
+        }
 
-        foreach (static::CURL_ERROR_CONSTANTS as $name) {
-            if (defined($name)) {
-                $codes[] = (int)constant($name);
+        foreach (static::CURL_ERROR_REASONS as $name => $reason) {
+            if (defined($name) && (int)constant($name) === $errno) {
+                return $reason;
             }
         }
 
-        return $codes;
+        return null;
     }
 
-    protected static function isSoapConnectionFault(SoapFault $e): bool
+    protected static function getSoapFaultReason(SoapFault $e): ?string
     {
         if ($e->faultcode !== 'HTTP') {
-            return false;
+            return null;
         }
 
-        foreach (static::SOAP_FAULT_PREFIXES as $prefix) {
+        foreach (static::SOAP_FAULT_REASONS as $prefix => $reason) {
             if (stripos($e->getMessage(), $prefix) === 0) {
-                return true;
+                return $reason;
             }
         }
 
-        return false;
+        return null;
     }
 }

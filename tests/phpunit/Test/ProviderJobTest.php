@@ -81,6 +81,10 @@ class ProviderJobTest extends TestCase
         $this->assertTrue($result->isError());
         $this->assertSame('Provider API connection failed', $result->getMessage());
         $this->assertInstanceOf(ProviderConnectionError::class, $result->getException());
+        $this->assertSame(
+            ['connection_error' => ['reason' => 'connect', 'host' => 'example.com']],
+            $result->getData()
+        );
         $this->assertSame([
             'type' => ConnectException::class,
             'message' => 'Connection refused for URI https://example.com/api',
