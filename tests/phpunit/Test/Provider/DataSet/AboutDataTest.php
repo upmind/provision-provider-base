@@ -9,18 +9,18 @@ use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Validation\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Upmind\ProvisionBase\Exception\InvalidDataSetException;
 use Upmind\ProvisionBase\Provider\DataSet\AboutData;
 
 class AboutDataTest extends TestCase
 {
-    private MockObject&Factory $validatorFactory;
+    private Factory&Stub $validatorFactory;
 
     protected function setUp(): void
     {
-        $this->validatorFactory = $this->createMock(Factory::class);
+        $this->validatorFactory = $this->createStub(Factory::class);
     }
 
     protected function tearDown(): void
@@ -31,15 +31,13 @@ class AboutDataTest extends TestCase
     /**
      * This is an example test, performed to confirm decoupling from Laravel's Validator Facade.
      * It asserts that an InvalidDataSetException is thrown when validation fails.
-     *
-     * @throws \PHPUnit\Framework\MockObject\Exception
      */
     public function test_invalid_data_set_exception_thrown_on_validation_failure(): void
     {
         $this->expectException(InvalidDataSetException::class);
 
-        $translator = $this->createMock(Translator::class);
-        $validator = $this->createMock(Validator::class);
+        $translator = $this->createStub(Translator::class);
+        $validator = $this->createStub(Validator::class);
 
         $messageBag = new MessageBag();
         $messageBag->add('name', 'The name field is required.');

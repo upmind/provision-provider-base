@@ -21,18 +21,18 @@
         }
     },
     "require": {
-        "php": ">=8.1 <8.4",
-        "guzzlehttp/guzzle": "^6.3||^7.0",
-        "illuminate/console": ">=6.20.0 <13",
-        "illuminate/support": ">=6.20.0 <13",
-        "illuminate/validation": ">=6.20.0 <13",
-        "league/iso3166": "^3.0 || ^4.0",
-        "propaganistas/laravel-phone": "^4.2||^5.0",
-        "psr/log": "^1.1||^2.0||^3.0"
+        "php": "^8.3",
+        "guzzlehttp/guzzle": "^8.0",
+        "illuminate/console": "^13.0",
+        "illuminate/support": "^13.0",
+        "illuminate/validation": "^13.0",
+        "league/iso3166": "^4.0",
+        "propaganistas/laravel-phone": "^6.0",
+        "psr/log": "^3.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.0 || ^10.0 || ^11.0"
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^12.0 || ^13.0"
     },
     "extra": {
         "laravel": {
