@@ -17,7 +17,7 @@ use Upmind\ProvisionBase\ProviderJob;
 use Upmind\ProvisionBase\Registry\Data\DataSetRegister;
 use Upmind\ProvisionBase\Registry\Data\FunctionRegister;
 use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
-use Upmind\ProvisionBase\Result\ProviderResult;
+use Upmind\ProvisionBase\Result\Result;
 use Upmind\ProvisionBase\TestStub\TestDataSet;
 use Upmind\ProvisionBase\TestStub\TestProvider;
 
@@ -125,7 +125,7 @@ class ProviderJobTest extends TestCase
         );
     }
 
-    private function executeThrowing(Throwable $e): ProviderResult
+    private function executeThrowing(Throwable $e): Result
     {
         $dataSetRegister = $this->createMock(DataSetRegister::class);
         $dataSetRegister->method('getClass')->willReturn(TestDataSet::class);
