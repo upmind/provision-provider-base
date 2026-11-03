@@ -15,6 +15,10 @@ All notable changes to the package will be documented in this file.
 - Update FormField::typeShouldBePassword() to match private key and passphrase
   field names, e.g., `client_private_key` and `key_passphrase`
   - Text fields with these names now render as `input_password`
+- Add `DataSetInterface`, which declares the `DataSet` constructor signature
+- Remove the `$autoValidation` argument from `DataSet::__construct()` and `DataSet::create()`
+  - Call `autoValidation(false)` on the instance to disable auto-validation
+  - Subclass constructors must match `__construct($values = [])`
 - Collapse `Result` and `ProviderResult` into one immutable, final `Result` DTO
   - Remove `ProviderResult` and `ResultInterface`; move the status constants to `Result`
   - The `Result` constructor no longer normalises values, and throws on an invalid status
