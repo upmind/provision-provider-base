@@ -1,0 +1,119 @@
+{
+  "rule": "contains_upper",
+  "cases": [
+    {
+      "name": "one uppercase letter",
+      "rules": {
+        "value": [
+          "contains_upper"
+        ]
+      },
+      "data": {
+        "value": "abC"
+      },
+      "valid": true
+    },
+    {
+      "name": "non-ASCII uppercase letter",
+      "rules": {
+        "value": [
+          "contains_upper"
+        ]
+      },
+      "data": {
+        "value": "É"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "contains_upper"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "contains_upper"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "lowercase letters only",
+      "rules": {
+        "value": [
+          "contains_upper"
+        ]
+      },
+      "data": {
+        "value": "abc"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "contains_upper"
+        ]
+      }
+    },
+    {
+      "name": "digits and symbols only",
+      "rules": {
+        "value": [
+          "contains_upper"
+        ]
+      },
+      "data": {
+        "value": "123!"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "contains_upper"
+        ]
+      }
+    },
+    {
+      "name": "non-ASCII lowercase letter only",
+      "rules": {
+        "value": [
+          "contains_upper"
+        ]
+      },
+      "data": {
+        "value": "é"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "contains_upper"
+        ]
+      }
+    },
+    {
+      "name": "boolean",
+      "rules": {
+        "value": [
+          "contains_upper"
+        ]
+      },
+      "data": {
+        "value": true
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "contains_upper"
+        ]
+      }
+    }
+  ]
+}

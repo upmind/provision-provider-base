@@ -1,0 +1,119 @@
+{
+  "rule": "ip",
+  "cases": [
+    {
+      "name": "IPv4 address",
+      "rules": {
+        "value": [
+          "ip"
+        ]
+      },
+      "data": {
+        "value": "192.168.0.1"
+      },
+      "valid": true
+    },
+    {
+      "name": "IPv6 address",
+      "rules": {
+        "value": [
+          "ip"
+        ]
+      },
+      "data": {
+        "value": "2001:db8::1"
+      },
+      "valid": true
+    },
+    {
+      "name": "IPv6 loopback",
+      "rules": {
+        "value": [
+          "ip"
+        ]
+      },
+      "data": {
+        "value": "::1"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "ip"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "IPv4 octet over 255",
+      "rules": {
+        "value": [
+          "ip"
+        ]
+      },
+      "data": {
+        "value": "256.1.1.1"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "ip"
+        ]
+      }
+    },
+    {
+      "name": "three octets",
+      "rules": {
+        "value": [
+          "ip"
+        ]
+      },
+      "data": {
+        "value": "192.168.0"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "ip"
+        ]
+      }
+    },
+    {
+      "name": "CIDR notation",
+      "rules": {
+        "value": [
+          "ip"
+        ]
+      },
+      "data": {
+        "value": "192.168.0.1/24"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "ip"
+        ]
+      }
+    },
+    {
+      "name": "host name",
+      "rules": {
+        "value": [
+          "ip"
+        ]
+      },
+      "data": {
+        "value": "example.com"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "ip"
+        ]
+      }
+    }
+  ]
+}

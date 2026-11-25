@@ -1,0 +1,132 @@
+{
+  "rule": "size",
+  "cases": [
+    {
+      "name": "string of the exact length",
+      "rules": {
+        "value": [
+          "string",
+          "size:2"
+        ]
+      },
+      "data": {
+        "value": "GB"
+      },
+      "valid": true
+    },
+    {
+      "name": "integer of the exact value",
+      "rules": {
+        "value": [
+          "integer",
+          "size:5"
+        ]
+      },
+      "data": {
+        "value": 5
+      },
+      "valid": true
+    },
+    {
+      "name": "array of the exact count",
+      "rules": {
+        "value": [
+          "array",
+          "size:2"
+        ]
+      },
+      "data": {
+        "value": [
+          "a",
+          "b"
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "string",
+          "size:2"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "string too long",
+      "rules": {
+        "value": [
+          "string",
+          "size:2"
+        ]
+      },
+      "data": {
+        "value": "GBR"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "size"
+        ]
+      }
+    },
+    {
+      "name": "string too short",
+      "rules": {
+        "value": [
+          "string",
+          "size:2"
+        ]
+      },
+      "data": {
+        "value": "G"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "size"
+        ]
+      }
+    },
+    {
+      "name": "integer of another value",
+      "rules": {
+        "value": [
+          "integer",
+          "size:5"
+        ]
+      },
+      "data": {
+        "value": 4
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "size"
+        ]
+      }
+    },
+    {
+      "name": "array of another count",
+      "rules": {
+        "value": [
+          "array",
+          "size:2"
+        ]
+      },
+      "data": {
+        "value": [
+          "a"
+        ]
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "size"
+        ]
+      }
+    }
+  ]
+}

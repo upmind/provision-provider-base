@@ -1,0 +1,188 @@
+{
+  "rule": "min",
+  "cases": [
+    {
+      "name": "string at the minimum length",
+      "rules": {
+        "value": [
+          "string",
+          "min:3"
+        ]
+      },
+      "data": {
+        "value": "abc"
+      },
+      "valid": true
+    },
+    {
+      "name": "multibyte string at the minimum length",
+      "rules": {
+        "value": [
+          "string",
+          "min:3"
+        ]
+      },
+      "data": {
+        "value": "ééé"
+      },
+      "valid": true
+    },
+    {
+      "name": "integer at the minimum",
+      "rules": {
+        "value": [
+          "integer",
+          "min:1"
+        ]
+      },
+      "data": {
+        "value": 1
+      },
+      "valid": true
+    },
+    {
+      "name": "numeric string with integer rule",
+      "rules": {
+        "value": [
+          "integer",
+          "min:1"
+        ]
+      },
+      "data": {
+        "value": "5"
+      },
+      "valid": true
+    },
+    {
+      "name": "decimal minimum",
+      "rules": {
+        "value": [
+          "numeric",
+          "min:0.5"
+        ]
+      },
+      "data": {
+        "value": 0.5
+      },
+      "valid": true
+    },
+    {
+      "name": "array at the minimum count",
+      "rules": {
+        "value": [
+          "array",
+          "min:2"
+        ]
+      },
+      "data": {
+        "value": [
+          1,
+          2
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "string",
+          "min:3"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "string under the minimum length",
+      "rules": {
+        "value": [
+          "string",
+          "min:3"
+        ]
+      },
+      "data": {
+        "value": "ab"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "min"
+        ]
+      }
+    },
+    {
+      "name": "integer under the minimum",
+      "rules": {
+        "value": [
+          "integer",
+          "min:1"
+        ]
+      },
+      "data": {
+        "value": 0
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "min"
+        ]
+      }
+    },
+    {
+      "name": "numeric string under the minimum",
+      "rules": {
+        "value": [
+          "integer",
+          "min:10"
+        ]
+      },
+      "data": {
+        "value": "9"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "min"
+        ]
+      }
+    },
+    {
+      "name": "array under the minimum count",
+      "rules": {
+        "value": [
+          "array",
+          "min:2"
+        ]
+      },
+      "data": {
+        "value": [
+          1
+        ]
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "min"
+        ]
+      }
+    },
+    {
+      "name": "integer without a numeric rule uses string length",
+      "rules": {
+        "value": [
+          "min:3"
+        ]
+      },
+      "data": {
+        "value": 12
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "min"
+        ]
+      }
+    }
+  ]
+}

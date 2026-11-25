@@ -1,0 +1,201 @@
+{
+  "rule": "boolean",
+  "cases": [
+    {
+      "name": "true",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": true
+      },
+      "valid": true
+    },
+    {
+      "name": "false",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": false
+      },
+      "valid": true
+    },
+    {
+      "name": "integer 1",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": 1
+      },
+      "valid": true
+    },
+    {
+      "name": "integer 0",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": 0
+      },
+      "valid": true
+    },
+    {
+      "name": "string 1",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": "1"
+      },
+      "valid": true
+    },
+    {
+      "name": "string 0",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": "0"
+      },
+      "valid": true
+    },
+    {
+      "name": "alias bool",
+      "rules": {
+        "value": [
+          "bool"
+        ]
+      },
+      "data": {
+        "value": true
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "string true",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": "true"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "string false",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": "false"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "string yes",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": "yes"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "integer 2",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": 2
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "null",
+      "rules": {
+        "value": [
+          "boolean"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "boolean"
+        ]
+      }
+    },
+    {
+      "name": "alias bool with string",
+      "rules": {
+        "value": [
+          "bool"
+        ]
+      },
+      "data": {
+        "value": "x"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "boolean"
+        ]
+      }
+    }
+  ]
+}

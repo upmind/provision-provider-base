@@ -2,6 +2,13 @@
 
 All notable changes to the package will be documented in this file.
 
+## Unreleased
+
+- Add `contains_lower`, `contains_upper` and `contains_number` validation rules
+- Add a validation conformance suite in `tests/conformance`: one JSON case file per supported rule
+- Add `SupportedRules` and `UnsupportedValidationRule`
+- Run PHPUnit in CI on Laravel 5.8 and 6
+
 ## v3.7.8 - 2026-10-15
 
 - Update FormField::typeShouldBePassword() to match private key and passphrase

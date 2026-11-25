@@ -1,0 +1,90 @@
+{
+  "rule": "alpha_num",
+  "cases": [
+    {
+      "name": "letters and digits",
+      "rules": {
+        "value": [
+          "alpha_num"
+        ]
+      },
+      "data": {
+        "value": "abc123"
+      },
+      "valid": true
+    },
+    {
+      "name": "non-ASCII letter",
+      "rules": {
+        "value": [
+          "alpha_num"
+        ]
+      },
+      "data": {
+        "value": "é1"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "alpha_num"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "dash",
+      "rules": {
+        "value": [
+          "alpha_num"
+        ]
+      },
+      "data": {
+        "value": "a-b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_num"
+        ]
+      }
+    },
+    {
+      "name": "underscore",
+      "rules": {
+        "value": [
+          "alpha_num"
+        ]
+      },
+      "data": {
+        "value": "a_b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_num"
+        ]
+      }
+    },
+    {
+      "name": "space",
+      "rules": {
+        "value": [
+          "alpha_num"
+        ]
+      },
+      "data": {
+        "value": "a b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_num"
+        ]
+      }
+    }
+  ]
+}

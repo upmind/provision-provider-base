@@ -1,0 +1,184 @@
+{
+  "rule": "in",
+  "cases": [
+    {
+      "name": "listed value",
+      "rules": {
+        "value": [
+          "in:a,b"
+        ]
+      },
+      "data": {
+        "value": "a"
+      },
+      "valid": true
+    },
+    {
+      "name": "last listed value",
+      "rules": {
+        "value": [
+          "in:a,b"
+        ]
+      },
+      "data": {
+        "value": "b"
+      },
+      "valid": true
+    },
+    {
+      "name": "integer matches string parameter",
+      "rules": {
+        "value": [
+          "in:1,2"
+        ]
+      },
+      "data": {
+        "value": 1
+      },
+      "valid": true
+    },
+    {
+      "name": "numeric string",
+      "rules": {
+        "value": [
+          "in:1,2"
+        ]
+      },
+      "data": {
+        "value": "2"
+      },
+      "valid": true
+    },
+    {
+      "name": "value with space",
+      "rules": {
+        "value": [
+          "in:a b,c"
+        ]
+      },
+      "data": {
+        "value": "a b"
+      },
+      "valid": true
+    },
+    {
+      "name": "quoted value with comma",
+      "rules": {
+        "value": [
+          "in:\"a,b\",c"
+        ]
+      },
+      "data": {
+        "value": "a,b"
+      },
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "in:,a"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "in:a,b"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "unlisted value",
+      "rules": {
+        "value": [
+          "in:a,b"
+        ]
+      },
+      "data": {
+        "value": "c"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "in"
+        ]
+      }
+    },
+    {
+      "name": "different case",
+      "rules": {
+        "value": [
+          "in:a,b"
+        ]
+      },
+      "data": {
+        "value": "A"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "in"
+        ]
+      }
+    },
+    {
+      "name": "trailing space",
+      "rules": {
+        "value": [
+          "in:a,b"
+        ]
+      },
+      "data": {
+        "value": "a "
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "in"
+        ]
+      }
+    },
+    {
+      "name": "unlisted integer",
+      "rules": {
+        "value": [
+          "in:1,2"
+        ]
+      },
+      "data": {
+        "value": 3
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "in"
+        ]
+      }
+    },
+    {
+      "name": "null",
+      "rules": {
+        "value": [
+          "in:a,b"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "in"
+        ]
+      }
+    }
+  ]
+}

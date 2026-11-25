@@ -1,0 +1,167 @@
+{
+  "rule": "country_code",
+  "cases": [
+    {
+      "name": "ISO 3166-1 alpha-2 code",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "GB"
+      },
+      "valid": true
+    },
+    {
+      "name": "lower case code",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "us"
+      },
+      "valid": true
+    },
+    {
+      "name": "transitional reservation UK",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "UK"
+      },
+      "valid": true
+    },
+    {
+      "name": "lower case transitional reservation",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "uk"
+      },
+      "valid": true
+    },
+    {
+      "name": "Kosovo",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "XK"
+      },
+      "valid": true
+    },
+    {
+      "name": "transitional reservation AN",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "AN"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "unassigned code",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "XX"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "country_code"
+        ]
+      }
+    },
+    {
+      "name": "alpha-3 code",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "GBR"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "country_code"
+        ]
+      }
+    },
+    {
+      "name": "numeric code",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "826"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "country_code"
+        ]
+      }
+    },
+    {
+      "name": "one letter",
+      "rules": {
+        "value": [
+          "country_code"
+        ]
+      },
+      "data": {
+        "value": "G"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "country_code"
+        ]
+      }
+    }
+  ]
+}

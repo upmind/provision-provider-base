@@ -1,0 +1,73 @@
+{
+  "rule": "starts_with",
+  "cases": [
+    {
+      "name": "second prefix",
+      "rules": {
+        "value": [
+          "starts_with:http://,https://"
+        ]
+      },
+      "data": {
+        "value": "https://example.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "prefix",
+      "rules": {
+        "value": [
+          "starts_with:ab"
+        ]
+      },
+      "data": {
+        "value": "abc"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "starts_with:ab"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "prefix not at start",
+      "rules": {
+        "value": [
+          "starts_with:ab"
+        ]
+      },
+      "data": {
+        "value": "cab"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "starts_with"
+        ]
+      }
+    },
+    {
+      "name": "different case",
+      "rules": {
+        "value": [
+          "starts_with:ab"
+        ]
+      },
+      "data": {
+        "value": "AB"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "starts_with"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "rule": "ends_with",
+  "cases": [
+    {
+      "name": "second suffix",
+      "rules": {
+        "value": [
+          "ends_with:.com,.net"
+        ]
+      },
+      "data": {
+        "value": "example.net"
+      },
+      "valid": true
+    },
+    {
+      "name": "suffix",
+      "rules": {
+        "value": [
+          "ends_with:.com"
+        ]
+      },
+      "data": {
+        "value": "example.com"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "ends_with:.com"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "suffix not at end",
+      "rules": {
+        "value": [
+          "ends_with:.com"
+        ]
+      },
+      "data": {
+        "value": "example.com.au"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "ends_with"
+        ]
+      }
+    },
+    {
+      "name": "different case",
+      "rules": {
+        "value": [
+          "ends_with:.com"
+        ]
+      },
+      "data": {
+        "value": "EXAMPLE.COM"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "ends_with"
+        ]
+      }
+    }
+  ]
+}

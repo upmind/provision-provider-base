@@ -1,0 +1,176 @@
+{
+  "rule": "array",
+  "cases": [
+    {
+      "name": "list",
+      "rules": {
+        "value": [
+          "array"
+        ]
+      },
+      "data": {
+        "value": [
+          "a",
+          "b"
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "map",
+      "rules": {
+        "value": [
+          "array"
+        ]
+      },
+      "data": {
+        "value": {
+          "a": 1
+        }
+      },
+      "valid": true
+    },
+    {
+      "name": "empty list",
+      "rules": {
+        "value": [
+          "array"
+        ]
+      },
+      "data": {
+        "value": []
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "array"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "string",
+      "rules": {
+        "value": [
+          "array"
+        ]
+      },
+      "data": {
+        "value": "a"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "array"
+        ]
+      }
+    },
+    {
+      "name": "integer",
+      "rules": {
+        "value": [
+          "array"
+        ]
+      },
+      "data": {
+        "value": 1
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "array"
+        ]
+      }
+    },
+    {
+      "name": "null",
+      "rules": {
+        "value": [
+          "array"
+        ]
+      },
+      "data": {
+        "value": null
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "array"
+        ]
+      }
+    },
+    {
+      "name": "wildcard rules apply to each item",
+      "rules": {
+        "value": [
+          "array"
+        ],
+        "value.*": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": [
+          "a",
+          "b"
+        ]
+      },
+      "valid": true
+    },
+    {
+      "name": "wildcard rule fails for one item",
+      "rules": {
+        "value": [
+          "array"
+        ],
+        "value.*": [
+          "string"
+        ]
+      },
+      "data": {
+        "value": [
+          "a",
+          1
+        ]
+      },
+      "valid": false,
+      "failed": {
+        "value.1": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "nested wildcard rules",
+      "rules": {
+        "value": [
+          "array"
+        ],
+        "value.*.name": [
+          "required",
+          "string"
+        ]
+      },
+      "data": {
+        "value": [
+          {
+            "name": "a"
+          },
+          {
+            "other": "b"
+          }
+        ]
+      },
+      "valid": false,
+      "failed": {
+        "value.1.name": [
+          "required"
+        ]
+      }
+    }
+  ]
+}

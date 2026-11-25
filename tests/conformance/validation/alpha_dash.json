@@ -1,0 +1,102 @@
+{
+  "rule": "alpha_dash",
+  "cases": [
+    {
+      "name": "letters, digits, dashes and underscores",
+      "rules": {
+        "value": [
+          "alpha_dash"
+        ]
+      },
+      "data": {
+        "value": "a-b_c1"
+      },
+      "valid": true
+    },
+    {
+      "name": "alias alpha-dash",
+      "rules": {
+        "value": [
+          "alpha-dash"
+        ]
+      },
+      "data": {
+        "value": "a-b"
+      },
+      "valid": true
+    },
+    {
+      "name": "non-ASCII letter",
+      "rules": {
+        "value": [
+          "alpha_dash"
+        ]
+      },
+      "data": {
+        "value": "café"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "alpha_dash"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "period",
+      "rules": {
+        "value": [
+          "alpha_dash"
+        ]
+      },
+      "data": {
+        "value": "a.b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_dash"
+        ]
+      }
+    },
+    {
+      "name": "space",
+      "rules": {
+        "value": [
+          "alpha_dash"
+        ]
+      },
+      "data": {
+        "value": "a b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_dash"
+        ]
+      }
+    },
+    {
+      "name": "alias alpha-dash with slash",
+      "rules": {
+        "value": [
+          "alpha-dash"
+        ]
+      },
+      "data": {
+        "value": "a/b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "alpha_dash"
+        ]
+      }
+    }
+  ]
+}

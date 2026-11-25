@@ -1,0 +1,186 @@
+{
+  "rule": "regex",
+  "cases": [
+    {
+      "name": "matching value",
+      "rules": {
+        "value": [
+          "regex:/^[a-z]+$/"
+        ]
+      },
+      "data": {
+        "value": "abc"
+      },
+      "valid": true
+    },
+    {
+      "name": "case-insensitive flag",
+      "rules": {
+        "value": [
+          "regex:/^[a-z]+$/i"
+        ]
+      },
+      "data": {
+        "value": "ABC"
+      },
+      "valid": true
+    },
+    {
+      "name": "optional group and escaped characters",
+      "rules": {
+        "value": [
+          "regex:/^v\\d+(\\.\\d+)?\\+$/"
+        ]
+      },
+      "data": {
+        "value": "v1.5+"
+      },
+      "valid": true
+    },
+    {
+      "name": "alternation with a pipe",
+      "rules": {
+        "value": [
+          "regex:/^(a|b)$/"
+        ]
+      },
+      "data": {
+        "value": "b"
+      },
+      "valid": true
+    },
+    {
+      "name": "negated character class",
+      "rules": {
+        "value": [
+          "regex:/^[^@#]+$/"
+        ]
+      },
+      "data": {
+        "value": "a-b"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing field is not validated",
+      "rules": {
+        "value": [
+          "regex:/^[a-z]+$/"
+        ]
+      },
+      "data": {},
+      "valid": true
+    },
+    {
+      "name": "empty string is not validated",
+      "rules": {
+        "value": [
+          "regex:/^[a-z]+$/"
+        ]
+      },
+      "data": {
+        "value": ""
+      },
+      "valid": true
+    },
+    {
+      "name": "non-matching value",
+      "rules": {
+        "value": [
+          "regex:/^[a-z]+$/"
+        ]
+      },
+      "data": {
+        "value": "abc1"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "regex"
+        ]
+      }
+    },
+    {
+      "name": "case-sensitive without flag",
+      "rules": {
+        "value": [
+          "regex:/^[a-z]+$/"
+        ]
+      },
+      "data": {
+        "value": "ABC"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "regex"
+        ]
+      }
+    },
+    {
+      "name": "alternation with a pipe, no match",
+      "rules": {
+        "value": [
+          "regex:/^(a|b)$/"
+        ]
+      },
+      "data": {
+        "value": "c"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "regex"
+        ]
+      }
+    },
+    {
+      "name": "negated character class, no match",
+      "rules": {
+        "value": [
+          "regex:/^[^@#]+$/"
+        ]
+      },
+      "data": {
+        "value": "a#b"
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "regex"
+        ]
+      }
+    },
+    {
+      "name": "array",
+      "rules": {
+        "value": [
+          "regex:/^\\d+$/"
+        ]
+      },
+      "data": {
+        "value": [
+          "1"
+        ]
+      },
+      "valid": false,
+      "failed": {
+        "value": [
+          "regex"
+        ]
+      }
+    },
+    {
+      "name": "integer matches as a string",
+      "rules": {
+        "value": [
+          "regex:/^\\d+$/"
+        ]
+      },
+      "data": {
+        "value": 123
+      },
+      "valid": true
+    }
+  ]
+}

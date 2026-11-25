@@ -1,0 +1,56 @@
+# Workflow name
+name: Tests
+
+# Triggers
+on:
+  push:
+    branches:
+      - 'v3.7-dev'
+  pull_request:
+    branches:
+      - 'v3.7-dev'
+
+# Jobs/Pipelines
+jobs:
+  php-unit:
+    name: 'PHP Unit (PHP ${{ matrix.php }}, Laravel ${{ matrix.laravel }})'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ 7.4 ]
+        laravel: [ '5.8', '6' ]
+    steps:
+      - name: 'Checkout Code'
+        uses: actions/checkout@v4
+
+      - name: "Setup PHP with tools"
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "${{ matrix.php }}"
+          tools: composer
+
+      - name: "Get composer cache directory"
+        id: composer-cache
+        run: 'echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT'
+
+      - name: "Cache dependencies"
+        uses: actions/cache@v4
+        with:
+          path: "${{ steps.composer-cache.outputs.dir }}"
+          key: "${{ runner.os }}-php-${{ matrix.php}}-laravel-${{ matrix.laravel }}-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "${{ runner.os }}-php-${{ matrix.php}}-laravel-${{ matrix.laravel }}-composer-"
+
+      # Pin the Laravel version so the conformance cases run against each supported version.
+      # Laravel 5.8 and 6 need Symfony 4 packages with security advisories, which Composer blocks by default.
+      - name: "Install Composer dependencies"
+        run: |
+          composer require --no-update --no-interaction \
+            "illuminate/console:^${{ matrix.laravel }}" \
+            "illuminate/encryption:^${{ matrix.laravel }}" \
+            "illuminate/support:^${{ matrix.laravel }}" \
+            "illuminate/validation:^${{ matrix.laravel }}"
+          composer update --no-ansi --no-interaction --no-progress --no-scripts --prefer-dist --with-all-dependencies --no-security-blocking
+
+      - name: 'Run PHPUnit'
+        run: ./vendor/bin/phpunit
