@@ -459,7 +459,7 @@
           "international_phone"
         ]
       },
-      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+      "correction": "v3.7 raises a PHP warning for an array value. Laravel turns it into an ErrorException."
     },
     {
       "name": "Kosovo mobile with country RS",
