@@ -123,20 +123,20 @@ class ProviderJobResultTest extends TestCase
             }
         };
 
-        $parameterRegister = $this->createMock(DataSetRegister::class);
+        $parameterRegister = $this->createStub(DataSetRegister::class);
         $parameterRegister->method('getClass')->willReturn(TestDataSet::class);
-        $returnRegister = $this->createMock(DataSetRegister::class);
+        $returnRegister = $this->createStub(DataSetRegister::class);
         $returnRegister->method('getClass')->willReturn($returnDataSetClass);
 
-        $functionRegister = $this->createMock(FunctionRegister::class);
+        $functionRegister = $this->createStub(FunctionRegister::class);
         $functionRegister->method('getParameter')->willReturn($parameterRegister);
         $functionRegister->method('getReturn')->willReturn($returnRegister);
 
-        $providerRegister = $this->createMock(ProviderRegister::class);
+        $providerRegister = $this->createStub(ProviderRegister::class);
         $providerRegister->method('hasFunction')->willReturn(true);
         $providerRegister->method('getFunction')->willReturn($functionRegister);
 
-        $provider = $this->createMock(Provider::class);
+        $provider = $this->createStub(Provider::class);
         $provider->method('getRegister')->willReturn($providerRegister);
         $provider->method('getInstance')->willReturn($this->provider);
 

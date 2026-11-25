@@ -12,7 +12,7 @@ class FormFieldTest extends TestCase
 {
     protected function setUp(): void
     {
-        RuleParser::setValidator($this->createMock(\Illuminate\Validation\Validator::class));
+        RuleParser::setValidator($this->createStub(\Illuminate\Validation\Validator::class));
     }
 
     public function testOptionValuesAreCastToString(): void

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Upmind\ProvisionBase\Test\Registry\Data;
 
 use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
 use Upmind\ProvisionBase\Registry\Data\CategoryRegister;
 use Upmind\ProvisionBase\Registry\Data\FunctionRegister;
@@ -14,13 +14,13 @@ use Upmind\ProvisionBase\TestStub\TestProvider;
 
 class ProviderRegisterTest extends TestCase
 {
-    private MockObject|CategoryRegister $categoryRegister;
+    private CategoryRegister&Stub $categoryRegister;
     private ProviderRegister $register;
 
     protected function setUp(): void
     {
-        $this->categoryRegister = $this->createMock(CategoryRegister::class);
-        $this->categoryRegister->expects($this->any())->method('getClass')->willReturn(AbstractTestProvider::class);
+        $this->categoryRegister = $this->createStub(CategoryRegister::class);
+        $this->categoryRegister->method('getClass')->willReturn(AbstractTestProvider::class);
         $this->register = new ProviderRegister('test-provider', TestProvider::class, $this->categoryRegister);
     }
 
@@ -39,10 +39,10 @@ class ProviderRegisterTest extends TestCase
 
     public function testHasAndGetDelegateToCategory(): void
     {
-        $functionRegister = $this->createMock(FunctionRegister::class);
+        $functionRegister = $this->createStub(FunctionRegister::class);
 
-        $this->categoryRegister->method('hasFunction')->with('testFunction')->willReturn(true);
-        $this->categoryRegister->method('getFunction')->with('testFunction')->willReturn($functionRegister);
+        $this->categoryRegister->method('hasFunction')->willReturnMap([['testFunction', true]]);
+        $this->categoryRegister->method('getFunction')->willReturnMap([['testFunction', $functionRegister]]);
 
         $this->assertTrue($this->register->hasFunction('testFunction'));
         $this->assertSame($functionRegister, $this->register->getFunction('testFunction'));
