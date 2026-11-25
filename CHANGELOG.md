@@ -7,6 +7,9 @@ All notable changes to the package will be documented in this file.
 - Add `contains_lower`, `contains_upper` and `contains_number` validation rules
 - Add a validation conformance suite in `tests/conformance`: one JSON case file per supported rule
 - Add `SupportedRules` and `UnsupportedValidationRule`
+- Update `RuleParser::expand()` to throw `UnsupportedValidationRule` for rules which can query a
+  database: `exists`, `unique`, `password` and `current_password`
+  - It does not enforce the rest of the allowlist
 - Run PHPUnit in CI on Laravel 5.8 and 6
 
 ## v3.7.8 - 2026-10-15

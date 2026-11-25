@@ -97,6 +97,19 @@ final class SupportedRules
     ];
 
     /**
+     * Blocked rules which can query a database. In v3.7, RuleParser rejects
+     * these rules only.
+     *
+     * @var string[]
+     */
+    public const DATABASE_RULES = [
+        'exists',
+        'unique',
+        'password',
+        'current_password',
+    ];
+
+    /**
      * Rule parameters which data sets can never use, with the reason.
      *
      * @var array<string,array<string,string>>
@@ -117,6 +130,18 @@ final class SupportedRules
         $name = Str::snake(Str::studly($name));
 
         return self::ALIASES[$name] ?? $name;
+    }
+
+    /**
+     * @throws UnsupportedValidationRule If the given rule can query a database
+     */
+    public static function assertNoDatabaseQuery(string $rule): void
+    {
+        $name = self::name($rule);
+
+        if (in_array($name, self::DATABASE_RULES, true)) {
+            throw UnsupportedValidationRule::forBlockedRule($name, self::BLOCKED[$name]);
+        }
     }
 
     public static function isSupported(string $rule): bool

@@ -4,8 +4,9 @@ This directory defines the expected behaviour of every validation rule that
 data sets can use. Any validator implementation must pass every case.
 
 `SupportedRules::RULES` lists the supported rules. Each supported rule has one
-case file, `validation/<rule>.json`. In v3.7, `RuleParser` does not enforce
-the allowlist.
+case file, `validation/<rule>.json`. In v3.7, `RuleParser` rejects only rules
+which can query a database (`SupportedRules::DATABASE_RULES`), so other
+existing data sets keep working.
 
 ## Case file format
 

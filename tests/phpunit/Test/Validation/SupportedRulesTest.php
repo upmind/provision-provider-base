@@ -14,6 +14,7 @@ use PHPUnit\Framework\TestCase;
 use Upmind\ProvisionBase\Exception\UnsupportedValidationRule;
 use Upmind\ProvisionBase\Laravel\Validation\SupportedRules;
 use Upmind\ProvisionBase\Provider\DataSet\DataSet;
+use Upmind\ProvisionBase\Provider\DataSet\RuleParser;
 
 class SupportedRulesTest extends TestCase
 {
@@ -128,6 +129,32 @@ class SupportedRulesTest extends TestCase
         $this->assertSame('domain_name', SupportedRules::name('domain-name'));
         $this->assertSame('required_if', SupportedRules::name('Required_If:a,b'));
         $this->assertSame('alpha_dash_dot', SupportedRules::name(' alpha-dash-dot '));
+    }
+
+    public static function databaseRules(): array
+    {
+        return [['exists:users,id'], ['unique:users'], ['Unique:users,email'], ['password'], ['current_password']];
+    }
+
+    /**
+     * @dataProvider databaseRules
+     */
+    #[DataProvider('databaseRules')]
+    public function testRuleParserRejectsDatabaseRules(string $rule): void
+    {
+        $this->expectException(UnsupportedValidationRule::class);
+        $this->expectExceptionMessage('is blocked');
+
+        RuleParser::expand(['name' => ['required', $rule]]);
+    }
+
+    public function testRuleParserAllowsOtherUnsupportedRules(): void
+    {
+        // v3.7 enforces only the database rules, so other existing data sets keep working.
+        $this->assertSame(
+            ['url' => ['required', 'active_url']],
+            RuleParser::expand(['url' => ['required', 'active_url']])
+        );
     }
 
     public function testPackageDataSetsUseSupportedRules(): void
