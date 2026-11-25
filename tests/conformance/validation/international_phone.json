@@ -91,31 +91,6 @@
       "valid": true
     },
     {
-      "name": "international format without country value",
-      "rules": {
-        "phone": [
-          "international_phone:country"
-        ]
-      },
-      "data": {
-        "phone": "+447400123456"
-      },
-      "valid": true
-    },
-    {
-      "name": "international format with unknown country value",
-      "rules": {
-        "phone": [
-          "international_phone:country"
-        ]
-      },
-      "data": {
-        "phone": "+447400123456",
-        "country": "XX"
-      },
-      "valid": true
-    },
-    {
       "name": "fallback pattern accepts 0 and 9 digits without country value",
       "rules": {
         "phone": [
@@ -137,18 +112,6 @@
       "data": {
         "phone": "0612345678",
         "country": "US"
-      },
-      "valid": true
-    },
-    {
-      "name": "known dialling code without a valid number",
-      "rules": {
-        "phone": [
-          "international_phone"
-        ]
-      },
-      "data": {
-        "phone": "+3312"
       },
       "valid": true
     },
@@ -175,6 +138,165 @@
       "valid": true
     },
     {
+      "name": "Kosovo mobile, international format",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+38343201234"
+      },
+      "valid": true
+    },
+    {
+      "name": "Kosovo mobile with country XK",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+38343201234",
+        "country": "XK"
+      },
+      "valid": true,
+      "correction": "v3.7 rejects country XK, because its ISO 3166 list does not include Kosovo."
+    },
+    {
+      "name": "Kosovo mobile, national format with country XK",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "043 201 234",
+        "country": "XK"
+      },
+      "valid": true,
+      "correction": "v3.7 rejects country XK, because its ISO 3166 list does not include Kosovo."
+    },
+    {
+      "name": "Kosovo mobile with lower case country xk",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+38343201234",
+        "country": "xk"
+      },
+      "valid": true,
+      "correction": "v3.7 rejects country XK, because its ISO 3166 list does not include Kosovo."
+    },
+    {
+      "name": "Monaco number in a range Kosovo used before +383",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+37744123456"
+      },
+      "valid": true
+    },
+    {
+      "name": "Isle of Man number with country GB",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447924123456",
+        "country": "GB"
+      },
+      "valid": true
+    },
+    {
+      "name": "Kazakhstan number with country KZ",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+77710009998",
+        "country": "KZ"
+      },
+      "valid": true
+    },
+    {
+      "name": "fallback pattern accepts a Moroccan number for another country",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+212612345678",
+        "country": "GB"
+      },
+      "valid": true
+    },
+    {
+      "name": "missing country value",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447400123456"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+    },
+    {
+      "name": "unknown country value",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447400123456",
+        "country": "XX"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+    },
+    {
+      "name": "known dialling code without a valid number",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+3312"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      }
+    },
+    {
       "name": "national format without country",
       "rules": {
         "phone": [
@@ -189,7 +311,8 @@
         "phone": [
           "international_phone"
         ]
-      }
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
     },
     {
       "name": "unknown dialling code",
@@ -258,7 +381,8 @@
         "phone": [
           "international_phone"
         ]
-      }
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
     },
     {
       "name": "number of another country",
@@ -276,7 +400,8 @@
         "phone": [
           "international_phone"
         ]
-      }
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
     },
     {
       "name": "Jersey number with country GB",
@@ -294,7 +419,8 @@
         "phone": [
           "international_phone"
         ]
-      }
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
     },
     {
       "name": "national format without country value",
@@ -311,7 +437,8 @@
         "phone": [
           "international_phone"
         ]
-      }
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
     },
     {
       "name": "array value",
@@ -331,7 +458,158 @@
         "phone": [
           "international_phone"
         ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+    },
+    {
+      "name": "Kosovo mobile with country RS",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+38343201234",
+        "country": "RS"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+    },
+    {
+      "name": "Serbian mobile with country XK",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+381601234567",
+        "country": "XK"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+    },
+    {
+      "name": "Pristina number in the Serbian range Kosovo used before +383",
+      "rules": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "data": {
+        "phone": "+38138123456"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
       }
+    },
+    {
+      "name": "Canadian number with country US",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+16135550123",
+        "country": "US"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+    },
+    {
+      "name": "Kazakhstan number with country RU",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+77710009998",
+        "country": "RU"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+    },
+    {
+      "name": "country without phone numbers",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447400123456",
+        "country": "AQ"
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+    },
+    {
+      "name": "integer country value",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447400123456",
+        "country": 44
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
+    },
+    {
+      "name": "empty country value",
+      "rules": {
+        "phone": [
+          "international_phone:country"
+        ]
+      },
+      "data": {
+        "phone": "+447400123456",
+        "country": ""
+      },
+      "valid": false,
+      "failed": {
+        "phone": [
+          "international_phone"
+        ]
+      },
+      "correction": "v3.7 adds the error message by hand, so Validator::failed() does not report international_phone."
     }
   ]
 }

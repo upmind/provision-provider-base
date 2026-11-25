@@ -130,7 +130,8 @@
         "contact.name": [
           "required"
         ]
-      }
+      },
+      "correction": "v3.7 does not report nested data set failures in Validator::failed()."
     },
     {
       "name": "invalid nested field",
@@ -158,7 +159,8 @@
         "contact.email": [
           "email"
         ]
-      }
+      },
+      "correction": "v3.7 does not report nested data set failures in Validator::failed()."
     },
     {
       "name": "empty nested data",
@@ -183,7 +185,8 @@
         "contact.name": [
           "required"
         ]
-      }
+      },
+      "correction": "v3.7 does not report nested data set failures in Validator::failed()."
     },
     {
       "name": "required parent is missing",
@@ -232,7 +235,8 @@
         "a.b.c": [
           "required"
         ]
-      }
+      },
+      "correction": "v3.7 does not report nested data set failures in Validator::failed()."
     }
   ]
 }

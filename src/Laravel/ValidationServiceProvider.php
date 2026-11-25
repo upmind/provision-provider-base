@@ -163,7 +163,7 @@ class ValidationServiceProvider extends BaseProvider
                 );
             }
 
-            return $this->getPhoneRegion($value) !== null || $this->manualCheckPhones($value);
+            return $this->isValidInternationalPhone($value) || $this->manualCheckPhones($value);
         };
 
         $factory = $this->getValidatorFactory();
@@ -297,10 +297,6 @@ class ValidationServiceProvider extends BaseProvider
     }
 
     /**
-     * @param $value
-     * @return bool
-     */
-    /**
      * Fail the international_phone rule of the given attribute with the given
      * message. The validator records the failed rule.
      */
@@ -313,8 +309,7 @@ class ValidationServiceProvider extends BaseProvider
 
     /**
      * Determine whether the given value is a valid phone number for the given
-     * country. If the country is not a supported region, the value must be a
-     * valid number in international format.
+     * country. A missing country, or one without phone numbers, never matches.
      *
      * @param mixed $value
      * @param mixed $country ISO 3166-1 alpha-2 code
@@ -326,42 +321,44 @@ class ValidationServiceProvider extends BaseProvider
         }
 
         $util = PhoneNumberUtil::getInstance();
-        $region = is_string($country) && in_array(strtoupper($country), $util->getSupportedRegions(), true)
-            ? strtoupper($country)
-            : null;
+        $region = is_string($country) ? strtoupper($country) : null;
 
-        try {
-            $number = $util->parse((string)$value, $region ?? 'ZZ');
-        } catch (NumberParseException $e) {
+        if (!in_array($region, $util->getSupportedRegions(), true)) {
             return false;
         }
 
-        return $region !== null
-            ? $util->isValidNumberForRegion($number, $region)
-            : $util->isValidNumber($number);
+        try {
+            return $util->isValidNumberForRegion($util->parse((string)$value, $region), $region);
+        } catch (NumberParseException $e) {
+            return false;
+        }
     }
 
     /**
-     * Get the region of the given phone number in international format, if
-     * the dialling code is known. This does not check that the number is valid.
+     * Determine whether the given value is a valid phone number in
+     * international format, e.g. `+447400123456`.
      *
      * @param mixed $value
      */
-    private function getPhoneRegion($value): ?string
+    private function isValidInternationalPhone($value): bool
     {
         if (!is_scalar($value)) {
-            return null;
+            return false;
         }
 
         $util = PhoneNumberUtil::getInstance();
 
         try {
-            return $util->getRegionCodeForNumber($util->parse((string)$value, 'ZZ'));
+            return $util->isValidNumber($util->parse((string)$value, 'ZZ'));
         } catch (NumberParseException $e) {
-            return null;
+            return false;
         }
     }
 
+    /**
+     * @param $value
+     * @return bool
+     */
     private function manualCheckPhones($value): bool
     {
         if (!is_scalar($value)) {

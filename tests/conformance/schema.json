@@ -28,6 +28,7 @@
           },
           "data": { "type": ["object", "array"] },
           "valid": { "type": "boolean" },
+          "correction": { "type": "string", "minLength": 1 },
           "failed": {
             "type": "object",
             "minProperties": 1,

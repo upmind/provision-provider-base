@@ -38,6 +38,15 @@ case file, `validation/<rule>.json`. `RuleParser` rejects any other rule.
 - `valid`: whether the data passes all rules.
 - `failed`: for invalid cases only. The rules that fail, per field. The order
   is not significant.
+- `correction`: optional. The case corrects the behaviour of v3.7, which is
+  live. The value says how v3.7 differs. See below.
+
+## Corrections
+
+Every case must pass on v3.7 and on later versions. A case may fail on v3.7
+only if the later behaviour corrects v3.7, e.g. newer phone number metadata or
+a bug fix. Such a case has a `correction`. The v3.7 suite checks that each case
+with a `correction` does not conform on v3.7, and that every other case does.
 
 ## Rule names
 

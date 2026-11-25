@@ -55,6 +55,11 @@ class SupportedRulesTest extends TestCase
                 $this->assertSame(!$case['valid'], array_key_exists('failed', $case), "{$label}: failed is set only for invalid cases");
                 $this->assertNotEmpty($case['rules'], $label);
 
+                if (array_key_exists('correction', $case)) {
+                    $this->assertIsString($case['correction'], $label);
+                    $this->assertNotSame('', trim($case['correction']), "{$label}: correction is empty");
+                }
+
                 foreach ($case['rules'] as $field => $fieldRules) {
                     $this->assertIsString($field, $label);
                     $this->assertIsArray($fieldRules, "{$label}: rules of {$field} must be a list");
