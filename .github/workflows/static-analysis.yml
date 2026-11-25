@@ -42,8 +42,9 @@ jobs:
           key: "${{ runner.os }}-php-${{ matrix.php}}-composer-${{ hashFiles('**/composer.json') }}"
           restore-keys: "${{ runner.os }}-php-${{ matrix.php}}-composer-"
 
+      # Laravel 5.8 and 6 need Symfony 4 packages with security advisories, which Composer blocks by default.
       - name: "Install Composer dependencies"
-        run: composer install --prefer-dist
+        run: composer install --prefer-dist --no-security-blocking
 
       - name: "Run PHPStan Static Analysis"
         run: phpstan analyse
