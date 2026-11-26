@@ -11,8 +11,9 @@ use Upmind\ProvisionBase\Provider\DataSet\RuleParser;
 /**
  * Validation rules which data sets can use.
  *
- * Each supported rule has conformance cases in tests/conformance/validation.
- * Other validator implementations must pass the same cases.
+ * Each supported rule has conformance cases in the package
+ * upmind/provision-validation-conformance. Other validator implementations
+ * must pass the same cases.
  */
 final class SupportedRules
 {

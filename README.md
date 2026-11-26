@@ -585,8 +585,10 @@ against the Laravel validator with this package's rules:
 vendor/bin/phpunit --filter ConformanceTest
 ```
 
-Every case must conform. CI checks that `v3.7-dev` and `v5-dev` require the
-same version of the package.
+Every case must conform.
+
+`composer.json` requires an exact version of the package. A new version can add
+rules and cases, so update the version and `SupportedRules::RULES` together.
 
 ## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
