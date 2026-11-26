@@ -54,3 +54,35 @@ jobs:
 
       - name: 'Run PHPUnit'
         run: ./vendor/bin/phpunit
+
+  # Both branches must run the same conformance cases.
+  conformance-version:
+    name: 'Conformance package version'
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE: 'upmind/provision-validation-conformance'
+      OTHER_BRANCH: 'v5-dev'
+    steps:
+      - name: 'Checkout Code'
+        uses: actions/checkout@v4
+
+      - name: 'Compare the required version with the other branch'
+        run: |
+          git fetch --no-tags --depth 1 origin "$OTHER_BRANCH"
+          ours=$(jq -r --arg p "$PACKAGE" '."require-dev"[$p] // empty' composer.json)
+          theirs=$(git show FETCH_HEAD:composer.json | jq -r --arg p "$PACKAGE" '."require-dev"[$p] // empty')
+
+          if [ -z "$ours" ]; then
+            echo "::error::composer.json does not require $PACKAGE"
+            exit 1
+          fi
+
+          if [ -z "$theirs" ]; then
+            echo "::warning::$OTHER_BRANCH does not require $PACKAGE yet"
+            exit 0
+          fi
+
+          if [ "$ours" != "$theirs" ]; then
+            echo "::error::This branch requires $PACKAGE $ours, but $OTHER_BRANCH requires $theirs"
+            exit 1
+          fi
