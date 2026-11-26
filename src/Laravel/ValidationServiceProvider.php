@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\ServiceProvider as BaseProvider;
 use League\ISO3166\ISO3166;
 use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumberUtil;
 use Upmind\ProvisionBase\Laravel\Validation\Rules\CertificatePem;
 use Upmind\ProvisionBase\Provider\DataSet\DataSet;
 use Upmind\ProvisionBase\Provider\DataSet\RuleParser;
@@ -52,6 +53,8 @@ class ValidationServiceProvider extends BaseProvider
         $this->bootStepRule();
 
         $this->bootCertificatePemRule();
+
+        $this->bootContainsRules();
     }
 
     /**
@@ -129,37 +132,20 @@ class ValidationServiceProvider extends BaseProvider
      */
     protected function bootInternationalPhoneRule(): void
     {
-        /**
-         * @param $attribute
-         * @param $value
-         * @param $parameters
-         * @param $validator
-         * @return bool
-         * @throws \Illuminate\Contracts\Container\BindingResolutionException
-         */
         $extension = function ($attribute, $value, $parameters, $validator) {
             if (!empty($parameters[0])) {
                 //validate phone number for the input country code
                 $countryCode = Arr::get($validator->getData(), $parameters[0]);
 
-                $factory = $this->getValidatorFactory();
-
-                $extraValidator = $factory->make([
-                    'phone' => $value
-                ], [
-                    'phone' => sprintf('phone:%s', $countryCode)
-                ]);
-
-                if ($extraValidator->fails() && !$this->manualCheckPhones($value)) {
-                    // manually adding an error will cause validation to fail with this specific error message
-                    $validator->errors()
-                        ->add(
-                            $attribute,
-                            $this->makeReplacements('This is not a valid :COUNTRY_CODE phone number', [
-                                'attribute' => $attribute,
-                                'country_code' => $countryCode,
-                            ])
-                        );
+                if (!$this->isValidPhoneForCountry($value, $countryCode) && !$this->manualCheckPhones($value)) {
+                    return $this->failInternationalPhone(
+                        $validator,
+                        $attribute,
+                        $this->makeReplacements('This is not a valid :COUNTRY_CODE phone number', [
+                            'attribute' => $attribute,
+                            'country_code' => is_scalar($countryCode) ? (string)$countryCode : '',
+                        ])
+                    );
                 }
 
                 return true;
@@ -168,26 +154,16 @@ class ValidationServiceProvider extends BaseProvider
             //validate for a valid international phone number regardless of country
 
             if (!Str::startsWith($value, '+')) {
-                // manually adding an error will cause validation to fail with this specific error message
-                $validator->errors()
-                    ->add(
-                        $attribute,
-                        $this->makeReplacements('The phone number must begin with +{dialing code}', [
-                            'attribute' => $attribute
-                        ])
-                    );
-
-                return true;
+                return $this->failInternationalPhone(
+                    $validator,
+                    $attribute,
+                    $this->makeReplacements('The phone number must begin with +{dialing code}', [
+                        'attribute' => $attribute
+                    ])
+                );
             }
 
-            try {
-                $phone = phone($value);
-                $phone->getCountry();
-            } catch (NumberParseException $e) {
-                return $this->manualCheckPhones($value);
-            }
-
-            return true;
+            return $this->isValidInternationalPhone($value) || $this->manualCheckPhones($value);
         };
 
         $factory = $this->getValidatorFactory();
@@ -240,6 +216,28 @@ class ValidationServiceProvider extends BaseProvider
 
         $factory->extend('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@validateStep');
         $factory->replacer('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@replaceStep');
+    }
+
+    /**
+     * Provides the rules `contains_lower`, `contains_upper` and `contains_number`.
+     * Each passes if a string value contains at least one character of the class.
+     * The character classes match the Laravel Password rule.
+     */
+    protected function bootContainsRules(): void
+    {
+        $factory = $this->getValidatorFactory();
+
+        $rules = [
+            'contains_lower' => ['/\p{Ll}/u', 'The :attribute must contain at least one lowercase letter.'],
+            'contains_upper' => ['/\p{Lu}/u', 'The :attribute must contain at least one uppercase letter.'],
+            'contains_number' => ['/\pN/u', 'The :attribute must contain at least one number.'],
+        ];
+
+        foreach ($rules as $rule => [$pattern, $message]) {
+            $factory->extend($rule, function ($attribute, $value) use ($pattern) {
+                return is_string($value) && preg_match($pattern, $value) === 1;
+            }, $message);
+        }
     }
 
     protected function bootCertificatePemRule(): void
@@ -299,11 +297,74 @@ class ValidationServiceProvider extends BaseProvider
     }
 
     /**
+     * Fail the international_phone rule of the given attribute with the given
+     * message. The validator records the failed rule.
+     */
+    private function failInternationalPhone(LaravelValidator $validator, string $attribute, string $message): bool
+    {
+        $validator->setCustomMessages([$attribute . '.international_phone' => $message]);
+
+        return false;
+    }
+
+    /**
+     * Determine whether the given value is a valid phone number for the given
+     * country. A missing country, or one without phone numbers, never matches.
+     *
+     * @param mixed $value
+     * @param mixed $country ISO 3166-1 alpha-2 code
+     */
+    private function isValidPhoneForCountry($value, $country): bool
+    {
+        if (!is_scalar($value)) {
+            return false;
+        }
+
+        $util = PhoneNumberUtil::getInstance();
+        $region = is_string($country) ? strtoupper($country) : null;
+
+        if (!in_array($region, $util->getSupportedRegions(), true)) {
+            return false;
+        }
+
+        try {
+            return $util->isValidNumberForRegion($util->parse((string)$value, $region), $region);
+        } catch (NumberParseException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Determine whether the given value is a valid phone number in
+     * international format, e.g. `+447400123456`.
+     *
+     * @param mixed $value
+     */
+    private function isValidInternationalPhone($value): bool
+    {
+        if (!is_scalar($value)) {
+            return false;
+        }
+
+        $util = PhoneNumberUtil::getInstance();
+
+        try {
+            return $util->isValidNumber($util->parse((string)$value, 'ZZ'));
+        } catch (NumberParseException $e) {
+            return false;
+        }
+    }
+
+    /**
      * @param $value
      * @return bool
      */
     private function manualCheckPhones($value): bool
     {
+        if (!is_scalar($value)) {
+            return false;
+        }
+
         $value = strval($value);
 
         //Morocco phone validation

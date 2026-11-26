@@ -571,6 +571,23 @@ class Greeting extends ResultData
 }
 ```
 
+## Validation Conformance
+
+`SupportedRules::RULES` lists the validation rules that data sets can use.
+`RuleParser` rejects any other rule.
+
+The package
+[upmind/provision-validation-conformance](https://github.com/upmind/provision-validation-conformance)
+defines the expected behaviour of each supported rule. PHPUnit runs every case
+against the Laravel validator with this package's rules:
+
+```sh
+vendor/bin/phpunit --filter ConformanceTest
+```
+
+Every case must conform. CI checks that `v3.7-dev` and `v5-dev` require the
+same version of the package.
+
 ## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
