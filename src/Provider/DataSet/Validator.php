@@ -100,6 +100,11 @@ class Validator extends LaravelValidator
                 );
 
                 $parentValidator->errors()->merge($nestedErrors);
+
+                $parentValidator->failedRules = array_merge(
+                    $parentValidator->failedRules,
+                    RuleParser::prefixFieldKeys($nestedValidator->failed(), $fieldName)
+                );
             });
         }
 

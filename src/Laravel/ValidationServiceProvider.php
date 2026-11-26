@@ -53,6 +53,8 @@ class ValidationServiceProvider extends BaseProvider
         $this->bootStepRule();
 
         $this->bootCertificatePemRule();
+
+        $this->bootContainsRules();
     }
 
     protected function bootDataSetValidatorResolver()
@@ -135,18 +137,16 @@ class ValidationServiceProvider extends BaseProvider
                     'phone' => sprintf('phone:%s', $countryCode)
                 ]);
 
-                if ($extraValidator->fails()) {
-                    if (!$this->manualCheckPhones($value)) {
-                        // manually adding an error will cause validation to fail with this specific error message
-                        $validator->errors()
-                            ->add(
-                                $attribute,
-                                $this->makeReplacements('This is not a valid :COUNTRY_CODE phone number', [
-                                    'attribute' => $attribute,
-                                    'country_code' => $countryCode,
-                                ])
-                            );
-                    }
+                // The phone rule raises a PHP warning for an array value.
+                if (is_array($value) || ($extraValidator->fails() && !$this->manualCheckPhones($value))) {
+                    return $this->failInternationalPhone(
+                        $validator,
+                        $attribute,
+                        $this->makeReplacements('This is not a valid :COUNTRY_CODE phone number', [
+                            'attribute' => $attribute,
+                            'country_code' => $countryCode,
+                        ])
+                    );
                 }
 
                 return true;
@@ -155,16 +155,13 @@ class ValidationServiceProvider extends BaseProvider
             //validate for a valid international phone number regardless of country
 
             if (!Str::startsWith($value, '+')) {
-                // manually adding an error will cause validation to fail with this specific error message
-                $validator->errors()
-                    ->add(
-                        $attribute,
-                        $this->makeReplacements('The phone number must begin with +{dialing code}', [
-                            'attribute' => $attribute
-                        ])
-                    );
-
-                return true;
+                return $this->failInternationalPhone(
+                    $validator,
+                    $attribute,
+                    $this->makeReplacements('The phone number must begin with +{dialing code}', [
+                        'attribute' => $attribute
+                    ])
+                );
             }
 
             try {
@@ -226,6 +223,26 @@ class ValidationServiceProvider extends BaseProvider
         Validator::replacer('step', 'Upmind\ProvisionBase\Laravel\Validation\Rules\Step@replaceStep');
     }
 
+    /**
+     * Provides the rules `contains_lower`, `contains_upper` and `contains_number`.
+     * Each passes if a string value contains at least one character of the class.
+     * The character classes match the Laravel Password rule.
+     */
+    protected function bootContainsRules(): void
+    {
+        $rules = [
+            'contains_lower' => ['/\p{Ll}/u', 'The :attribute must contain at least one lowercase letter.'],
+            'contains_upper' => ['/\p{Lu}/u', 'The :attribute must contain at least one uppercase letter.'],
+            'contains_number' => ['/\pN/u', 'The :attribute must contain at least one number.'],
+        ];
+
+        foreach ($rules as $rule => [$pattern, $message]) {
+            Validator::extend($rule, function ($attribute, $value) use ($pattern) {
+                return is_string($value) && preg_match($pattern, $value) === 1;
+            }, $message);
+        }
+    }
+
     protected function bootCertificatePemRule(): void
     {
         Validator::extend(
@@ -278,6 +295,18 @@ class ValidationServiceProvider extends BaseProvider
         return (new Collection($replace))->sortBy(function ($value, $key) {
             return mb_strlen($key) * -1;
         })->all();
+    }
+
+    /**
+     * Fail the international_phone rule of the given attribute with the given
+     * message. The validator records the failed rule.
+     */
+    private function failInternationalPhone(LaravelValidator $validator, string $attribute, string $message): bool
+    {
+        // Put the message first, so that no other custom message replaces it.
+        $validator->customMessages = [$attribute . '.international_phone' => $message] + $validator->customMessages;
+
+        return false;
     }
 
     /**

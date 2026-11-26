@@ -2,6 +2,21 @@
 
 All notable changes to the package will be documented in this file.
 
+## Unreleased
+
+- Add `contains_lower`, `contains_upper` and `contains_number` validation rules
+- Run the validation conformance cases of `upmind/provision-validation-conformance` in PHPUnit
+- Update `international_phone` and nested data sets to report the failed rules in
+  `Validator::failed()`
+  - The validation result and the error messages do not change
+- Fix `international_phone` with a country to fail for an array value instead of raising a PHP
+  warning
+- Add `SupportedRules` and `UnsupportedValidationRule`
+- Update `RuleParser::expand()` to throw `UnsupportedValidationRule` for rules which can query a
+  database: `exists`, `unique`, `password` and `current_password`
+  - It does not enforce the rest of the allowlist
+- Run PHPUnit in CI on Laravel 5.8 and 6
+
 ## v3.7.8 - 2026-10-15
 
 - Update FormField::typeShouldBePassword() to match private key and passphrase

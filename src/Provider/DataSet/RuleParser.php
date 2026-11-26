@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationRuleParser;
 use Illuminate\Validation\Validator as LaravelValidator;
+use Upmind\ProvisionBase\Laravel\Validation\SupportedRules;
 
 class RuleParser
 {
@@ -38,6 +39,8 @@ class RuleParser
      * @param string|null $parentField Name/key of the parent field, if any
      *
      * @return array<string[]> Fully expanded data set rules
+     *
+     * @throws \Upmind\ProvisionBase\Exception\UnsupportedValidationRule If a rule can query a database
      */
     public static function expand(array $rawRules, ?string $parentField = null): array
     {
@@ -65,6 +68,8 @@ class RuleParser
 
                     continue;
                 }
+
+                SupportedRules::assertNoDatabaseQuery($rule);
 
                 //no further rules to expand
                 $returnRules[$field][] = $rule;
