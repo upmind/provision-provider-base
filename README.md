@@ -549,8 +549,10 @@ vendor/bin/phpunit --filter ConformanceTest
 
 `ConformanceTest::KNOWN_DIFFERENCES` lists the cases where v3.7 does not
 conform. The suite checks that each listed case does not conform, and that
-every other case does. CI checks that `v3.7-dev` and `v5-dev` require the same
-version of the package.
+every other case does.
+
+`composer.json` requires version 1.0.0 of the package. v3.7 stays on this
+version. Later versions add rules which Laravel 5.8 and 6 do not have.
 
 ## Changelog
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
