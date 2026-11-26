@@ -9,11 +9,13 @@ use InvalidArgumentException;
 use ReflectionMethod;
 use Upmind\ProvisionBase\Provider\Contract\CategoryInterface;
 use Upmind\ProvisionBase\Provider\DataSet\AboutData;
+use Upmind\ProvisionBase\Registry\Data\Contract\CategoryRegisterInterface;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
 
 /**
  * Register for a provision category.
  */
-class CategoryRegister extends ClassRegister
+class CategoryRegister extends ClassRegister implements CategoryRegisterInterface
 {
     /**
      * About data.
@@ -51,7 +53,7 @@ class CategoryRegister extends ClassRegister
             $register->enumerateData();
         });
 
-        $this->getProviders()->each(function (ProviderRegister $register) {
+        $this->getProviders()->each(function (ProviderRegisterInterface $register) {
             $register->enumerateData();
         });
     }
@@ -68,7 +70,7 @@ class CategoryRegister extends ClassRegister
     /**
      * Return the child provider registers.
      *
-     * @return Collection<array-key, ProviderRegister>
+     * @return Collection<array-key, ProviderRegisterInterface>
      */
     public function getProviders(): Collection
     {
@@ -78,9 +80,9 @@ class CategoryRegister extends ClassRegister
     /**
      * Return a provider by identifier, class or register instance.
      *
-     * @param string|ProviderRegister $provider Provider identifier, class or register instance
+     * @param string|ProviderRegisterInterface $provider Provider identifier, class or register instance
      */
-    public function getProvider($provider): ?ProviderRegister
+    public function getProvider($provider): ?ProviderRegisterInterface
     {
         return $this->getChild($provider);
     }
@@ -90,10 +92,8 @@ class CategoryRegister extends ClassRegister
      *
      * @param string $identifier Provider unique identifier
      * @param string $class Provider fully-namespaced class name
-     *
-     * @return ProviderRegister
      */
-    public function addProvider(string $identifier, string $class): ProviderRegister
+    public function addProvider(string $identifier, string $class): ProviderRegisterInterface
     {
         $this->addChild($provider = new ProviderRegister($identifier, $class, $this));
 
@@ -103,7 +103,7 @@ class CategoryRegister extends ClassRegister
     /**
      * Determine whether this category has the given provider.
      *
-     * @param string|ProviderRegister $provider Provider identifier, class or register instance
+     * @param string|ProviderRegisterInterface $provider Provider identifier, class or register instance
      */
     public function hasProvider($provider): bool
     {

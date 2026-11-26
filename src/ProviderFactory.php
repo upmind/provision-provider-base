@@ -15,8 +15,8 @@ use Upmind\ProvisionBase\Provider\Contract\ProviderInterface;
 use Upmind\ProvisionBase\Registry\Registry;
 use Upmind\ProvisionBase\Provider\DataSet\DataSet;
 use Upmind\ProvisionBase\Provider\DataSet\SystemInfo;
-use Upmind\ProvisionBase\Registry\Data\CategoryRegister;
-use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
+use Upmind\ProvisionBase\Registry\Data\Contract\CategoryRegisterInterface;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
 
 /**
  * Factory class for creating Provider instance/register wrapper instances
@@ -59,8 +59,8 @@ class ProviderFactory
     }
 
     /**
-     * @param string|CategoryRegister $category Category identifier, class or register
-     * @param string|ProviderRegister $provider Provider identifier, class or register
+     * @param string|CategoryRegisterInterface $category Category identifier, class or register
+     * @param string|ProviderRegisterInterface $provider Provider identifier, class or register
      * @param array|DataSet $providerConfiguration Provider configuration data
      *
      * @throws \Upmind\ProvisionBase\Exception\InvalidProviderConfigurationException If the given config data is invalid

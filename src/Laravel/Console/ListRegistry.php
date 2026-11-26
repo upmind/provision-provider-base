@@ -3,7 +3,7 @@
 namespace Upmind\ProvisionBase\Laravel\Console;
 
 use Illuminate\Console\Command;
-use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
 use Upmind\ProvisionBase\Registry\Registry;
 
 /**
@@ -51,7 +51,7 @@ class ListRegistry extends Command
         foreach ($categories as $category) {
             $categoryIdentifier = $category->getIdentifier();
             $providerIdentifiers = $category->getProviders()
-                ->map(function (ProviderRegister $provider) {
+                ->map(function (ProviderRegisterInterface $provider) {
                     return $provider->getIdentifier();
                 });
 

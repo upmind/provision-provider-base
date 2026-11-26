@@ -14,9 +14,9 @@ use Upmind\ProvisionBase\Exception\ProviderConnectionError;
 use Upmind\ProvisionBase\Exception\ProvisionFunctionError;
 use Upmind\ProvisionBase\Provider;
 use Upmind\ProvisionBase\ProviderJob;
+use Upmind\ProvisionBase\Registry\Data\Contract\ProviderRegisterInterface;
 use Upmind\ProvisionBase\Registry\Data\DataSetRegister;
 use Upmind\ProvisionBase\Registry\Data\FunctionRegister;
-use Upmind\ProvisionBase\Registry\Data\ProviderRegister;
 use Upmind\ProvisionBase\Result\Result;
 use Upmind\ProvisionBase\TestStub\TestDataSet;
 use Upmind\ProvisionBase\TestStub\TestProvider;
@@ -24,12 +24,12 @@ use Upmind\ProvisionBase\TestStub\TestProvider;
 class ProviderJobTest extends TestCase
 {
     private Provider&Stub $provider;
-    private ProviderRegister&Stub $providerRegister;
+    private ProviderRegisterInterface&Stub $providerRegister;
     private FunctionRegister&Stub $functionRegister;
 
     protected function setUp(): void
     {
-        $this->providerRegister = $this->createStub(ProviderRegister::class);
+        $this->providerRegister = $this->createStub(ProviderRegisterInterface::class);
         $this->provider = $this->createStub(Provider::class);
         $this->functionRegister = $this->createStub(FunctionRegister::class);
     }
