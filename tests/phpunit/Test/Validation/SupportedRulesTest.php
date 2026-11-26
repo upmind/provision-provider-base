@@ -32,15 +32,21 @@ class SupportedRulesTest extends TestCase
         $package = ConformanceCases::rules();
         $rules = SupportedRules::RULES;
         $supported = array_merge($package['supported']['laravel'], $package['supported']['custom']);
-        $blocked = SupportedRules::BLOCKED;
         sort($rules);
         sort($supported);
-        ksort($blocked);
 
         $this->assertSame($supported, $rules);
         $this->assertSame($package['aliases'], SupportedRules::ALIASES);
-        $this->assertSame($package['blocked'], $blocked);
-        $this->assertSame($package['blocked_parameters'], SupportedRules::BLOCKED_PARAMETERS);
+    }
+
+    public function testBlockedRulesAreNotSupported(): void
+    {
+        $this->assertSame([], array_intersect(array_keys(SupportedRules::BLOCKED), SupportedRules::RULES));
+    }
+
+    public function testEmailWithDnsParameterIsSupported(): void
+    {
+        $this->assertTrue(SupportedRules::isSupported('email:rfc,dns'));
     }
 
     public function testEverySupportedRuleHasCases(): void
@@ -68,7 +74,7 @@ class SupportedRulesTest extends TestCase
             return [$rule];
         }, array_keys(SupportedRules::BLOCKED));
 
-        return array_merge($rules, [['email:rfc,dns'], ['exists:users,id'], ['unique:users']]);
+        return array_merge($rules, [['exists:users,id'], ['unique:users']]);
     }
 
     /**

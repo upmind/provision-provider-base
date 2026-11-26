@@ -580,7 +580,9 @@ Data sets can use:
 
 Data sets cannot use a rule which reads a database, the network, the
 authenticated user or uploaded files. `RuleParser` rejects every rule which is
-not supported.
+not supported. `SupportedRules::BLOCKED` lists the Laravel rules which are
+never supported, with the reason. One supported rule can use the network:
+`email` with the `dns` parameter does a DNS lookup.
 
 The package
 [upmind/provision-validation-conformance](https://github.com/upmind/provision-validation-conformance)

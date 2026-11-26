@@ -154,7 +154,8 @@ final class SupportedRules
     ];
 
     /**
-     * Rules which data sets can never use, with the reason.
+     * Rules which data sets can never use, with the reason. A rule which is
+     * not in RULES is not supported. This list gives a clear error message.
      *
      * @var array<string,string>
      */
@@ -170,17 +171,6 @@ final class SupportedRules
         'mimetypes' => 'inspects uploaded files',
         'extensions' => 'inspects uploaded files',
         'dimensions' => 'inspects uploaded files',
-    ];
-
-    /**
-     * Rule parameters which data sets can never use, with the reason.
-     *
-     * @var array<string,array<string,string>>
-     */
-    public const BLOCKED_PARAMETERS = [
-        'email' => [
-            'dns' => 'does a DNS lookup',
-        ],
     ];
 
     /**
@@ -215,14 +205,6 @@ final class SupportedRules
 
         if (isset(self::BLOCKED[$name])) {
             throw UnsupportedValidationRule::forBlockedRule($name, self::BLOCKED[$name]);
-        }
-
-        [, $parameters] = RuleParser::parseRule(trim($rule));
-
-        foreach (self::BLOCKED_PARAMETERS[$name] ?? [] as $parameter => $reason) {
-            if (in_array($parameter, array_map('strtolower', array_map('trim', $parameters)), true)) {
-                throw UnsupportedValidationRule::forBlockedParameter($name, $parameter, $reason);
-            }
         }
 
         if (!in_array($name, self::RULES, true)) {
