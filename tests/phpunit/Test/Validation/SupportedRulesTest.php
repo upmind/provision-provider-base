@@ -27,6 +27,22 @@ class SupportedRulesTest extends TestCase
         DataSet::setValidatorFactory(null);
     }
 
+    public function testRulesEqualThePackageList(): void
+    {
+        $package = ConformanceCases::rules();
+        $rules = SupportedRules::RULES;
+        $supported = array_merge($package['supported']['laravel'], $package['supported']['custom']);
+        $blocked = SupportedRules::BLOCKED;
+        sort($rules);
+        sort($supported);
+        ksort($blocked);
+
+        $this->assertSame($supported, $rules);
+        $this->assertSame($package['aliases'], SupportedRules::ALIASES);
+        $this->assertSame($package['blocked'], $blocked);
+        $this->assertSame($package['blocked_parameters'], SupportedRules::BLOCKED_PARAMETERS);
+    }
+
     public function testEverySupportedRuleHasCases(): void
     {
         $rules = SupportedRules::RULES;

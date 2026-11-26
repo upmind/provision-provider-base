@@ -38,6 +38,9 @@ All notable changes to the package will be documented in this file.
 - Add `SupportedRules`; `RuleParser::expand()` throws `UnsupportedValidationRule` for any rule outside the allowlist
   - Block rules which query a database, do DNS lookups, read the authenticated user or inspect uploaded files
 - Add `contains_lower`, `contains_upper` and `contains_number` validation rules
+- Update `SupportedRules` to allow every Laravel rule which needs only the input data: 75 more
+  rules, e.g. `required_unless`, `between`, `after`, `uuid` and `distinct`
+- Require `ramsey/uuid` and `symfony/uid`, which the `uuid` and `ulid` rules need
 - Remove the `propaganistas/laravel-phone` dependency; `international_phone` uses
   `giggsey/libphonenumber-for-php-lite` directly
   - This package no longer registers the `phone` rule or the `phone()` helper. Require
