@@ -11,8 +11,9 @@ use Upmind\ProvisionBase\Provider\DataSet\RuleParser;
 /**
  * Validation rules which data sets can use.
  *
- * Each supported rule has conformance cases in tests/conformance/validation.
- * Other validator implementations must pass the same cases.
+ * The package upmind/provision-validation-conformance lists the same rules in
+ * rules.json and has conformance cases for each rule. Other validator
+ * implementations must pass the same cases.
  */
 final class SupportedRules
 {
@@ -22,34 +23,109 @@ final class SupportedRules
      * @var string[]
      */
     public const RULES = [
-        // Laravel rules
+        // Laravel rules which need only the input data
         'accepted',
+        'accepted_if',
+        'after',
+        'after_or_equal',
+        'alpha',
         'alpha_dash',
         'alpha_num',
         'array',
+        'array_keys',
+        'ascii',
+        'bail',
+        'base64',
+        'before',
+        'before_or_equal',
+        'between',
         'boolean',
+        'confirmed',
+        'contains',
         'date',
+        'date_equals',
         'date_format',
+        'decimal',
+        'declined',
+        'declined_if',
+        'different',
+        'digits',
+        'digits_between',
+        'distinct',
+        'doesnt_contain',
+        'doesnt_end_with',
+        'doesnt_start_with',
         'email',
+        'encoding',
         'ends_with',
+        'exclude',
+        'exclude_if',
+        'exclude_unless',
+        'exclude_with',
+        'exclude_without',
         'filled',
+        'gt',
+        'gte',
+        'hex_color',
         'in',
+        'in_array',
+        'in_array_keys',
         'integer',
         'ip',
+        'ipv4',
+        'ipv6',
+        'json',
+        'list',
+        'lowercase',
+        'lt',
+        'lte',
+        'mac_address',
         'max',
+        'max_digits',
         'min',
+        'min_digits',
+        'missing',
+        'missing_if',
+        'missing_unless',
+        'missing_with',
+        'missing_with_all',
+        'multiple_of',
+        'not_in',
+        'not_regex',
         'nullable',
         'numeric',
         'present',
+        'present_if',
+        'present_unless',
+        'present_with',
+        'present_with_all',
+        'prohibited',
+        'prohibited_if',
+        'prohibited_if_accepted',
+        'prohibited_if_declined',
+        'prohibited_unless',
+        'prohibits',
         'regex',
         'required',
+        'required_array_keys',
         'required_if',
+        'required_if_accepted',
+        'required_if_declined',
+        'required_unless',
+        'required_with',
+        'required_with_all',
         'required_without',
         'required_without_all',
+        'same',
         'size',
+        'sometimes',
         'starts_with',
         'string',
+        'timezone',
+        'ulid',
+        'uppercase',
         'url',
+        'uuid',
 
         // Marks a nested data set. RuleParser::expand() adds it.
         'upmind_nested_data_set',
@@ -78,7 +154,8 @@ final class SupportedRules
     ];
 
     /**
-     * Rules which data sets can never use, with the reason.
+     * Rules which data sets can never use, with the reason. A rule which is
+     * not in RULES is not supported. This list gives a clear error message.
      *
      * @var array<string,string>
      */
@@ -94,17 +171,6 @@ final class SupportedRules
         'mimetypes' => 'inspects uploaded files',
         'extensions' => 'inspects uploaded files',
         'dimensions' => 'inspects uploaded files',
-    ];
-
-    /**
-     * Rule parameters which data sets can never use, with the reason.
-     *
-     * @var array<string,array<string,string>>
-     */
-    public const BLOCKED_PARAMETERS = [
-        'email' => [
-            'dns' => 'does a DNS lookup',
-        ],
     ];
 
     /**
@@ -139,14 +205,6 @@ final class SupportedRules
 
         if (isset(self::BLOCKED[$name])) {
             throw UnsupportedValidationRule::forBlockedRule($name, self::BLOCKED[$name]);
-        }
-
-        [, $parameters] = RuleParser::parseRule(trim($rule));
-
-        foreach (self::BLOCKED_PARAMETERS[$name] ?? [] as $parameter => $reason) {
-            if (in_array($parameter, array_map('strtolower', array_map('trim', $parameters)), true)) {
-                throw UnsupportedValidationRule::forBlockedParameter($name, $parameter, $reason);
-            }
         }
 
         if (!in_array($name, self::RULES, true)) {

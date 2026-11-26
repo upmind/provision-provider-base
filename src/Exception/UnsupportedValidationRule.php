@@ -20,9 +20,4 @@ final class UnsupportedValidationRule extends \LogicException implements Provisi
     {
         return new self("Validation rule {$rule} is blocked because it {$reason}");
     }
-
-    public static function forBlockedParameter(string $rule, string $parameter, string $reason): self
-    {
-        return new self("Validation rule {$rule}:{$parameter} is blocked because it {$reason}");
-    }
 }

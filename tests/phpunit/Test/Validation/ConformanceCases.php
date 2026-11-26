@@ -10,7 +10,19 @@ namespace Upmind\ProvisionBase\Test\Validation;
  */
 final class ConformanceCases
 {
-    public const DIRECTORY = __DIR__ . '/../../../../vendor/upmind/provision-validation-conformance/validation';
+    public const PACKAGE = __DIR__ . '/../../../../vendor/upmind/provision-validation-conformance';
+
+    public const DIRECTORY = self::PACKAGE . '/validation';
+
+    /**
+     * Get rules.json: the supported rules and their aliases.
+     *
+     * @return array<string,mixed>
+     */
+    public static function rules(): array
+    {
+        return json_decode((string)file_get_contents(self::PACKAGE . '/rules.json'), true, 512, JSON_THROW_ON_ERROR);
+    }
 
     /**
      * Get the case files, keyed by rule name.

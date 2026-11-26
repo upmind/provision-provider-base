@@ -27,6 +27,26 @@ class SupportedRulesTest extends TestCase
         DataSet::setValidatorFactory(null);
     }
 
+    public function testRulesEqualThePackageList(): void
+    {
+        $package = ConformanceCases::rules();
+        $rules = SupportedRules::RULES;
+        sort($rules);
+
+        $this->assertSame($package['rules'], $rules);
+        $this->assertSame($package['aliases'], SupportedRules::ALIASES);
+    }
+
+    public function testBlockedRulesAreNotSupported(): void
+    {
+        $this->assertSame([], array_intersect(array_keys(SupportedRules::BLOCKED), SupportedRules::RULES));
+    }
+
+    public function testEmailWithDnsParameterIsSupported(): void
+    {
+        $this->assertTrue(SupportedRules::isSupported('email:rfc,dns'));
+    }
+
     public function testEverySupportedRuleHasCases(): void
     {
         $rules = SupportedRules::RULES;
@@ -52,7 +72,7 @@ class SupportedRulesTest extends TestCase
             return [$rule];
         }, array_keys(SupportedRules::BLOCKED));
 
-        return array_merge($rules, [['email:rfc,dns'], ['exists:users,id'], ['unique:users']]);
+        return array_merge($rules, [['exists:users,id'], ['unique:users']]);
     }
 
     /**
