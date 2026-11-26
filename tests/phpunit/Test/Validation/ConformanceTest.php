@@ -24,16 +24,60 @@ use Upmind\ProvisionBase\Laravel\ValidationServiceProvider;
  */
 class ConformanceTest extends TestCase
 {
+    private const NO_KOSOVO = 'v3.7 rejects country XK, because its ISO 3166 list does not include Kosovo.';
+
+    private const NO_PHONE_FAILURE = 'v3.7 adds the error message by hand, so Validator::failed() does not report'
+        . ' international_phone.';
+
+    private const NO_NESTED_FAILURE = 'v3.7 does not report nested data set failures in Validator::failed().';
+
     /**
-     * Cases where an older Laravel version does not conform, keyed by
-     * Laravel minor version, then case label. The value is the reason.
+     * Cases which do not conform on v3.7, keyed by rule, then case name. The
+     * value is the reason.
      *
      * @var array<string,array<string,string>>
      */
     private const KNOWN_DIFFERENCES = [
+        'international_phone' => [
+            'Kosovo mobile with country XK' => self::NO_KOSOVO,
+            'Kosovo mobile, national format with country XK' => self::NO_KOSOVO,
+            'Kosovo mobile with lower case country xk' => self::NO_KOSOVO,
+            'missing country value' => self::NO_PHONE_FAILURE,
+            'unknown country value' => self::NO_PHONE_FAILURE,
+            'national format without country' => self::NO_PHONE_FAILURE,
+            'invalid number for country' => self::NO_PHONE_FAILURE,
+            'number of another country' => self::NO_PHONE_FAILURE,
+            'Jersey number with country GB' => self::NO_PHONE_FAILURE,
+            'national format without country value' => self::NO_PHONE_FAILURE,
+            'Kosovo mobile with country RS' => self::NO_PHONE_FAILURE,
+            'Serbian mobile with country XK' => self::NO_PHONE_FAILURE,
+            'Canadian number with country US' => self::NO_PHONE_FAILURE,
+            'Kazakhstan number with country RU' => self::NO_PHONE_FAILURE,
+            'country without phone numbers' => self::NO_PHONE_FAILURE,
+            'integer country value' => self::NO_PHONE_FAILURE,
+            'empty country value' => self::NO_PHONE_FAILURE,
+            'array value' => 'v3.7 raises a PHP warning for an array value. Laravel turns it into an ErrorException.',
+        ],
+        'upmind_nested_data_set' => [
+            'missing nested required field' => self::NO_NESTED_FAILURE,
+            'invalid nested field' => self::NO_NESTED_FAILURE,
+            'empty nested data' => self::NO_NESTED_FAILURE,
+            'two levels of nesting' => self::NO_NESTED_FAILURE,
+        ],
+    ];
+
+    /**
+     * Cases which do not conform on one Laravel minor version only, keyed by
+     * version, then rule, then case name. The value is the reason.
+     *
+     * @var array<string,array<string,array<string,string>>>
+     */
+    private const LARAVEL_KNOWN_DIFFERENCES = [
         '5.8' => [
-            'required_if #7: boolean other field true does not match parameter 1'
-                => 'Laravel 5.8 compares loosely, so boolean true matches 1',
+            'required_if' => [
+                'boolean other field true does not match parameter 1'
+                    => 'Laravel 5.8 compares loosely, so boolean true matches 1.',
+            ],
         ],
     ];
 
@@ -74,16 +118,10 @@ class ConformanceTest extends TestCase
     #[DataProvider('cases')]
     public function testCase(string $rule, array $case): void
     {
-        $label = (string)$this->dataName();
-        $laravel = implode('.', array_slice(explode('.', (string)InstalledVersions::getVersion('illuminate/validation')), 0, 2));
+        $reason = self::knownDifferences()[$rule][$case['name']] ?? null;
 
-        if (isset(self::KNOWN_DIFFERENCES[$laravel][$label])) {
-            $this->markTestSkipped(sprintf('Laravel %s: %s', $laravel, self::KNOWN_DIFFERENCES[$laravel][$label]));
-        }
-
-        if (isset($case['correction'])) {
-            // A later version corrects v3.7, so v3.7 must not conform.
-            $this->assertFalse(self::conforms($case), "Case conforms on v3.7, so it is not a correction: {$case['correction']}");
+        if ($reason !== null) {
+            $this->assertFalse(self::conforms($case), "Case conforms, so remove its known difference: {$reason}");
 
             return;
         }
@@ -93,6 +131,36 @@ class ConformanceTest extends TestCase
 
         $this->assertSame(self::sortFailed($case['failed'] ?? []), self::failedRules($validator));
         $this->assertSame($case['valid'], $passes);
+    }
+
+    public function testKnownDifferencesNameCases(): void
+    {
+        $files = ConformanceCases::files();
+        $lists = array_merge([self::KNOWN_DIFFERENCES], array_values(self::LARAVEL_KNOWN_DIFFERENCES));
+
+        foreach ($lists as $list) {
+            foreach ($list as $rule => $reasons) {
+                $names = array_column($files[$rule]['cases'] ?? [], 'name');
+
+                foreach (array_keys($reasons) as $name) {
+                    $this->assertContains($name, $names, "No {$rule} case has the name: {$name}");
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the known differences of the installed Laravel version, keyed by
+     * rule, then case name.
+     *
+     * @return array<string,array<string,string>>
+     */
+    private static function knownDifferences(): array
+    {
+        $version = (string)InstalledVersions::getVersion('illuminate/validation');
+        $laravel = implode('.', array_slice(explode('.', $version), 0, 2));
+
+        return array_merge_recursive(self::KNOWN_DIFFERENCES, self::LARAVEL_KNOWN_DIFFERENCES[$laravel] ?? []);
     }
 
     /**

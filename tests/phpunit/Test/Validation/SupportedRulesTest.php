@@ -40,58 +40,14 @@ class SupportedRulesTest extends TestCase
         $this->assertSame($rules, array_keys(ConformanceCases::files()));
     }
 
-    public function testCaseFilesAreWellFormed(): void
+    public function testCasesUseSupportedRules(): void
     {
-        foreach (ConformanceCases::files() as $name => $file) {
-            $this->assertSame($name, $file['rule'], "File {$name}.json has rule {$file['rule']}");
-            $this->assertNotEmpty($file['cases'], "File {$name}.json has no cases");
-
-            $valid = array_filter(array_column($file['cases'], 'valid'));
-            $this->assertNotEmpty($valid, "File {$name}.json has no valid case");
-            $this->assertNotCount(count($file['cases']), $valid, "File {$name}.json has no invalid case");
-
-            foreach ($file['cases'] as $index => $case) {
-                $label = "{$name}.json case #{$index}";
-
-                $this->assertSame(['name', 'rules', 'data', 'valid'], array_slice(array_keys($case), 0, 4), $label);
-                $this->assertIsString($case['name'], $label);
-                $this->assertIsArray($case['data'], $label);
-                $this->assertIsBool($case['valid'], $label);
-                $this->assertSame(!$case['valid'], array_key_exists('failed', $case), "{$label}: failed is set only for invalid cases");
-                $this->assertNotEmpty($case['rules'], $label);
-
-                if (array_key_exists('correction', $case)) {
-                    $this->assertIsString($case['correction'], $label);
-                    $this->assertNotSame('', trim($case['correction']), "{$label}: correction is empty");
-                }
-
-                foreach ($case['rules'] as $field => $fieldRules) {
-                    $this->assertIsString($field, $label);
-                    $this->assertIsArray($fieldRules, "{$label}: rules of {$field} must be a list");
-
-                    foreach ($fieldRules as $rule) {
-                        $this->assertIsString($rule, $label);
-                        $this->assertTrue(SupportedRules::isSupported($rule), "{$label}: rule {$rule} is not supported");
-                    }
+        foreach (ConformanceCases::cases() as $label => [, $case]) {
+            foreach ($case['rules'] as $fieldRules) {
+                foreach ($fieldRules as $rule) {
+                    $this->assertTrue(SupportedRules::isSupported($rule), "{$label}: rule {$rule} is not supported");
                 }
             }
-        }
-    }
-
-    public function testEveryCaseFileTestsItsRule(): void
-    {
-        foreach (ConformanceCases::files() as $name => $file) {
-            $rules = [];
-
-            foreach ($file['cases'] as $case) {
-                foreach ($case['rules'] as $fieldRules) {
-                    foreach ($fieldRules as $rule) {
-                        $rules[] = SupportedRules::name($rule);
-                    }
-                }
-            }
-
-            $this->assertContains($name, $rules, "File {$name}.json does not use rule {$name}");
         }
     }
 

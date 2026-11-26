@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Upmind\ProvisionBase\Test\Validation;
 
 /**
- * Loads the validation conformance cases in tests/conformance/validation.
+ * Loads the validation conformance cases of the package
+ * upmind/provision-validation-conformance.
  */
 final class ConformanceCases
 {
-    public const DIRECTORY = __DIR__ . '/../../../conformance/validation';
+    public const DIRECTORY = __DIR__ . '/../../../../vendor/upmind/provision-validation-conformance/validation';
 
     /**
      * Get the case files, keyed by rule name.
@@ -31,15 +32,15 @@ final class ConformanceCases
     }
 
     /**
-     * Get every case, keyed by a readable label.
+     * Get every case, keyed by rule and case name.
      *
      * @return iterable<string,array{0:string,1:array<string,mixed>}>
      */
     public static function cases(): iterable
     {
         foreach (self::files() as $file) {
-            foreach ($file['cases'] as $index => $case) {
-                yield sprintf('%s #%d: %s', $file['rule'], $index, $case['name']) => [$file['rule'], $case];
+            foreach ($file['cases'] as $case) {
+                yield sprintf('%s: %s', $file['rule'], $case['name']) => [$file['rule'], $case];
             }
         }
     }

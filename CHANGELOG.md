@@ -5,7 +5,7 @@ All notable changes to the package will be documented in this file.
 ## Unreleased
 
 - Add `contains_lower`, `contains_upper` and `contains_number` validation rules
-- Add a validation conformance suite in `tests/conformance`: one JSON case file per supported rule
+- Run the validation conformance cases of `upmind/provision-validation-conformance` in PHPUnit
 - Add `SupportedRules` and `UnsupportedValidationRule`
 - Update `RuleParser::expand()` to throw `UnsupportedValidationRule` for rules which can query a
   database: `exists`, `unique`, `password` and `current_password`
