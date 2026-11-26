@@ -31,11 +31,9 @@ class SupportedRulesTest extends TestCase
     {
         $package = ConformanceCases::rules();
         $rules = SupportedRules::RULES;
-        $supported = array_merge($package['supported']['laravel'], $package['supported']['custom']);
         sort($rules);
-        sort($supported);
 
-        $this->assertSame($supported, $rules);
+        $this->assertSame($package['rules'], $rules);
         $this->assertSame($package['aliases'], SupportedRules::ALIASES);
     }
 

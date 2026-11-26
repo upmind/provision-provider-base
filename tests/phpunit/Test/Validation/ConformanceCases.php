@@ -15,8 +15,7 @@ final class ConformanceCases
     public const DIRECTORY = self::PACKAGE . '/validation';
 
     /**
-     * Get rules.json: the supported rules, aliases, blocked rules and blocked
-     * parameters.
+     * Get rules.json: the supported rules and their aliases.
      *
      * @return array<string,mixed>
      */
