@@ -34,7 +34,7 @@ All notable changes to the package will be documented in this file.
 - Update `international_phone` to fail as a rule, so `Validator::failed()` reports it
 - Update `international_phone` with a country argument to accept country `XK` (Kosovo)
 - Update the data set validator to report nested data set failures in `Validator::failed()`
-- Add a validation conformance suite in `tests/conformance`: one JSON case file per supported rule
+- Run the validation conformance cases of `upmind/provision-validation-conformance` in PHPUnit
 - Add `SupportedRules`; `RuleParser::expand()` throws `UnsupportedValidationRule` for any rule outside the allowlist
   - Block rules which query a database, do DNS lookups, read the authenticated user or inspect uploaded files
 - Add `contains_lower`, `contains_upper` and `contains_number` validation rules
