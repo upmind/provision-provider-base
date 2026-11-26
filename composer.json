@@ -28,6 +28,7 @@
         "illuminate/support": "^13.0",
         "illuminate/validation": "^13.0",
         "league/iso3166": "^4.0",
+        "psr/http-client": "^1.0",
         "psr/log": "^3.0"
     },
     "require-dev": {

@@ -9,7 +9,9 @@ use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use JsonException;
 use Throwable;
+use Upmind\ProvisionBase\ConnectionErrorClassifier;
 use Upmind\ProvisionBase\Exception\InvalidDataSetException;
+use Upmind\ProvisionBase\Exception\ProviderConnectionError;
 use Upmind\ProvisionBase\Exception\ProvisionFunctionError;
 use Upmind\ProvisionBase\Provider\DataSet\ResultData;
 use Upmind\ProvisionBase\ProviderJob;
@@ -201,10 +203,20 @@ final class ResultFactory
 
     /**
      * Set the result exception. Add the root exception to debug provider_exception.
+     * For a connection error, the message contains no URL credentials or query strings.
      */
     public static function withProviderExceptionDebug(Result $result, Throwable $e): Result
     {
-        return self::withRootExceptionDebug($result, $e, 'provider_exception');
+        $result = self::withRootExceptionDebug($result, $e, 'provider_exception');
+
+        if (!$e instanceof ProviderConnectionError) {
+            return $result;
+        }
+
+        $exceptionDebug = $result->getDebug()['provider_exception'];
+        $exceptionDebug['message'] = ConnectionErrorClassifier::sanitiseMessage($exceptionDebug['message']);
+
+        return $result->withDebugValue('provider_exception', $exceptionDebug);
     }
 
     /**
