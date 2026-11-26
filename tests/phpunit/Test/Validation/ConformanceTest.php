@@ -26,11 +26,6 @@ class ConformanceTest extends TestCase
 {
     private const NO_KOSOVO = 'v3.7 rejects country XK, because its ISO 3166 list does not include Kosovo.';
 
-    private const NO_PHONE_FAILURE = 'v3.7 adds the error message by hand, so Validator::failed() does not report'
-        . ' international_phone.';
-
-    private const NO_NESTED_FAILURE = 'v3.7 does not report nested data set failures in Validator::failed().';
-
     /**
      * Cases which do not conform on v3.7, keyed by rule, then case name. The
      * value is the reason.
@@ -42,27 +37,6 @@ class ConformanceTest extends TestCase
             'Kosovo mobile with country XK' => self::NO_KOSOVO,
             'Kosovo mobile, national format with country XK' => self::NO_KOSOVO,
             'Kosovo mobile with lower case country xk' => self::NO_KOSOVO,
-            'missing country value' => self::NO_PHONE_FAILURE,
-            'unknown country value' => self::NO_PHONE_FAILURE,
-            'national format without country' => self::NO_PHONE_FAILURE,
-            'invalid number for country' => self::NO_PHONE_FAILURE,
-            'number of another country' => self::NO_PHONE_FAILURE,
-            'Jersey number with country GB' => self::NO_PHONE_FAILURE,
-            'national format without country value' => self::NO_PHONE_FAILURE,
-            'Kosovo mobile with country RS' => self::NO_PHONE_FAILURE,
-            'Serbian mobile with country XK' => self::NO_PHONE_FAILURE,
-            'Canadian number with country US' => self::NO_PHONE_FAILURE,
-            'Kazakhstan number with country RU' => self::NO_PHONE_FAILURE,
-            'country without phone numbers' => self::NO_PHONE_FAILURE,
-            'integer country value' => self::NO_PHONE_FAILURE,
-            'empty country value' => self::NO_PHONE_FAILURE,
-            'array value' => 'v3.7 raises a PHP warning for an array value. Laravel turns it into an ErrorException.',
-        ],
-        'upmind_nested_data_set' => [
-            'missing nested required field' => self::NO_NESTED_FAILURE,
-            'invalid nested field' => self::NO_NESTED_FAILURE,
-            'empty nested data' => self::NO_NESTED_FAILURE,
-            'two levels of nesting' => self::NO_NESTED_FAILURE,
         ],
     ];
 

@@ -1,0 +1,1446 @@
+[
+    {
+        "name": "international_phone: international format, GB mobile",
+        "data": {
+            "phone": "+447400123456"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: international format, US number",
+        "data": {
+            "phone": "+12015550123"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: national format with matching country",
+        "data": {
+            "phone": "07400123456",
+            "country": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: international format with matching country",
+        "data": {
+            "phone": "+447400123456",
+            "country": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: national format with spaces and matching country",
+        "data": {
+            "phone": "07400 123456",
+            "country": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: lower case country",
+        "data": {
+            "phone": "07400123456",
+            "country": "gb"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: integer national number with matching country",
+        "data": {
+            "phone": 7400123456,
+            "country": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: fallback pattern accepts 0 and 9 digits without country value",
+        "data": {
+            "phone": "0612345678"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: fallback pattern accepts 0 and 9 digits for another country",
+        "data": {
+            "phone": "0612345678",
+            "country": "US"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: missing field is not validated",
+        "data": [],
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: empty string is not validated",
+        "data": {
+            "phone": ""
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: Kosovo mobile, international format",
+        "data": {
+            "phone": "+38343201234"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: Kosovo mobile with country XK",
+        "data": {
+            "phone": "+38343201234",
+            "country": "XK"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid XK phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: Kosovo mobile, national format with country XK",
+        "data": {
+            "phone": "043 201 234",
+            "country": "XK"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid XK phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: Kosovo mobile with lower case country xk",
+        "data": {
+            "phone": "+38343201234",
+            "country": "xk"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid XK phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: Monaco number in a range Kosovo used before +383",
+        "data": {
+            "phone": "+37744123456"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: Isle of Man number with country GB",
+        "data": {
+            "phone": "+447924123456",
+            "country": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: Kazakhstan number with country KZ",
+        "data": {
+            "phone": "+77710009998",
+            "country": "KZ"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: fallback pattern accepts a Moroccan number for another country",
+        "data": {
+            "phone": "+212612345678",
+            "country": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "international_phone: missing country value",
+        "data": {
+            "phone": "+447400123456"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid  phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: unknown country value",
+        "data": {
+            "phone": "+447400123456",
+            "country": "XX"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid XX phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: known dialling code without a valid number",
+        "data": {
+            "phone": "+3312"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid international phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: national format without country",
+        "data": {
+            "phone": "07400123456"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "The phone number must begin with +{dialing code}"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: unknown dialling code",
+        "data": {
+            "phone": "+999123456"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid international phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: dialling code only",
+        "data": {
+            "phone": "+44"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid international phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: letters after plus sign",
+        "data": {
+            "phone": "+abc"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid international phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: invalid number for country",
+        "data": {
+            "phone": "12345",
+            "country": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: number of another country",
+        "data": {
+            "phone": "+12015550123",
+            "country": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: Jersey number with country GB",
+        "data": {
+            "phone": "+447797712345",
+            "country": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: national format without country value",
+        "data": {
+            "phone": "7400123456"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid  phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: Kosovo mobile with country RS",
+        "data": {
+            "phone": "+38343201234",
+            "country": "RS"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid RS phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: Serbian mobile with country XK",
+        "data": {
+            "phone": "+381601234567",
+            "country": "XK"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid XK phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: Pristina number in the Serbian range Kosovo used before +383",
+        "data": {
+            "phone": "+38138123456"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid international phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: Canadian number with country US",
+        "data": {
+            "phone": "+16135550123",
+            "country": "US"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid US phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: Kazakhstan number with country RU",
+        "data": {
+            "phone": "+77710009998",
+            "country": "RU"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid RU phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: country without phone numbers",
+        "data": {
+            "phone": "+447400123456",
+            "country": "AQ"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid AQ phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: integer country value",
+        "data": {
+            "phone": "+447400123456",
+            "country": 44
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid 44 phone number"
+            ]
+        }
+    },
+    {
+        "name": "international_phone: empty country value",
+        "data": {
+            "phone": "+447400123456",
+            "country": ""
+        },
+        "rules": {
+            "phone": [
+                "international_phone:country"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid  phone number"
+            ]
+        }
+    },
+    {
+        "name": "upmind_nested_data_set: valid nested data",
+        "data": {
+            "contact": {
+                "name": "A",
+                "email": "a@example.com"
+            }
+        },
+        "rules": {
+            "contact": [
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required",
+                "string"
+            ],
+            "contact.email": [
+                "nullable",
+                "email"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "upmind_nested_data_set: nested rules are skipped when the field is missing",
+        "data": [],
+        "rules": {
+            "contact": [
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required",
+                "string"
+            ],
+            "contact.email": [
+                "nullable",
+                "email"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "upmind_nested_data_set: nested rules are skipped when the field is null",
+        "data": {
+            "contact": null
+        },
+        "rules": {
+            "contact": [
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required",
+                "string"
+            ],
+            "contact.email": [
+                "nullable",
+                "email"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "upmind_nested_data_set: nested rules are skipped when the field is not an array",
+        "data": {
+            "contact": "x"
+        },
+        "rules": {
+            "contact": [
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required",
+                "string"
+            ],
+            "contact.email": [
+                "nullable",
+                "email"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "upmind_nested_data_set: required parent with nested data",
+        "data": {
+            "contact": {
+                "name": "A"
+            }
+        },
+        "rules": {
+            "contact": [
+                "required",
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required",
+                "string"
+            ],
+            "contact.email": [
+                "nullable",
+                "email"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "upmind_nested_data_set: missing nested required field",
+        "data": {
+            "contact": {
+                "email": "a@example.com"
+            }
+        },
+        "rules": {
+            "contact": [
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required",
+                "string"
+            ],
+            "contact.email": [
+                "nullable",
+                "email"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "contact.name": [
+                "validation.required"
+            ]
+        }
+    },
+    {
+        "name": "upmind_nested_data_set: invalid nested field",
+        "data": {
+            "contact": {
+                "name": "A",
+                "email": "x"
+            }
+        },
+        "rules": {
+            "contact": [
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required",
+                "string"
+            ],
+            "contact.email": [
+                "nullable",
+                "email"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "contact.email": [
+                "validation.email"
+            ]
+        }
+    },
+    {
+        "name": "upmind_nested_data_set: empty nested data",
+        "data": {
+            "contact": []
+        },
+        "rules": {
+            "contact": [
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required",
+                "string"
+            ],
+            "contact.email": [
+                "nullable",
+                "email"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "contact.name": [
+                "validation.required"
+            ]
+        }
+    },
+    {
+        "name": "upmind_nested_data_set: required parent is missing",
+        "data": [],
+        "rules": {
+            "contact": [
+                "required",
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required",
+                "string"
+            ],
+            "contact.email": [
+                "nullable",
+                "email"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "contact": [
+                "validation.required"
+            ]
+        }
+    },
+    {
+        "name": "upmind_nested_data_set: two levels of nesting",
+        "data": {
+            "a": {
+                "b": []
+            }
+        },
+        "rules": {
+            "a": [
+                "upmind_nested_data_set"
+            ],
+            "a.b": [
+                "upmind_nested_data_set"
+            ],
+            "a.b.c": [
+                "required"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "a.b.c": [
+                "validation.required"
+            ]
+        }
+    },
+    {
+        "name": "country, then max",
+        "data": {
+            "phone": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:cc",
+                "max:1"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number",
+                "validation.max.string"
+            ]
+        }
+    },
+    {
+        "name": "max, then country",
+        "data": {
+            "phone": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "max:1",
+                "international_phone:cc"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "validation.max.string",
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "bail before",
+        "data": {
+            "phone": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "bail",
+                "international_phone:cc",
+                "max:1"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "bail, required first",
+        "data": {
+            "phone": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "bail",
+                "required",
+                "international_phone:cc",
+                "max:1"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "no plus, then max",
+        "data": {
+            "phone": "123"
+        },
+        "rules": {
+            "phone": [
+                "international_phone",
+                "max:1"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "The phone number must begin with +{dialing code}",
+                "validation.max.string"
+            ]
+        }
+    },
+    {
+        "name": "no plus bail",
+        "data": {
+            "phone": "123"
+        },
+        "rules": {
+            "phone": [
+                "bail",
+                "international_phone",
+                "max:1"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "The phone number must begin with +{dialing code}"
+            ]
+        }
+    },
+    {
+        "name": "plus invalid",
+        "data": {
+            "phone": "+999999"
+        },
+        "rules": {
+            "phone": [
+                "international_phone",
+                "max:1"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid international phone number",
+                "validation.max.string"
+            ]
+        }
+    },
+    {
+        "name": "pipe string rules",
+        "data": {
+            "phone": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": "required|international_phone:cc|max:1"
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number",
+                "validation.max.string"
+            ]
+        }
+    },
+    {
+        "name": "custom exact message",
+        "data": {
+            "phone": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:cc"
+            ]
+        },
+        "messages": {
+            "phone.international_phone": "CUSTOM"
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "custom rule message",
+        "data": {
+            "phone": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:cc"
+            ]
+        },
+        "messages": {
+            "international_phone": "CUSTOM"
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "custom wildcard message",
+        "data": {
+            "phone": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:cc"
+            ]
+        },
+        "messages": {
+            "*.international_phone": "CUSTOM",
+            "p*": "P"
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "custom wildcard no plus",
+        "data": {
+            "phone": "123"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "messages": {
+            "*.international_phone": "CUSTOM",
+            "international_phone": "C2"
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "The phone number must begin with +{dialing code}"
+            ]
+        }
+    },
+    {
+        "name": "custom message plus invalid",
+        "data": {
+            "phone": "+999999"
+        },
+        "rules": {
+            "phone": [
+                "international_phone"
+            ]
+        },
+        "messages": {
+            "international_phone": "CUSTOM"
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "CUSTOM"
+            ]
+        }
+    },
+    {
+        "name": "custom attribute name",
+        "data": {
+            "phone": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:cc"
+            ]
+        },
+        "attributes": {
+            "phone": "Phone Number"
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "wildcard list",
+        "data": {
+            "cc": "GB",
+            "c": [
+                {
+                    "phone": "123"
+                },
+                {
+                    "phone": "+447400123456"
+                },
+                {
+                    "phone": "456"
+                }
+            ]
+        },
+        "rules": {
+            "c.*.phone": [
+                "international_phone:cc"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "c.0.phone": [
+                "This is not a valid GB phone number"
+            ],
+            "c.2.phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "wildcard list no country",
+        "data": {
+            "c": [
+                {
+                    "phone": "123"
+                },
+                {
+                    "phone": "+447400123456"
+                }
+            ]
+        },
+        "rules": {
+            "c.*.phone": [
+                "international_phone"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "c.0.phone": [
+                "The phone number must begin with +{dialing code}"
+            ]
+        }
+    },
+    {
+        "name": "snake attribute",
+        "data": {
+            "phone_number": "123",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone_number": [
+                "international_phone:cc"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone_number": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "two phone fields",
+        "data": {
+            "a": "123",
+            "b": "456",
+            "cc": "GB",
+            "cc2": "FR"
+        },
+        "rules": {
+            "a": [
+                "international_phone:cc"
+            ],
+            "b": [
+                "international_phone:cc2"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "a": [
+                "This is not a valid GB phone number"
+            ],
+            "b": [
+                "This is not a valid FR phone number"
+            ]
+        }
+    },
+    {
+        "name": "placeholder country",
+        "data": {
+            "phone": "123",
+            "cc": ":attribute"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:cc"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid PHONE phone number"
+            ]
+        }
+    },
+    {
+        "name": "placeholder country input",
+        "data": {
+            "phone": "123",
+            "cc": ":input"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:cc"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "This is not a valid :INPUT phone number"
+            ]
+        }
+    },
+    {
+        "name": "nullable null",
+        "data": {
+            "phone": null,
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "nullable",
+                "international_phone:cc"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "empty string",
+        "data": {
+            "phone": "",
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "international_phone:cc"
+            ]
+        },
+        "passes": true,
+        "errors": {}
+    },
+    {
+        "name": "required missing",
+        "data": {
+            "cc": "GB"
+        },
+        "rules": {
+            "phone": [
+                "required",
+                "international_phone:cc"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "phone": [
+                "validation.required"
+            ]
+        }
+    },
+    {
+        "name": "nested phone",
+        "data": {
+            "contact": {
+                "phone": "123",
+                "cc": "GB"
+            }
+        },
+        "rules": {
+            "contact": [
+                "upmind_nested_data_set"
+            ],
+            "contact.phone": [
+                "required",
+                "international_phone:cc"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "contact.phone": [
+                "This is not a valid GB phone number"
+            ]
+        }
+    },
+    {
+        "name": "nested phone custom message",
+        "data": {
+            "contact": {
+                "phone": "123"
+            }
+        },
+        "rules": {
+            "contact": [
+                "upmind_nested_data_set"
+            ],
+            "contact.phone": [
+                "international_phone"
+            ]
+        },
+        "messages": {
+            "contact.phone.international_phone": "CUSTOM"
+        },
+        "passes": false,
+        "errors": {
+            "contact.phone": [
+                "The phone number must begin with +{dialing code}"
+            ]
+        }
+    },
+    {
+        "name": "nested and parent errors",
+        "data": {
+            "name": "",
+            "contact": {
+                "name": "",
+                "email": "x"
+            }
+        },
+        "rules": {
+            "name": [
+                "required"
+            ],
+            "contact": [
+                "required",
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required"
+            ],
+            "contact.email": [
+                "email",
+                "max:0"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "name": [
+                "validation.required"
+            ],
+            "contact.name": [
+                "validation.required"
+            ],
+            "contact.email": [
+                "validation.email",
+                "validation.max.string"
+            ]
+        }
+    },
+    {
+        "name": "nested list",
+        "data": {
+            "items": [
+                {
+                    "n": {
+                        "a": 1
+                    }
+                },
+                {
+                    "n": {
+                        "a": "x"
+                    }
+                }
+            ]
+        },
+        "rules": {
+            "items.*.n": [
+                "upmind_nested_data_set"
+            ],
+            "items.*.n.a": [
+                "integer"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "items.1.n.a": [
+                "validation.integer"
+            ]
+        }
+    },
+    {
+        "name": "nested same field parent rule fails",
+        "data": {
+            "contact": "str"
+        },
+        "rules": {
+            "contact": [
+                "array",
+                "upmind_nested_data_set"
+            ],
+            "contact.name": [
+                "required"
+            ]
+        },
+        "passes": false,
+        "errors": {
+            "contact": [
+                "validation.array"
+            ]
+        }
+    }
+]
